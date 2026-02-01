@@ -16,11 +16,14 @@ COPY medusa-config.ts tsconfig.json instrumentation.ts ./
 COPY src ./src
 
 # Cache bust: change this to force full rebuild (Render may not clear Docker layer cache)
-ARG CACHEBUST=20240201
+ARG CACHEBUST=20240202
 RUN echo "Docker cache bust: $CACHEBUST"
 
 # Build (outputs to .medusa/server)
 RUN npm run build
+
+# Verify .medusa/server exists (fail build if missing)
+RUN test -d .medusa/server || (echo "ERROR: .medusa/server missing after build" && exit 1)
 
 # Install production deps for the built server
 RUN cd .medusa/server && npm ci --omit=dev
