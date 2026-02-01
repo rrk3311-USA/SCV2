@@ -9,7 +9,7 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     preDeployCommand: npx medusa db:migrate
-    dockerCommand: cd .medusa/server && exec env HOST=0.0.0.0 npm start
+    dockerCommand: 'sh -c "cd .medusa/server && HOST=0.0.0.0 npm start"'
     healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
