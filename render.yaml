@@ -8,6 +8,9 @@ services:
     rootDir: deploy-site/medusa-backend
     dockerfilePath: ./Dockerfile
     dockerContext: .
+    preDeployCommand: npx medusa db:migrate
+    dockerCommand: cd .medusa/server && exec env HOST=0.0.0.0 npm start
+    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -19,6 +22,8 @@ services:
         generateValue: true
       - key: MEDUSA_WORKER_MODE
         value: server
+      - key: HOST
+        value: "0.0.0.0"
       - key: STORE_CORS
         value: https://scv2-success-chemistry.vercel.app
       - key: ADMIN_CORS
