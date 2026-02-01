@@ -8,8 +8,6 @@ services:
     rootDir: deploy-site/medusa-backend
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    preDeployCommand: npx medusa db:migrate
-    dockerCommand: 'sh -c "cd .medusa/server && HOST=0.0.0.0 npm start"'
     healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
