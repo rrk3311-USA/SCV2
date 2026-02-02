@@ -11,7 +11,7 @@ RUN npm ci
 COPY medusa-config.ts tsconfig.json instrumentation.ts ./
 COPY src ./src
 
-ARG CACHEBUST=20240203
+ARG CACHEBUST=20240204
 RUN echo "Docker cache bust: $CACHEBUST"
 
 RUN npm run build
@@ -35,5 +35,13 @@ COPY --from=builder /server/.medusa/server /opt/medusa-server
 
 EXPOSE 9000
 
-# Run migrations from /app; then start built server using ENTRY file written at build time
-CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && ENTRY=$(cat ENTRY 2>/dev/null || echo 'dist/index.js'); exec env HOST=0.0.0.0 PORT=${PORT:-9000} node $ENTRY"]
+# Run migrations from /app; then start built server with debug output
+CMD ["sh", "-c", "\
+echo '[DEBUG H1] === ENTRY file contents ===' && cat /opt/medusa-server/ENTRY 2>&1 || echo 'ENTRY file not found'; \
+echo '[DEBUG H2/H4] === /opt/medusa-server root listing ===' && ls -la /opt/medusa-server; \
+echo '[DEBUG H2/H4] === /opt/medusa-server/dist listing ===' && ls -la /opt/medusa-server/dist 2>&1 || echo 'dist/ does not exist'; \
+echo '[DEBUG H3/H5] === package.json scripts/main ===' && node -e \"const p=require('/opt/medusa-server/package.json'); console.log('main:', p.main); console.log('scripts:', JSON.stringify(p.scripts, null, 2));\"; \
+echo '[DEBUG] === Starting server ===' && \
+cd /app && npx medusa db:migrate && \
+cd /opt/medusa-server && npm start \
+"]
