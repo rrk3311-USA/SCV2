@@ -32,4 +32,5 @@ EXPOSE 9000
 
 # Migrations need DATABASE_URL at runtime; then start from built server.
 # Render sets PORT; Medusa reads it. HOST=0.0.0.0 so the server binds to all interfaces.
-CMD ["sh", "-c", "npx medusa db:migrate && cd .medusa/server && exec env HOST=0.0.0.0 npm start"]
+# Debug: dump pwd and .medusa at runtime (remove after fix verified)
+CMD ["sh", "-c", "echo [DEBUG] PWD=$(pwd) && echo [DEBUG] .medusa: && ls -la .medusa 2>&1 || true && npx medusa db:migrate && cd .medusa/server && exec env HOST=0.0.0.0 npm start"]
