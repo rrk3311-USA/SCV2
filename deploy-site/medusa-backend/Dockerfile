@@ -33,4 +33,5 @@ COPY --from=builder /server/.medusa/server /opt/medusa-server
 
 EXPOSE 9000
 
-CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && exec env HOST=0.0.0.0 npm start"]
+# Symlink so "npx medusa start" from /app finds the built server; then use CLI to start (avoids npm start loop)
+CMD ["sh", "-c", "cd /app && mkdir -p .medusa && ln -sfn /opt/medusa-server .medusa/server && npx medusa db:migrate && exec env HOST=0.0.0.0 npx medusa start -p ${PORT:-9000}"]
