@@ -1,6 +1,7 @@
-'use client'
-
 import Link from 'next/link'
+
+// Avoid prerender; fixes "Cannot read properties of undefined (reading 'clientModules')" on Render
+export const dynamic = 'force-dynamic'
 
 export default function IndexPage() {
   return (
