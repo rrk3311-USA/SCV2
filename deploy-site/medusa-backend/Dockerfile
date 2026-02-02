@@ -16,7 +16,8 @@ RUN echo "Docker cache bust: $CACHEBUST"
 
 RUN npm run build
 RUN test -d .medusa/server || (echo "ERROR: .medusa/server missing after build" && exit 1)
-RUN echo "=== .medusa/server ===" && ls -la .medusa/server && echo "=== package.json start/main ===" && (node -e "const p=require('./.medusa/server/package.json'); console.log('start:', p.scripts?.start); console.log('main:', p.main);")
+# Write entry point for runtime: use package.json "start" (e.g. "node dist/index.js") or "main" or "dist/index.js"
+RUN node -e "const p=require('./.medusa/server/package.json'); const s=p.scripts?.start; const m=p.main||'dist/index.js'; const entry=(s&&s.startsWith('node ')?s.replace(/^node\\s+/,'').trim():m); require('fs').writeFileSync('.medusa/server/ENTRY', entry); console.log('ENTRY:', entry);"
 RUN cd .medusa/server && npm ci --omit=dev
 
 # Stage 2: runtime – built server in /opt/medusa-server so Render mount cannot overwrite it
@@ -34,5 +35,5 @@ COPY --from=builder /server/.medusa/server /opt/medusa-server
 
 EXPOSE 9000
 
-# Run migrations from /app; then start built server (built output has index.js at root per Medusa docs)
-CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && exec env HOST=0.0.0.0 PORT=${PORT:-9000} node index.js"]
+# Run migrations from /app; then start built server using ENTRY file written at build time
+CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && ENTRY=$(cat ENTRY 2>/dev/null || echo 'dist/index.js'); exec env HOST=0.0.0.0 PORT=${PORT:-9000} node $ENTRY"]
