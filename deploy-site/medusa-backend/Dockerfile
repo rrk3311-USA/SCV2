@@ -16,6 +16,7 @@ RUN echo "Docker cache bust: $CACHEBUST"
 
 RUN npm run build
 RUN test -d .medusa/server || (echo "ERROR: .medusa/server missing after build" && exit 1)
+RUN echo "=== .medusa/server ===" && ls -la .medusa/server && echo "=== package.json start/main ===" && (node -e "const p=require('./.medusa/server/package.json'); console.log('start:', p.scripts?.start); console.log('main:', p.main);")
 RUN cd .medusa/server && npm ci --omit=dev
 
 # Stage 2: runtime – built server in /opt/medusa-server so Render mount cannot overwrite it
@@ -33,5 +34,5 @@ COPY --from=builder /server/.medusa/server /opt/medusa-server
 
 EXPOSE 9000
 
-# Run migrations from /app; then start the built server with node run.js (Medusa v2 built entry point)
-CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && exec env HOST=0.0.0.0 PORT=${PORT:-9000} node run.js"]
+# Run migrations from /app; then start built server (built output has index.js at root per Medusa docs)
+CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && exec env HOST=0.0.0.0 PORT=${PORT:-9000} node index.js"]
