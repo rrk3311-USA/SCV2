@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Medusa Admin – Success Chemistry</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container { max-width: 560px; margin: 0 auto; }
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #f8fafc; }
+        .sub { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #334155;
+        }
+        .card h2 { font-size: 1rem; margin-bottom: 0.75rem; color: #cbd5e1; }
+        .card p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 0.5rem; }
+        a.btn {
+            display: inline-block;
+            background: #10b981;
+            color: #022c22;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+        a.btn:hover { background: #34d399; }
+        code {
+            background: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #a5f3fc;
+        }
+        pre {
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            margin: 0.75rem 0;
+            border: 1px solid #334155;
+        }
+        .note { font-size: 0.85rem; color: #64748b; margin-top: 1rem; }
+        #admin-link { margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Medusa Admin</h1>
+        <p class="sub">Use the open-source Medusa admin on a new page (runs separately).</p>
+
+        <div class="card" style="border-color: #10b981;">
+            <h2>Local URLs</h2>
+            <p><strong>This page (Success Chemistry):</strong></p>
+            <p><a href="http://localhost:8080/test-medusa-admin.html" style="color: #34d399;">http://localhost:8080/test-medusa-admin.html</a></p>
+            <p class="note">Run <code>npm run start</code> or <code>npm run local</code> in the project root, then open that URL. Server runs on port 8080.</p>
+            <p style="margin-top: 1rem;"><strong>Sample on port 7001:</strong> Run <code>npm run medusa-sample</code> in the project root, <strong>leave the terminal open</strong>, then open <a href="http://localhost:7001" style="color: #34d399;">http://localhost:7001</a> (or 7002 if 7001 is in use).</p>
+            <p style="margin-top: 1rem;"><strong>Medusa Admin</strong> (when Medusa is running):</p>
+            <p><a href="http://localhost:7001" target="_blank" rel="noopener" style="color: #34d399;">http://localhost:7001</a></p>
+            <p><strong>Medusa Backend API:</strong> <code>http://localhost:9000</code></p>
+        </div>
+
+        <div class="card">
+            <h2>1. Open Medusa Admin</h2>
+            <p>When Medusa is running locally, the admin is at <code>http://localhost:7001</code>. Click below to open it.</p>
+            <p id="admin-link">
+                <a href="http://localhost:7001" target="_blank" rel="noopener" class="btn">Open Medusa Admin →</a>
+            </p>
+            <p class="note">If the link doesn’t load, start Medusa first (step 2).</p>
+        </div>
+
+        <div class="card">
+            <h2>2. Run Medusa locally (one-time)</h2>
+            <p>From the project root, in a separate folder:</p>
+            <pre>npx create-medusa-app@latest --with-nextjs-starter</pre>
+            <p>Pick a folder name (e.g. <code>medusa-test</code>). When it finishes, run the backend and open the admin from the project’s README (or start backend + admin; admin is usually on port 7001).</p>
+            <p>Or, if you already have a Medusa project:</p>
+            <pre>cd your-medusa-folder
+npm run dev</pre>
+            <p class="note">Backend: <code>localhost:9000</code>, Admin: <code>localhost:7001</code>. First time you open Admin you’ll create an admin user.</p>
+        </div>
+
+        <div class="card">
+            <h2>3. What you get</h2>
+            <p>Medusa Admin gives you: products, orders, customers, settings, and API. No payment to Medusa — the app is open source; you only pay for hosting if you deploy it.</p>
+        </div>
+
+        <p class="note">This page is just a launcher and instructions. The actual admin runs in its own app at <code>http://localhost:7001</code> (or your deployed admin URL).</p>
+    </div>
+</body>
+</html>

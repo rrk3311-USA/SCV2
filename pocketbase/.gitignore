@@ -1,0 +1,20 @@
+# PocketBase binary
+pocketbase
+pocketbase.exe
+
+# Data directory (contains SQLite DB and uploads)
+pb_data/
+
+# Backups
+*.tar.gz
+backup-*/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# Downloads
+*.zip
