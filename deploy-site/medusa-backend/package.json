@@ -2,6 +2,7 @@
   "name": "medusa-backend",
   "version": "0.0.1",
   "description": "A starter for Medusa projects.",
+  "main": "medusa-config.js",
   "author": "Medusa (https://medusajs.com)",
   "license": "MIT",
   "keywords": [
