@@ -18,7 +18,7 @@ RUN npm run build
 RUN test -d .medusa/server || (echo "ERROR: .medusa/server missing after build" && exit 1)
 RUN cd .medusa/server && npm ci --omit=dev
 
-# Stage 2: runtime – use /app so Render mount of rootDir doesn't overwrite /server
+# Stage 2: runtime – built server in /opt/medusa-server so Render mount cannot overwrite it
 FROM node:20-alpine
 
 WORKDIR /app
@@ -28,9 +28,9 @@ COPY --from=builder /server/package.json /server/package-lock.json* ./
 COPY --from=builder /server/node_modules ./node_modules
 COPY --from=builder /server/medusa-config.ts /server/tsconfig.json /server/instrumentation.ts ./
 
-# Built server – in /app so not overwritten if Render mounts repo at /server
-COPY --from=builder /server/.medusa/server ./.medusa/server
+# Built server – /opt/medusa-server is outside Render's typical mount paths
+COPY --from=builder /server/.medusa/server /opt/medusa-server
 
 EXPOSE 9000
 
-CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /app/.medusa/server && exec env HOST=0.0.0.0 npm start"]
+CMD ["sh", "-c", "cd /app && npx medusa db:migrate && cd /opt/medusa-server && exec env HOST=0.0.0.0 npm start"]
