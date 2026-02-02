@@ -31,6 +31,6 @@ RUN cd .medusa/server && npm ci --omit=dev
 EXPOSE 9000
 
 # Migrations need DATABASE_URL at runtime; then start from built server.
+# Use /server and /server/.medusa/server so we're correct even if Render overrides CWD at runtime.
 # Render sets PORT; Medusa reads it. HOST=0.0.0.0 so the server binds to all interfaces.
-# Debug: dump pwd and .medusa at runtime (remove after fix verified)
-CMD ["sh", "-c", "echo [DEBUG] PWD=$(pwd) && echo [DEBUG] .medusa: && ls -la .medusa 2>&1 || true && npx medusa db:migrate && cd .medusa/server && exec env HOST=0.0.0.0 npm start"]
+CMD ["sh", "-c", "cd /server && npx medusa db:migrate && cd /server/.medusa/server && exec env HOST=0.0.0.0 npm start"]
