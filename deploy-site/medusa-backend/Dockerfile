@@ -11,7 +11,7 @@ RUN npm ci
 COPY medusa-config.ts tsconfig.json instrumentation.ts ./
 COPY src ./src
 
-ARG CACHEBUST=20240207
+ARG CACHEBUST=20240208
 RUN echo "Docker cache bust: $CACHEBUST"
 
 RUN npm run build
