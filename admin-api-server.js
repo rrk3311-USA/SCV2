@@ -156,19 +156,57 @@ app.get('/api/analytics/overview', checkAuth, (req, res) => {
     });
 });
 
-// Orders
-app.get('/api/orders', checkAuth, (req, res) => {
+// Orders – list from PocketBase when configured (for public admin dashboard), else mock
+app.get('/api/orders', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 50;
-    
-    res.json({
-        orders: mockOrders,
-        pagination: {
-            page,
-            limit,
-            total: mockOrders.length,
-            pages: Math.ceil(mockOrders.length / limit)
+    const limit = Math.min(parseInt(req.query.limit) || 50, 1000);
+    const PB_URL = process.env.PB_URL || 'https://success-chemistry-pb.fly.dev';
+    const PB_ADMIN_EMAIL = process.env.PB_ADMIN_EMAIL || '';
+    const PB_ADMIN_PASSWORD = process.env.PB_ADMIN_PASSWORD || '';
+
+    if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
+        try {
+            const authRes = await fetch(`${PB_URL}/api/collections/_superusers/auth-with-password`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ identity: PB_ADMIN_EMAIL, password: PB_ADMIN_PASSWORD })
+            });
+            if (!authRes.ok) throw new Error('PocketBase admin auth failed');
+            const { token } = await authRes.json();
+            const listRes = await fetch(
+                `${PB_URL}/api/collections/orders/records?sort=-created&page=${page}&perPage=${limit}`,
+                { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } }
+            );
+            if (!listRes.ok) throw new Error('PocketBase orders list failed');
+            const data = await listRes.json();
+            const items = data.items || [];
+            const total = data.totalItems ?? items.length;
+            const orders = items.map((o) => ({
+                id: o.id,
+                order_number: o.orderNumber || o.id,
+                customer_name: o.customerName || '',
+                customer_email: o.customerEmail || '',
+                created_at: o.created || o.updated,
+                total: o.total ?? 0,
+                status: o.status || 'paid',
+                items: o.items || [],
+                shipping_address: typeof o.shippingAddress === 'string' ? (o.shippingAddress ? JSON.parse(o.shippingAddress) : {}) : (o.shippingAddress || {})
+            }));
+            return res.json({
+                orders,
+                pagination: { page, limit, total, pages: Math.ceil(total / limit) || 1 }
+            });
+        } catch (e) {
+            console.error('GET /api/orders PocketBase error:', e.message);
+            // Fall through to mock
         }
+    }
+
+    const start = (page - 1) * limit;
+    const slice = mockOrders.slice(start, start + limit);
+    res.json({
+        orders: slice,
+        pagination: { page, limit, total: mockOrders.length, pages: Math.ceil(mockOrders.length / limit) || 1 }
     });
 });
 
@@ -623,6 +661,22 @@ app.get('/api/shipstation', shipstationBasicAuth, handleShipStationExport);
 app.post('/api/shipstation', shipstationBasicAuth, (req, res) => {
   req.body = req.body && req.body.toString ? req.body.toString() : '';
   handleShipStationShipNotify(req, res);
+});
+
+// Root – so "See live" / visiting the URL shows something
+app.get('/', (req, res) => {
+    res.set('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+        name: 'Success Chemistry Admin API',
+        status: 'ok',
+        docs: 'https://success-chemistry-api.fly.dev/api/health',
+        endpoints: {
+            health: '/api/health',
+            orders: 'POST /api/orders',
+            shipstation: 'GET/POST /api/shipstation',
+            paypal: 'POST /api/paypal/orders'
+        }
+    }, null, 2));
 });
 
 // Health check

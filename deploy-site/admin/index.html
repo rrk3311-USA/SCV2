@@ -871,6 +871,18 @@
                     <span class="nav-item-icon ph-fill ph-link"></span>
                     <span class="nav-item-text">LINKS</span>
                 </a>
+                <a href="#" class="nav-item" data-tab="ai-agent" onclick="event.preventDefault(); switchTab('ai-agent', event);">
+                    <span class="nav-item-icon ph-fill ph-robot"></span>
+                    <span class="nav-item-text">AI AGENT</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="documents-ads" onclick="event.preventDefault(); switchTab('documents-ads', event);">
+                    <span class="nav-item-icon ph-fill ph-file-text"></span>
+                    <span class="nav-item-text">DOCUMENTS & ADS</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="scrum" onclick="event.preventDefault(); switchTab('scrum', event);">
+                    <span class="nav-item-icon ph-fill ph-kanban"></span>
+                    <span class="nav-item-text">SCRUM / PROJECT</span>
+                </a>
                 <a href="/test-medusa-admin.html" target="_blank" rel="noopener" class="nav-item">
                     <span class="nav-item-icon ph-fill ph-puzzle-piece"></span>
                     <span class="nav-item-text">TEST MEDUSA ADMIN</span>
@@ -1124,6 +1136,108 @@
                             <li style="padding: 12px; border-bottom: 1px solid hsl(var(--border));">
                                 ✅ <strong>Conversion Tracking:</strong> Set up e-commerce tracking for orders
                             </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Agent Tab -->
+            <div id="ai-agent" class="tab-content">
+                <div class="data-table">
+                    <div class="table-header">
+                        <h2>AI Agent (Anthropic / Claude)</h2>
+                    </div>
+                    <div style="padding: 24px;">
+                        <p style="color: hsl(var(--muted-foreground)); margin-bottom: 20px;">The Anthropic (Claude) commerce agent lives in a <strong>separate app</strong>: Commerce Manager. It is not inside this admin dashboard.</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Commerce Manager (Claude 3.5 Sonnet)</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">Chat, tasks, ad copy, product analysis. Runs on its own server (e.g. port 3002).</p>
+                                <p style="font-size: 12px; color: hsl(var(--muted-foreground)); margin: 0;"><code>commerce-manager/</code> in repo → <code>npm run dev</code> or deploy to Fly.</p>
+                            </div>
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Admin API AI stub</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">This dashboard can call <code>GET/POST /api/ai/ask</code> on the Success Chemistry Admin API (OpenAI stub). Set <code>OPENAI_API_KEY</code> for real responses.</p>
+                                <p style="font-size: 12px; color: hsl(var(--muted-foreground)); margin: 0;">API: <a href="https://success-chemistry-api.fly.dev" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-api.fly.dev</a></p>
+                            </div>
+                        </div>
+                        <h4 style="color: hsl(var(--foreground)); margin-bottom: 10px;">Where it lives in the repo</h4>
+                        <ul style="color: hsl(var(--muted-foreground)); font-size: 13px; margin: 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>commerce-manager/</strong> – agent.js (Claude), server.js (/api/agent/chat, /api/agent/task), memory.js, pb-collections-setup.md</li>
+                            <li><strong>admin-api-server.js</strong> – /api/ai/ask (OpenAI stub for this admin)</li>
+                            <li><strong>PocketBase</strong> – collections agent_conversations, agent_insights, agent_config (used by Commerce Manager when run)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents & Ads Tab -->
+            <div id="documents-ads" class="tab-content">
+                <div class="data-table">
+                    <div class="table-header">
+                        <h2>Documents & Ads</h2>
+                    </div>
+                    <div style="padding: 24px;">
+                        <p style="color: hsl(var(--muted-foreground)); margin-bottom: 20px;">Product docs, ad copy, and AI-generated content are split between PocketBase, Commerce Manager, and the blog/docs in the repo.</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">PocketBase Admin</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">Products, orders, customers. Optional: automation_tasks, activity_log, agent_config for Commerce Manager.</p>
+                                <a href="https://success-chemistry-pb.fly.dev/_/" target="_blank" rel="noopener" style="color: hsl(var(--primary)); font-size: 13px;">PB Admin →</a>
+                            </div>
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Ad copy & content</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">Commerce Manager agent can generate ad copy and product content. Run Commerce Manager and use /api/agent/chat or /api/agent/task.</p>
+                                <p style="font-size: 12px; color: hsl(var(--muted-foreground)); margin: 0;">See <code>commerce-manager/README.md</code></p>
+                            </div>
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Blog & docs (repo)</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">AI-optimized blog: <code>blog-md/</code>. Other docs: CDP_AGENTIC_MANAGED.md, FLEET_MANAGER_README.md, DISTRIBUTION_SUBMISSION_GUIDE.md, etc.</p>
+                                <a href="/blog-md/" target="_blank" rel="noopener" style="color: hsl(var(--primary)); font-size: 13px;">Blog →</a>
+                            </div>
+                        </div>
+                        <h4 style="color: hsl(var(--foreground)); margin-bottom: 10px;">Quick links</h4>
+                        <ul style="color: hsl(var(--muted-foreground)); font-size: 13px; margin: 0; padding-left: 20px; line-height: 1.8;">
+                            <li>PocketBase admin (products, orders): <a href="https://success-chemistry-pb.fly.dev/_/" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-pb.fly.dev/_/</a></li>
+                            <li>Commerce Manager (agent, ads): run <code>cd commerce-manager && npm run dev</code> or deploy; see README</li>
+                            <li>Admin API (orders, PayPal, ShipStation): <a href="https://success-chemistry-api.fly.dev" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-api.fly.dev</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrum / Project Management Tab -->
+            <div id="scrum" class="tab-content">
+                <div class="data-table">
+                    <div class="table-header">
+                        <h2>Scrum / Project Management</h2>
+                    </div>
+                    <div style="padding: 24px;">
+                        <p style="color: hsl(var(--muted-foreground)); margin-bottom: 20px;">Backlog, sprints, and project tracking. Use the links below or connect your own board (GitHub Projects, Jira, Linear, etc.).</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Current sprint</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">Track active sprint goals and tasks. Add your board URL below or use GitHub Issues/Projects.</p>
+                                <p style="font-size: 12px; color: hsl(var(--muted-foreground)); margin: 0;">Repo: <code style="background: rgba(0,0,0,0.1); padding: 2px 6px;">success007</code> → Issues / Projects</p>
+                            </div>
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Backlog</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">Prioritized list of stories and bugs. Keep in GitHub Issues, Notion, or your preferred tool.</p>
+                            </div>
+                            <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
+                                <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">External boards</div>
+                                <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">Quick links to project management tools.</p>
+                                <ul style="font-size: 13px; color: hsl(var(--muted-foreground)); padding-left: 20px; margin: 0; line-height: 1.8;">
+                                    <li><a href="https://github.com" target="_blank" rel="noopener" style="color: hsl(var(--primary));">GitHub Projects / Issues</a></li>
+                                    <li><a href="https://linear.app" target="_blank" rel="noopener" style="color: hsl(var(--primary));">Linear</a></li>
+                                    <li><a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener" style="color: hsl(var(--primary));">Jira</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4 style="color: hsl(var(--foreground)); margin-bottom: 10px;">Quick links</h4>
+                        <ul style="color: hsl(var(--muted-foreground)); font-size: 13px; margin: 0; padding-left: 20px; line-height: 1.8;">
+                            <li>GitHub repo Issues: use your <code>success007</code> (or org) repo → Issues tab for backlog and bugs.</li>
+                            <li>GitHub Projects: same repo → Projects for kanban/sprint boards.</li>
                         </ul>
                     </div>
                 </div>
@@ -1462,6 +1576,9 @@
                 'woo-orders': 'WooCommerce Orders',
                 'analytics': 'Analytics',
                 'links': 'Links',
+                'ai-agent': 'AI Agent',
+                'documents-ads': 'Documents & Ads',
+                'scrum': 'Scrum / Project',
                 'future-upgrades': 'Future Upgrades'
             };
             const pageTitle = document.getElementById('pageTitle');
