@@ -1792,10 +1792,8 @@
             const item = cart[0];
             try {
                 console.log('🔄 Setting up subscription for:', item);
-                // Use dynamic API URL - works in both development and production
-                const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                    ? 'http://localhost:3001'
-                    : window.location.origin;
+                // Use dynamic API URL - localhost for dev, Fly API for production
+                const apiBase = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-api.fly.dev';
                 const apiUrl = `${apiBase}/api/subscription/setup`;
                 console.log('📡 Calling subscription API:', apiUrl);
                 
@@ -1947,9 +1945,7 @@
             localStorage.setItem('successChemistryOrders', JSON.stringify(orders));
             
             // Save order to PocketBase (for ShipStation/3PL pull; sandbox = TEST- prefix, supplier won't get it)
-            const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:3001'
-                : (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : window.location.origin;
+                const apiBase = (typeof window.getApiBase === 'function') ? window.getApiBase() : ((window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-api.fly.dev');
             const isTest = typeof CONFIG !== 'undefined' && CONFIG.SANDBOX_MODE;
             let pocketBaseResult = null;
             try {

@@ -1383,6 +1383,8 @@
         </div>
     </div>
 
+    <!-- Config (API base for dev vs production) -->
+    <script src="/config.js"></script>
     <!-- Optional external dependencies - admin dashboard works standalone with fallbacks -->
     <script src="/products-data.js"></script>
     <script src="/woocommerce-order-integration.js"></script>
@@ -1577,7 +1579,8 @@
         // Fetch orders from backend API
         async function fetchOrdersFromAPI() {
             try {
-                const response = await fetch('http://localhost:3001/api/orders?limit=1000');
+                const apiBase = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-api.fly.dev';
+                const response = await fetch(apiBase + '/api/orders?limit=1000');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.orders && data.orders.length > 0) {
@@ -1967,7 +1970,7 @@
             });
         }
 
-        const ADMIN_API_BASE = 'http://localhost:3001';
+        const ADMIN_API_BASE = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-api.fly.dev';
 
         async function loadWooConfig() {
             try {
@@ -2350,7 +2353,7 @@
                     'http://localhost:8080/shop',
                     'http://localhost:8080/admin/',
                     'http://localhost:8080/command-center/',
-                    'http://localhost:3001',
+                    'https://success-chemistry-api.fly.dev',
                     'https://successchemistry.com/',
                     'https://successchemistry.com/shop',
                     'https://successchemistry.com/admin/'
@@ -2401,7 +2404,7 @@
                     },
                     production: {
                         base: 'https://successchemistry.com',
-                        api: 'https://api.successchemistry.com'
+                        api: 'https://success-chemistry-api.fly.dev'
                     }
                 };
                 

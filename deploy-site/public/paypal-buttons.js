@@ -1,3 +1,10 @@
+// API base URL – localhost for dev, Fly API for production
+function getApiBase() {
+    if (typeof window.getApiBase === 'function') return window.getApiBase();
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) return 'http://localhost:3001';
+    return (typeof window.CONFIG !== 'undefined' && window.CONFIG.API_BASE) ? window.CONFIG.API_BASE : 'https://success-chemistry-api.fly.dev';
+}
+
 // Get PayPal Client ID from config.js if available, otherwise use sandbox
 function getPayPalClientID() {
     // Check if CONFIG object exists (from config.js)
@@ -73,7 +80,7 @@ function renderOrderButton(container, amount, currency, description, items, onSu
         
         createOrder: async function(data, actions) {
             try {
-                const response = await fetch('http://localhost:3001/api/paypal/orders', {
+                const response = await fetch(getApiBase() + '/api/paypal/orders', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -119,7 +126,7 @@ function renderOrderButton(container, amount, currency, description, items, onSu
 
         onApprove: async function(data, actions) {
             try {
-                const response = await fetch(`http://localhost:3001/api/paypal/orders/${data.orderID}/pay`, {
+                const response = await fetch(getApiBase() + '/api/paypal/orders/' + data.orderID + '/pay', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 });
@@ -176,7 +183,7 @@ function renderSubscriptionButton(container, planId, onSuccess, onError, onCance
 
         createSubscription: async function(data, actions) {
             try {
-                const response = await fetch('http://localhost:3001/api/paypal/subscriptions', {
+                const response = await fetch(getApiBase() + '/api/paypal/subscriptions', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -232,7 +239,7 @@ function renderSubscriptionButton(container, planId, onSuccess, onError, onCance
                     if (window.WooCommerceOrder && window.WooCommerceOrder.syncOrder) {
                         try {
                             // Fetch subscription details from PayPal to get customer info
-                            const subscriptionResponse = await fetch(`http://localhost:3001/api/paypal/subscriptions/${data.subscriptionID}`);
+                            const subscriptionResponse = await fetch(getApiBase() + '/api/paypal/subscriptions/' + data.subscriptionID);
                             if (subscriptionResponse.ok) {
                                 const subscriptionDetails = await subscriptionResponse.json();
                                 await window.WooCommerceOrder.syncOrder(subscriptionDetails);
@@ -316,11 +323,8 @@ function renderCartPayPalButtons() {
                     console.log('🔄 Syncing subscription to integrations...', data);
                     
                     // Fetch subscription details from PayPal API
-                    const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                        ? 'http://localhost:3001' 
-                        : 'https://api.successchemistry.com';
-                    
-                    const subscriptionResponse = await fetch(`${apiBase}/api/paypal/subscriptions/${data.subscriptionID}`);
+                    const apiBase = getApiBase();
+                    const subscriptionResponse = await fetch(apiBase + '/api/paypal/subscriptions/' + data.subscriptionID);
                     if (subscriptionResponse.ok) {
                         const subscriptionDetails = await subscriptionResponse.json();
                         

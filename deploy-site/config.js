@@ -6,7 +6,10 @@
 const CONFIG = {
     // Set to true for testing, false for production
     SANDBOX_MODE: true, // Sandbox mode - test payments (switch to false for live)
-    
+
+    // Admin API (PayPal, orders, ShipStation) – used when not on localhost
+    API_BASE: 'https://success-chemistry-api.fly.dev',
+
     // PayPal Configuration
     PAYPAL: {
         // Sandbox: PocketBase_Ecomm app (https://developer.paypal.com/dashboard/applications/sandbox)
@@ -66,6 +69,14 @@ const CONFIG = {
     }
 };
 
+// Helper: API base URL (localhost for dev, Fly API for production)
+function getApiBase() {
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        return 'http://localhost:3001';
+    }
+    return (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'https://success-chemistry-api.fly.dev';
+}
+
 // Helper function to get PayPal Client ID based on mode
 function getPayPalClientID() {
     return CONFIG.SANDBOX_MODE 
@@ -87,4 +98,5 @@ if (typeof module !== 'undefined' && module.exports) {
 if (typeof window !== 'undefined') {
     window.CONFIG = CONFIG;
     window.getPayPalClientID = getPayPalClientID;
+    window.getApiBase = getApiBase;
 }
