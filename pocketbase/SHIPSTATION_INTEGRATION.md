@@ -41,10 +41,9 @@ PB_ADMIN_PASSWORD=your_admin_password
 
 ### 2. Deploy the API Endpoint
 
-The endpoint is at `api/shipstation-custom-store.js`. Deploy it to:
-- **Vercel**: `https://your-site.vercel.app/api/shipstation`
-- **Railway**: `https://your-api.railway.app/api/shipstation`
-- **Local dev**: `http://localhost:3001/api/shipstation`
+The endpoint is implemented in PocketBase hooks: `pocketbase/pb_hooks/api-routes.pb.js`. It is served by the PocketBase app:
+- **Production**: `https://success-chemistry-pb.fly.dev/api/shipstation`
+- **Local dev**: `http://localhost:8090/api/shipstation` (run `npm run pocketbase`)
 
 ### 3. Give Credentials to Your Supplier
 
@@ -204,19 +203,19 @@ When your supplier creates a shipping label, ShipStation POSTs XML with `<ShipNo
 1. **Start your API server**:
    ```bash
    node local-server.js
-   # Or: node admin-api-server.js
+   # Or run PocketBase for Admin API: npm run pocketbase (then use http://localhost:8090/api/shipstation)
    ```
 
-2. **Test GET (export orders)**:
+2. **Test GET (export orders)** (use port 8090 when running PocketBase):
    ```bash
    curl -u your_store_username:your_store_password \
-     "http://localhost:3001/api/shipstation?action=export&start_date=01/01/2024%2000:00&end_date=12/31/2024%2023:59&page=1"
+     "http://localhost:8090/api/shipstation?action=export&start_date=01/01/2024%2000:00&end_date=12/31/2024%2023:59&page=1"
    ```
 
 3. **Test POST (ship notification)**:
    ```bash
    curl -u your_store_username:your_store_password \
-     -X POST http://localhost:3001/api/shipstation \
+     -X POST http://localhost:8090/api/shipstation \
      -H "Content-Type: application/xml" \
      -d '<?xml version="1.0"?>
    <ShipNotice>
@@ -269,14 +268,14 @@ Check [Zoho's integration docs](https://ondemandfulfillment.zohodesk.com/portal/
 
 ### Tracking not updating
 
-1. **Check POST is being received**: Add logging to `api/shipstation-custom-store.js`
+1. **Check POST is being received**: Add logging in `pocketbase/pb_hooks/api-routes.pb.js` (ShipStation POST handler)
 2. **Check XML format**: Must match ShipStation spec
 3. **Check orderNumber**: Must match exactly (case-sensitive)
 4. **Check PocketBase permissions**: API must have write access to orders
 
 ### Authentication errors
 
-1. **Verify .env variables**: `SHIPSTATION_STORE_USER` and `SHIPSTATION_STORE_PASSWORD`
+1. **Verify api_config in PocketBase**: ShipStation store user/password are in the **api_config** collection (PocketBase admin)
 2. **Check Basic Auth header**: Should be `Basic base64(username:password)`
 3. **Test with curl**:
    ```bash
@@ -298,6 +297,6 @@ Check [Zoho's integration docs](https://ondemandfulfillment.zohodesk.com/portal/
 
 ## Related Files
 
-- `api/shipstation-custom-store.js` - The endpoint implementation
+- `pocketbase/pb_hooks/api-routes.pb.js` - ShipStation GET/POST endpoint implementation
 - `docs/SHIPSTATION_CUSTOM_STORE.md` - Original documentation
 - `pocketbase/COLLECTIONS_SETUP.md` - Order collection schema

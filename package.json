@@ -19,7 +19,6 @@
     "test:purchase": "node test-purchase-flow.js",
     "sclera:i18n": "node deploy-site/sclera/generate-full-i18n-pages.js",
     "mercor:pdf": "node deploy-site/generate-mercor-pdf.js",
-    "admin": "node admin-api-server.js",
     "pocketbase": "cd pocketbase && ./start.sh",
     "pb:migrate": "cd pocketbase && node migrate-products.js"
   },

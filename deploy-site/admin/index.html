@@ -1158,13 +1158,13 @@
                             <div style="padding: 16px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 8px;">
                                 <div style="font-weight: 600; color: hsl(var(--primary)); margin-bottom: 8px;">Admin API AI stub</div>
                                 <p style="font-size: 13px; color: hsl(var(--muted-foreground)); margin-bottom: 12px;">This dashboard can call <code>GET/POST /api/ai/ask</code> on the Success Chemistry Admin API (OpenAI stub). Set <code>OPENAI_API_KEY</code> for real responses.</p>
-                                <p style="font-size: 12px; color: hsl(var(--muted-foreground)); margin: 0;">API: <a href="https://success-chemistry-api.fly.dev" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-api.fly.dev</a></p>
+                                <p style="font-size: 12px; color: hsl(var(--muted-foreground)); margin: 0;">API: <a href="https://success-chemistry-pb.fly.dev" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-pb.fly.dev</a></p>
                             </div>
                         </div>
                         <h4 style="color: hsl(var(--foreground)); margin-bottom: 10px;">Where it lives in the repo</h4>
                         <ul style="color: hsl(var(--muted-foreground)); font-size: 13px; margin: 0; padding-left: 20px; line-height: 1.8;">
                             <li><strong>commerce-manager/</strong> – agent.js (Claude), server.js (/api/agent/chat, /api/agent/task), memory.js, pb-collections-setup.md</li>
-                            <li><strong>admin-api-server.js</strong> – /api/ai/ask (OpenAI stub for this admin)</li>
+                            <li><strong>PocketBase</strong> (success-chemistry-pb) – Admin API (orders, PayPal, ShipStation)</li>
                             <li><strong>PocketBase</strong> – collections agent_conversations, agent_insights, agent_config (used by Commerce Manager when run)</li>
                         </ul>
                     </div>
@@ -1200,7 +1200,7 @@
                         <ul style="color: hsl(var(--muted-foreground)); font-size: 13px; margin: 0; padding-left: 20px; line-height: 1.8;">
                             <li>PocketBase admin (products, orders): <a href="https://success-chemistry-pb.fly.dev/_/" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-pb.fly.dev/_/</a></li>
                             <li>Commerce Manager (agent, ads): run <code>cd commerce-manager && npm run dev</code> or deploy; see README</li>
-                            <li>Admin API (orders, PayPal, ShipStation): <a href="https://success-chemistry-api.fly.dev" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-api.fly.dev</a></li>
+                            <li>Admin API (orders, PayPal, ShipStation): <a href="https://success-chemistry-pb.fly.dev" target="_blank" rel="noopener" style="color: hsl(var(--primary));">success-chemistry-pb.fly.dev</a></li>
                         </ul>
                     </div>
                 </div>
@@ -1696,7 +1696,7 @@
         // Fetch orders from backend API
         async function fetchOrdersFromAPI() {
             try {
-                const apiBase = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-api.fly.dev';
+                const apiBase = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-pb.fly.dev';
                 const response = await fetch(apiBase + '/api/orders?limit=1000');
                 if (response.ok) {
                     const data = await response.json();
@@ -2087,7 +2087,7 @@
             });
         }
 
-        const ADMIN_API_BASE = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-api.fly.dev';
+        const ADMIN_API_BASE = (typeof window.getApiBase === 'function') ? window.getApiBase() : (window.CONFIG && window.CONFIG.API_BASE) || 'https://success-chemistry-pb.fly.dev';
 
         async function loadWooConfig() {
             try {
@@ -2470,7 +2470,7 @@
                     'http://localhost:8080/shop',
                     'http://localhost:8080/admin/',
                     'http://localhost:8080/command-center/',
-                    'https://success-chemistry-api.fly.dev',
+                    'https://success-chemistry-pb.fly.dev',
                     'https://successchemistry.com/',
                     'https://successchemistry.com/shop',
                     'https://successchemistry.com/admin/'
@@ -2521,7 +2521,7 @@
                     },
                     production: {
                         base: 'https://successchemistry.com',
-                        api: 'https://success-chemistry-api.fly.dev'
+                        api: 'https://success-chemistry-pb.fly.dev'
                     }
                 };
                 

@@ -20,9 +20,9 @@ So you can find everything in one place.
 
 ## Admin API (orders, PayPal, ShipStation)
 
-- **URL**: https://success-chemistry-api.fly.dev
-- **Repo**: `admin-api-server.js`, `fly.admin-api.toml`
-- **Endpoints**: `/api/health`, `POST /api/orders`, `GET/POST /api/shipstation`, `POST /api/paypal/orders`, `GET /api/orders` (PocketBase), `/api/ai/ask` (OpenAI stub for admin UI).
+- **URL**: https://success-chemistry-pb.fly.dev (same machine as PocketBase)
+- **Repo**: `pocketbase/pb_hooks/api-routes.pb.js` (hooks on the PB app)
+- **Endpoints**: `/api/health`, `GET/POST /api/orders`, `GET/POST /api/shipstation`, `POST /api/paypal/orders`, `POST /api/paypal/orders/:id/pay`. Credentials from PB **api_config** collection.
 
 ## PocketBase (PB) admin
 
@@ -41,7 +41,7 @@ So you can find everything in one place.
 |-----------------|---------------------|------------------------------|
 | Public admin    | deploy-site/admin/  | successchemistry.com/admin/  |
 | AI Agent (Claude)| commerce-manager/  | Run locally or deploy        |
-| Admin API       | admin-api-server.js | success-chemistry-api.fly.dev |
+| Admin API       | pocketbase/pb_hooks/api-routes.pb.js | success-chemistry-pb.fly.dev |
 | PB admin        | pocketbase/         | success-chemistry-pb.fly.dev/_/ |
 | Documents/ads   | PB + commerce-manager + blog-md/ + repo docs | See AI Agent & Documents & Ads tabs in admin |
 | Scrum / Project | Public admin + PB admin-extras               | Backlog, sprints, links to GitHub/Linear/Jira |

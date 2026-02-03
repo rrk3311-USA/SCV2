@@ -138,7 +138,7 @@ Renders without edit button
 2. **Start your API** (if separate):
    ```bash
    node local-server.js
-   # or: node admin-api-server.js
+   # Admin API (orders, PayPal, ShipStation) is on PocketBase: npm run pocketbase
    ```
 
 3. **Visit a product page**:

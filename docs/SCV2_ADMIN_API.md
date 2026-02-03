@@ -4,8 +4,8 @@
 
 ## API base URL
 
-- **Production**: `https://success-chemistry-api.fly.dev`
-- **Local dev**: `http://localhost:3001` (when running `node admin-api-server.js`)
+- **Production**: `https://success-chemistry-pb.fly.dev` (single PocketBase backend)
+- **Local dev**: `http://localhost:8090` (when running PocketBase locally)
 
 ## Env (SCV2)
 
@@ -13,7 +13,7 @@ In SCV2 `.env.local`:
 
 ```env
 # Admin API (orders + PayPal). Omit or use localhost for local dev.
-NEXT_PUBLIC_ADMIN_API_URL=https://success-chemistry-api.fly.dev
+NEXT_PUBLIC_ADMIN_API_URL=https://success-chemistry-pb.fly.dev
 ```
 
 ## Usage in SCV2
@@ -23,9 +23,9 @@ NEXT_PUBLIC_ADMIN_API_URL=https://success-chemistry-api.fly.dev
    ```ts
    export function getAdminApiBase(): string {
      if (typeof window !== "undefined") {
-       return process.env.NEXT_PUBLIC_ADMIN_API_URL || "https://success-chemistry-api.fly.dev";
+       return process.env.NEXT_PUBLIC_ADMIN_API_URL || "https://success-chemistry-pb.fly.dev";
      }
-     return process.env.NEXT_PUBLIC_ADMIN_API_URL || "https://success-chemistry-api.fly.dev";
+     return process.env.NEXT_PUBLIC_ADMIN_API_URL || "https://success-chemistry-pb.fly.dev";
    }
    ```
 

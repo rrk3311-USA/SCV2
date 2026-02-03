@@ -35,13 +35,11 @@ MYSQL_PASSWORD=your_password
 MYSQL_DATABASE=your_database
 ```
 
-Put these in `.env` in the project root (same folder as `admin-api-server.js`).
+Put these in `.env` in the project root.
 
 ## 3. Run the admin server
 
-```bash
-npm run admin
-```
+The admin backend is PocketBase (`npm run pocketbase`). For the dashboard and Woo-style flows, use the public admin at `/admin/`; see `docs/ADMIN_API_DEPLOY.md`.
 
 Then open Admin → **WOO ORDERS**:
 

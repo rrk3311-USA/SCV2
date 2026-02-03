@@ -2,7 +2,7 @@
 function getApiBase() {
     if (typeof window.getApiBase === 'function') return window.getApiBase();
     if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) return 'http://localhost:3001';
-    return (typeof window.CONFIG !== 'undefined' && window.CONFIG.API_BASE) ? window.CONFIG.API_BASE : 'https://success-chemistry-api.fly.dev';
+    return (typeof window.CONFIG !== 'undefined' && window.CONFIG.API_BASE) ? window.CONFIG.API_BASE : 'https://success-chemistry-pb.fly.dev';
 }
 
 // Get PayPal Client ID from config.js if available, otherwise use sandbox

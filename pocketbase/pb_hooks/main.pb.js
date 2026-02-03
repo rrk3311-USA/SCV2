@@ -52,7 +52,7 @@ routerAdd("GET", "/admin-extras", (e) => {
       <div class="card">
         <h3>Admin API AI stub</h3>
         <p>Public admin dashboard can call <code>POST /api/ai/ask</code> on the Success Chemistry Admin API (OpenAI stub).</p>
-        <p><a href="https://success-chemistry-api.fly.dev" target="_blank" rel="noopener">success-chemistry-api.fly.dev</a></p>
+        <p><a href="https://success-chemistry-pb.fly.dev" target="_blank" rel="noopener">success-chemistry-pb.fly.dev</a></p>
       </div>
       <ul>
         <li>PocketBase collections used by Commerce Manager when running: <code>agent_conversations</code>, <code>agent_insights</code>, <code>agent_config</code> (see commerce-manager migrations).</li>
@@ -75,7 +75,7 @@ routerAdd("GET", "/admin-extras", (e) => {
         <p>AI-optimized blog and project docs (e.g. CDP_AGENTIC_MANAGED.md, FLEET_MANAGER_README.md) live in the repo and on the main site.</p>
       </div>
       <ul>
-        <li>Admin API (orders, PayPal, ShipStation): <a href="https://success-chemistry-api.fly.dev" target="_blank" rel="noopener">success-chemistry-api.fly.dev</a></li>
+        <li>Admin API (orders, PayPal, ShipStation): <a href="https://success-chemistry-pb.fly.dev" target="_blank" rel="noopener">success-chemistry-pb.fly.dev</a></li>
       </ul>
     </section>
 
