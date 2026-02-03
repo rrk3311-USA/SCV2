@@ -38,6 +38,14 @@ export default function Landing() {
           Extreme
           <div className="text-xs text-purple-300 mt-1">Shaders • Particles • 3D</div>
         </Link>
+        <Link
+          href="/v2"
+          className="flex-1 block px-8 py-6 rounded-xl bg-slate-800 border-2 border-slate-600 hover:border-emerald-500 hover:bg-slate-700 text-white font-semibold text-center transition-colors"
+        >
+          <span className="block text-2xl mb-2">✨</span>
+          Home v2
+          <div className="text-xs text-slate-400 mt-1">Contained • Shadcn-style • Media</div>
+        </Link>
       </div>
     </div>
   )

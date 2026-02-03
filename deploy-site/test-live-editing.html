@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Live Editing - Success Chemistry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/products-data.js"></script>
+    <script src="/product-pb-loader.js"></script>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">🧪 Live Editing Test</h1>
+        
+        <!-- Status -->
+        <div id="status" class="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h2 class="font-bold mb-2">System Status</h2>
+            <div id="statusContent">Loading...</div>
+        </div>
+
+        <!-- Test Controls -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-bold mb-4">Test Product Loading</h2>
+            
+            <div class="mb-4">
+                <label class="block font-medium mb-2">Enter Product SKU:</label>
+                <input 
+                    type="text" 
+                    id="skuInput" 
+                    value="10777-810"
+                    class="w-full px-4 py-2 border rounded-lg"
+                    placeholder="e.g., 10777-810"
+                >
+            </div>
+
+            <div class="flex gap-4">
+                <button 
+                    onclick="testLoad()"
+                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                    Load Product
+                </button>
+                <button 
+                    onclick="clearCache()"
+                    class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                >
+                    Clear Cache
+                </button>
+                <button 
+                    onclick="checkStatus()"
+                    class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                    Check Status
+                </button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Results</h2>
+            <div id="resultsContent" class="text-gray-500">
+                Click "Load Product" to test...
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="mt-8 p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <h3 class="font-bold mb-2">📝 How to Test:</h3>
+            <ol class="list-decimal list-inside space-y-2">
+                <li>Make sure PocketBase is running: <code class="bg-gray-100 px-2 py-1 rounded">./pocketbase serve</code></li>
+                <li>Make sure your API is running: <code class="bg-gray-100 px-2 py-1 rounded">node local-server.js</code></li>
+                <li>Enter a product SKU (e.g., 10777-810)</li>
+                <li>Click "Load Product"</li>
+                <li>Check if it loads from PocketBase (green) or static data (gray)</li>
+                <li>Edit the product in PocketBase admin</li>
+                <li>Click "Clear Cache" then "Load Product" again</li>
+                <li>Verify your changes appear!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        async function checkStatus() {
+            const statusContent = document.getElementById('statusContent');
+            statusContent.innerHTML = 'Checking...';
+
+            const checks = [];
+
+            // Check PocketBase
+            try {
+                const pbResponse = await fetch('http://localhost:8090/api/health', { 
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                checks.push(`✅ PocketBase: ${pbResponse.ok ? 'Running' : 'Error'}`);
+            } catch (e) {
+                checks.push(`❌ PocketBase: Not running (${e.message})`);
+            }
+
+            // Check API
+            try {
+                const apiResponse = await fetch('http://localhost:3001/api/products?sku=10777-810');
+                checks.push(`✅ API: ${apiResponse.ok ? 'Running' : 'Error'}`);
+            } catch (e) {
+                checks.push(`❌ API: Not running (${e.message})`);
+            }
+
+            // Check Loader
+            checks.push(window.productLoader ? '✅ Product Loader: Initialized' : '❌ Product Loader: Not found');
+
+            // Check Static Data
+            checks.push(typeof PRODUCTS_DATA !== 'undefined' ? '✅ Static Data: Loaded' : '❌ Static Data: Not loaded');
+
+            statusContent.innerHTML = checks.join('<br>');
+        }
+
+        async function testLoad() {
+            const sku = document.getElementById('skuInput').value.trim();
+            const resultsContent = document.getElementById('resultsContent');
+
+            if (!sku) {
+                resultsContent.innerHTML = '<p class="text-red-600">Please enter a SKU</p>';
+                return;
+            }
+
+            resultsContent.innerHTML = '<p class="text-blue-600">Loading...</p>';
+
+            try {
+                const startTime = Date.now();
+                const product = await window.productLoader.getProductBySKU(sku);
+                const loadTime = Date.now() - startTime;
+
+                if (!product) {
+                    resultsContent.innerHTML = '<p class="text-red-600">Product not found</p>';
+                    return;
+                }
+
+                const isLive = product._isLive;
+                const sourceColor = isLive ? 'green' : 'gray';
+                const sourceText = isLive ? 'PocketBase (Live)' : 'Static Data';
+
+                resultsContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="px-3 py-1 bg-${sourceColor}-100 text-${sourceColor}-800 rounded-full text-sm font-medium">
+                                ${sourceText}
+                            </span>
+                            <span class="text-sm text-gray-500">Loaded in ${loadTime}ms</span>
+                        </div>
+
+                        <div class="border-t pt-4">
+                            <h3 class="font-bold text-lg mb-2">${product.name}</h3>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div><strong>SKU:</strong> ${product.sku}</div>
+                                <div><strong>Price:</strong> $${product.price}</div>
+                                <div><strong>Category:</strong> ${product.category}</div>
+                                <div><strong>Stock:</strong> ${product.stock}</div>
+                                <div><strong>Images:</strong> ${product.images?.length || 0}</div>
+                                <div><strong>UPC:</strong> ${product.upc || 'N/A'}</div>
+                            </div>
+                        </div>
+
+                        ${product.short_description ? `
+                            <div class="border-t pt-4">
+                                <strong>Description:</strong>
+                                <p class="text-sm text-gray-600 mt-2">${product.short_description}</p>
+                            </div>
+                        ` : ''}
+
+                        ${isLive && product._editUrl ? `
+                            <div class="border-t pt-4">
+                                <a 
+                                    href="${product._editUrl}" 
+                                    target="_blank"
+                                    class="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                                >
+                                    ✏️ Edit in PocketBase
+                                </a>
+                            </div>
+                        ` : ''}
+
+                        <div class="border-t pt-4">
+                            <details class="text-sm">
+                                <summary class="cursor-pointer font-medium">View Full Product Data</summary>
+                                <pre class="mt-2 p-4 bg-gray-50 rounded overflow-auto max-h-96">${JSON.stringify(product, null, 2)}</pre>
+                            </details>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                resultsContent.innerHTML = `
+                    <p class="text-red-600">Error: ${error.message}</p>
+                    <pre class="mt-2 p-4 bg-red-50 rounded text-sm">${error.stack}</pre>
+                `;
+            }
+        }
+
+        function clearCache() {
+            window.productLoader.clearCache();
+            document.getElementById('resultsContent').innerHTML = '<p class="text-green-600">✅ Cache cleared!</p>';
+        }
+
+        // Auto-check status on load
+        window.addEventListener('load', () => {
+            setTimeout(checkStatus, 500);
+        });
+    </script>
+</body>
+</html>

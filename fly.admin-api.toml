@@ -1,0 +1,40 @@
+# Fly.io config for Admin API (PayPal, ShipStation, POST /api/orders)
+# Deploy: fly deploy -c fly.admin-api.toml
+# Or from root: fly deploy -a success-chemistry-api -c fly.admin-api.toml
+
+app = "success-chemistry-api"
+primary_region = "lax"
+
+[build]
+  dockerfile = "Dockerfile.admin-api"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3001"
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 250
+    soft_limit = 200
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[checks]
+  [checks.health]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/health"
+    port = 3001
+    timeout = "5s"
+    type = "http"

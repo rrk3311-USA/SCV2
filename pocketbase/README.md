@@ -1,5 +1,9 @@
 # PocketBase Backend
 
+<p align="center">
+  <img src="https://pocketbase.io/images/logo.svg" alt="PocketBase Logo" width="100">
+</p>
+
 This is the PocketBase backend for Success Chemistry.
 
 ## What is PocketBase?

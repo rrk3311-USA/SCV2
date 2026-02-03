@@ -631,7 +631,8 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '127.0.0.1', () => {
+const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1';
+app.listen(PORT, host, () => {
     console.log(`🚀 Admin API Server running on http://localhost:${PORT}`);
     console.log(`📊 Mock data loaded: ${mockProducts.length} products, ${mockOrders.length} orders, ${mockUsers.length} users`);
     

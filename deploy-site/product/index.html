@@ -37,6 +37,8 @@
     
     <!-- Preload products data for faster loading - MUST match script src version -->
     <link rel="preload" href="/products-data.js?v=19" as="script" crossorigin="anonymous">
+    <!-- PocketBase Product Loader -->
+    <script src="/product-pb-loader.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/public/images/SC_logo_withR.png">
     <link rel="shortcut icon" type="image/png" href="/public/images/SC_logo_withR.png">
@@ -4193,24 +4195,24 @@
             }
         }
 
-        // Load product data
+        // Load product data - NEW: Uses PocketBase first, falls back to static data
         async function loadProduct() {
             currentProductId = getProductIdFromUrl();
-            console.log('Looking for product SKU:', currentProductId);
+            console.log('🔍 Looking for product SKU:', currentProductId);
             
-            // Wait for products-data.js to load
+            // Wait for product loader to be ready
             let attempts = 0;
-            while (typeof window.getProductBySKU !== 'function' && typeof window.getAllProducts !== 'function' && attempts < 50) {
+            while (!window.productLoader && attempts < 50) {
                 await new Promise(resolve => setTimeout(resolve, 100));
                 attempts++;
             }
             
-            if (typeof window.getProductBySKU !== 'function' && typeof window.getAllProducts !== 'function') {
-                console.error('Product functions not loaded after 5 seconds');
+            if (!window.productLoader) {
+                console.error('❌ Product loader not initialized');
                 document.getElementById('productContent').innerHTML = `
                     <div class="loading">
                         <h2>Loading Error</h2>
-                        <p>Product data failed to load. Please refresh the page.</p>
+                        <p>Product loader failed to initialize. Please refresh the page.</p>
                         <a href="/shop" class="btn btn-primary">Return to Shop</a>
                     </div>
                 `;
@@ -4218,21 +4220,25 @@
             }
             
             try {
-                // Use local product data - try getProductBySKU first, then getAllProducts
-                if (typeof window.getProductBySKU === 'function') {
-                    currentProduct = window.getProductBySKU(currentProductId);
-                } else if (typeof window.getAllProducts === 'function') {
-                    const products = window.getAllProducts();
-                    currentProduct = products.find(p => p.sku === currentProductId);
-                }
+                // NEW: Load from PocketBase (with fallback to static data)
+                currentProduct = await window.productLoader.getProductBySKU(currentProductId);
                 
-                console.log('Found product:', currentProduct ? currentProduct.name : 'Not found');
+                console.log('✅ Found product:', currentProduct ? currentProduct.name : 'Not found');
+                console.log('📊 Data source:', currentProduct?._isLive ? 'PocketBase (Live)' : 'Static');
                 
                 if (!currentProduct) {
                     throw new Error(`Product not found for SKU: ${currentProductId}`);
                 }
                 
                 renderProduct();
+                
+                // Show edit button for admins (only if live data)
+                if (currentProduct._isLive) {
+                    window.productLoader.showEditButton(currentProduct);
+                }
+                
+                // Show data source indicator
+                window.productLoader.showLiveIndicator(currentProduct._isLive);
                 
                 // Track and display recently viewed products
                 if (currentProduct) {
@@ -4245,11 +4251,11 @@
                     window.SuccessChemistryTracking.trackProductView(currentProduct);
                 }
             } catch (error) {
-                console.error('Error loading product:', error);
+                console.error('❌ Error loading product:', error);
                 document.getElementById('productContent').innerHTML = `
                     <div class="loading">
                         <h2>Product Not Found</h2>
-                        <p>SKU "${currentProductId}" not found in local product data.</p>
+                        <p>SKU "${currentProductId}" not found.</p>
                         <p style="font-size: 0.9rem; color: #666;">Error: ${error.message}</p>
                         <a href="/shop" class="btn btn-primary">Return to Shop</a>
                     </div>

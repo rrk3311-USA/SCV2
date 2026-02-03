@@ -10,7 +10,11 @@
  *   3. Run: PB_ADMIN_PASSWORD=yourpassword node migrate-products.js
  */
 
-const path = require('path');
+import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // PocketBase config
 const PB_URL = process.env.PB_URL || 'http://localhost:8090';
@@ -18,6 +22,7 @@ const PB_ADMIN_EMAIL = process.env.PB_ADMIN_EMAIL || 'admin@successchemistry.com
 const PB_ADMIN_PASSWORD = process.env.PB_ADMIN_PASSWORD;
 
 // Load products from products-data.js (PRODUCTS_DATA object)
+// Uses fs + Function to avoid require()/ESM conflicts when project has "type": "module"
 let productsData = [];
 const possiblePaths = [
   path.join(__dirname, '../deploy-site/products-data.js'),
@@ -27,8 +32,10 @@ const possiblePaths = [
 
 for (const p of possiblePaths) {
   try {
-    const mod = require(p);
-    const data = mod.PRODUCTS_DATA || mod.products || mod;
+    if (!fs.existsSync(p)) continue;
+    const content = fs.readFileSync(p, 'utf8');
+    const fn = new Function(content + '; return typeof PRODUCTS_DATA !== "undefined" ? PRODUCTS_DATA : null;');
+    const data = fn();
     if (data && typeof data === 'object') {
       productsData = Array.isArray(data) ? data : Object.values(data);
       console.log(`📦 Found products at: ${p}`);
@@ -64,7 +71,7 @@ async function migrate() {
 
   console.log('\n🔐 Authenticating with PocketBase...');
 
-  const authRes = await fetch(`${PB_URL}/api/admins/auth-with-password`, {
+  const authRes = await fetch(`${PB_URL}/api/collections/_superusers/auth-with-password`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -74,8 +81,12 @@ async function migrate() {
   });
 
   if (!authRes.ok) {
+    const errBody = await authRes.text();
     console.error('❌ Authentication failed');
-    console.error('   Make sure PocketBase is running and credentials are correct');
+    console.error(`   HTTP ${authRes.status}: ${authRes.statusText}`);
+    console.error('   Response:', errBody || '(empty)');
+    console.error('   Try: fly ssh console -a success-chemistry-pb');
+    console.error('   Then: /pocketbase superuser upsert rrk3311@gmail.com YourPassword --dir=/pb_data');
     process.exit(1);
   }
 
