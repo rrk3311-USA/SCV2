@@ -10,10 +10,10 @@ function getPayPalClientID() {
     if (typeof window.getPayPalClientID === 'function' && window.getPayPalClientID !== getPayPalClientID) {
         return window.getPayPalClientID();
     }
-    // Fallback to production client ID
-    return 'EBAQIbUDDVgB06yvEWREs2cMox8AKElkxFJAqKF71iUj007dv0YzxlKbepduwV7xGEI5FrjK3vakzm0b';
+    // Fallback to sandbox client ID (PocketBase_Ecomm)
+    return 'AfUHsoJ2uDH7vJ-XDc8b2H0MGTtlGqVeEUkORnzKqePIvKFt5G-eKtlOg4Bl7dexwKE5vz7glt1vXqfC';
 }
-const PAYPAL_MODE = 'live';
+const PAYPAL_MODE = 'sandbox';
 
 function loadPayPalSDK(callback) {
     if (window.paypal) {

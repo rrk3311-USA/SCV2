@@ -16,8 +16,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- PayPal SDK with Production Client ID -->
-    <script src="https://www.paypal.com/sdk/js?client-id=EBAQIbUDDVgB06yvEWREs2cMox8AKElkxFJAqKF71iUj007dv0YzxlKbepduwV7xGEI5FrjK3vakzm0b&currency=USD&components=buttons,funding-eligibility&enable-funding=venmo,paylater&disable-funding=credit"></script>
+    <!-- PayPal SDK (sandbox: config.js SANDBOX_MODE=true) -->
+    <script src="/config.js"></script>
+    <script>
+      (function(){
+        var c = (typeof CONFIG !== 'undefined' && CONFIG.PAYPAL) ? (CONFIG.SANDBOX_MODE ? CONFIG.PAYPAL.SANDBOX_CLIENT_ID : CONFIG.PAYPAL.PRODUCTION_CLIENT_ID) : 'ATM3Eoawal0vHl1xqCcuP5TvlPBP-96AHV0xP0tiQ-KlAd_tuSLLQjKMsby8lgbgE7jN5zXPF3HjMUNk';
+        var s = document.createElement('script');
+        s.src = 'https://www.paypal.com/sdk/js?client-id=' + c + '&currency=USD&components=buttons,funding-eligibility&enable-funding=venmo,paylater&disable-funding=credit';
+        document.head.appendChild(s);
+      })();
+    </script>
     
     <!-- WooCommerce Order Integration -->
     <script src="/woocommerce-order-integration.js"></script>
@@ -1937,6 +1945,42 @@
             const orders = JSON.parse(localStorage.getItem('successChemistryOrders') || '[]');
             orders.push(orderData);
             localStorage.setItem('successChemistryOrders', JSON.stringify(orders));
+            
+            // Save order to PocketBase (for ShipStation/3PL pull; sandbox = TEST- prefix, supplier won't get it)
+            const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:3001'
+                : (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : window.location.origin;
+            const isTest = typeof CONFIG !== 'undefined' && CONFIG.SANDBOX_MODE;
+            let pocketBaseResult = null;
+            try {
+                const pbRes = await fetch(`${apiBase}/api/orders`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderNumber: isTest ? undefined : details.id,
+                        customerEmail: details.payer?.email_address,
+                        customerName: orderData.customerName,
+                        customerPhone: details.payer?.phone?.phone_number?.national_number,
+                        items: getCart(),
+                        total: total,
+                        tax: 0,
+                        shipping: 0,
+                        paymentMethod: 'paypal',
+                        paymentId: details.id,
+                        isTest: isTest,
+                        shippingAddress: details.purchase_units?.[0]?.shipping?.address
+                    })
+                });
+                pocketBaseResult = await pbRes.json();
+                if (pbRes.ok && pocketBaseResult.success) {
+                    console.log('✅ Order saved to PocketBase', isTest ? '(TEST – supplier won\'t receive)' : '');
+                } else {
+                    console.warn('⚠️ PocketBase order save:', pocketBaseResult?.error || 'Failed');
+                }
+            } catch (err) {
+                console.warn('⚠️ PocketBase order save:', err.message);
+                pocketBaseResult = { success: false, error: err.message };
+            }
             
             // Sync to Capsule CRM (don't block on error)
             let capsuleResult = null;

@@ -5,12 +5,12 @@
 
 const CONFIG = {
     // Set to true for testing, false for production
-    SANDBOX_MODE: false, // Production mode - real payments enabled
+    SANDBOX_MODE: true, // Sandbox mode - test payments (switch to false for live)
     
     // PayPal Configuration
     PAYPAL: {
-        // Get Sandbox Client ID from: https://developer.paypal.com/dashboard/applications/sandbox
-        SANDBOX_CLIENT_ID: 'ATM3Eoawal0vHl1xqCcuP5TvlPBP-96AHV0xP0tiQ-KlAd_tuSLLQjKMsby8lgbgE7jN5zXPF3HjMUNk', // Replace with your Sandbox Client ID
+        // Sandbox: PocketBase_Ecomm app (https://developer.paypal.com/dashboard/applications/sandbox)
+        SANDBOX_CLIENT_ID: 'AfUHsoJ2uDH7vJ-XDc8b2H0MGTtlGqVeEUkORnzKqePIvKFt5G-eKtlOg4Bl7dexwKE5vz7glt1vXqfC',
         PRODUCTION_CLIENT_ID: 'EBAQIbUDDVgB06yvEWREs2cMox8AKElkxFJAqKF71iUj007dv0YzxlKbepduwV7xGEI5FrjK3vakzm0b'
     },
     

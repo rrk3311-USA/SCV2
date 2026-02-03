@@ -3,6 +3,11 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import {
+  shipstationBasicAuth,
+  handleShipStationExport,
+  handleShipStationShipNotify
+} from './api/shipstation-custom-store.js';
 
 const app = express();
 const PORT = 3001;
@@ -539,6 +544,87 @@ app.post('/api/paypal/orders/:orderID/pay', async (req, res) => {
     }
 });
 
+// --- PocketBase Order Creation (for checkout flow) ---
+app.post('/api/orders', async (req, res) => {
+    const PB_URL = process.env.PB_URL || 'https://success-chemistry-pb.fly.dev';
+    const PB_ADMIN_EMAIL = process.env.PB_ADMIN_EMAIL || '';
+    const PB_ADMIN_PASSWORD = process.env.PB_ADMIN_PASSWORD || '';
+    if (!PB_ADMIN_EMAIL || !PB_ADMIN_PASSWORD) {
+        return res.status(503).json({ error: 'PocketBase not configured. Set PB_ADMIN_EMAIL and PB_ADMIN_PASSWORD.' });
+    }
+    try {
+        const b = req.body || {};
+        const isTest = b.isTest === true;
+        const orderNumber = isTest
+            ? `TEST-SC-${Date.now()}`
+            : (b.orderNumber || `SC-${Date.now()}`);
+        const items = Array.isArray(b.items) ? b.items : [];
+        const addr = b.shippingAddress || b.address || {};
+        const orderData = {
+            orderNumber,
+            customerEmail: b.customerEmail || b.email || '',
+            customerName: b.customerName || b.customer_name || '',
+            customerPhone: b.customerPhone || b.phone || '',
+            items: items.map(i => ({
+                sku: i.sku || i.product_sku,
+                name: i.name || i.product_name || 'Product',
+                quantity: i.quantity || 1,
+                price: i.price || i.unit_price || 0,
+                image: i.image || '',
+                upc: i.upc || i.gtin
+            })),
+            total: parseFloat(b.total || 0),
+            subtotal: parseFloat(b.subtotal || b.total || 0),
+            tax: parseFloat(b.tax || 0),
+            shipping: parseFloat(b.shipping || 0),
+            status: 'paid',
+            paymentMethod: b.paymentMethod || 'paypal',
+            paymentId: b.paymentId || b.id || '',
+            shippingAddress: {
+                address_line_1: addr.address_line_1 || addr.street || addr.address1,
+                address_line_2: addr.address_line_2 || addr.street2 || addr.address2,
+                admin_area_1: addr.admin_area_1 || addr.state,
+                admin_area_2: addr.admin_area_2 || addr.city,
+                postal_code: addr.postal_code || addr.zip,
+                country_code: (addr.country_code || addr.country || 'US').substring(0, 2)
+            },
+            notes: b.notes || ''
+        };
+        const authRes = await fetch(`${PB_URL}/api/collections/_superusers/auth-with-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ identity: PB_ADMIN_EMAIL, password: PB_ADMIN_PASSWORD })
+        });
+        if (!authRes.ok) throw new Error('PocketBase admin auth failed');
+        const { token } = await authRes.json();
+        const createRes = await fetch(`${PB_URL}/api/collections/orders/records`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify(orderData)
+        });
+        if (!createRes.ok) {
+            const errText = await createRes.text();
+            throw new Error(`PocketBase create failed: ${errText}`);
+        }
+        const created = await createRes.json();
+        res.json({ success: true, id: created.id, orderNumber });
+    } catch (e) {
+        console.error('Order create error:', e.message);
+        res.status(500).json({ success: false, error: e.message });
+    }
+});
+
+// --- ShipStation Custom Store (GET orders XML, POST ShipNotice) ---
+app.use(
+  '/api/shipstation',
+  express.raw({ type: ['application/xml', 'text/xml'] })
+);
+app.get('/api/shipstation', shipstationBasicAuth, handleShipStationExport);
+app.post('/api/shipstation', shipstationBasicAuth, (req, res) => {
+  req.body = req.body && req.body.toString ? req.body.toString() : '';
+  handleShipStationShipNotify(req, res);
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -570,6 +656,16 @@ app.listen(PORT, '127.0.0.1', () => {
         console.log(`\n💳 PayPal: ${PAYPAL_MODE} mode – /api/paypal/orders ready`);
     } else {
         console.log(`\n⚠️  PayPal: Set PAYPAL_PRODUCTION_CLIENT_ID and PAYPAL_PRODUCTION_CLIENT_SECRET in .env for checkout`);
+    }
+
+    const ssUser = process.env.SHIPSTATION_STORE_USER;
+    const ssPass = process.env.SHIPSTATION_STORE_PASSWORD;
+    if (ssUser && ssPass) {
+        console.log(`\n📦 ShipStation Custom Store: /api/shipstation (GET export, POST shipNotify)`);
+        console.log(`   Supplier connects with Basic Auth using SHIPSTATION_STORE_USER`);
+    } else {
+        console.log(`\n⚠️  ShipStation Custom Store: Set SHIPSTATION_STORE_USER and SHIPSTATION_STORE_PASSWORD`);
+        console.log(`   Also: PB_URL, PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD for PocketBase`);
     }
     console.log(`\n🔐 Demo Login Credentials:`);
     console.log(`   Email: admin@successchemistry.com (or any email)`);
