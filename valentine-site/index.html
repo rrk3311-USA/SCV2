@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: url('valentine-backdrop.png') center center / cover no-repeat;
+            opacity: 0.45;
+        }
+
+        .backdrop-shade {
+            position: fixed;
+            inset: 0;
+            z-index: 0.5;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.55) 0%, rgba(118, 75, 162, 0.55) 100%);
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .backdrop-yes {
+            position: fixed;
+            inset: 0;
+            z-index: 0.3;
+            background: url('valentine-yes-backdrop.png') center center / cover no-repeat;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .backdrop-yes-shade {
+            position: fixed;
+            inset: 0;
+            z-index: 0.4;
+            background: linear-gradient(135deg, rgba(118, 75, 162, 0.4) 0%, rgba(255, 87, 108, 0.35) 100%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        body.success-active .backdrop,
+        body.success-active .backdrop-shade {
+            opacity: 0;
+        }
+
+        body.success-active .backdrop-yes {
+            opacity: 0.7;
+        }
+
+        body.success-active .backdrop-yes-shade {
+            opacity: 1;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff1744;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .question {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 100px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        #noBtn {
+            background: #ddd;
+            color: #666;
+            position: absolute;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .success {
+            display: none;
+        }
+
+        .success.active {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success h2 {
+            color: #f5576c;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .success p {
+            font-size: 1.3em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .celebration {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        /* Success: heart-shaped floating module */
+        .container.success-heart-mode {
+            max-width: none;
+            width: 260px;
+            height: 260px;
+            padding: 24px 20px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-left: -130px;
+            margin-top: -130px;
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            z-index: 10;
+            transition: transform 0.2s ease-out;
+        }
+
+        .container.success-heart-mode .success h2 {
+            font-size: 1.6em;
+            margin-bottom: 8px;
+        }
+
+        .container.success-heart-mode .success p {
+            font-size: 0.95em;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .container.success-heart-mode .celebration {
+            font-size: 1.8em;
+            margin: 8px 0;
+        }
+
+        .container.success-heart-mode.bounce {
+            animation: heartBounce 0.5s ease-out;
+        }
+
+        @keyframes heartBounce {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.15); }
+            70% { transform: scale(0.92); }
+            100% { transform: scale(1); }
+        }
+
+
+        @keyframes heartBurst {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .burst-heart {
+            position: fixed;
+            font-size: 40px;
+            pointer-events: none;
+            animation: heartBurst 2s ease-out forwards;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="backdrop-shade" aria-hidden="true"></div>
+    <div class="backdrop-yes" aria-hidden="true"></div>
+    <div class="backdrop-yes-shade" aria-hidden="true"></div>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container" id="main-container">
+        <div id="question-screen">
+            <h1>💝 Hey SJK! 💝</h1>
+            <p class="question">SJK, will you be my Valentine?</p>
+            <div class="buttons">
+                <button id="yesBtn">Yes! 💕</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div class="success" id="success-screen">
+            <div class="celebration">🎉 💖 🎊</div>
+            <h2>Yay! 💕</h2>
+            <p>I knew you'd say yes! 😊</p>
+            <p style="margin-top: 20px;">You just made me the happiest person in the world! ❤️</p>
+            <div class="celebration" style="margin-top: 30px;">💑 🌹 💝</div>
+        </div>
+    </div>
+
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionScreen = document.getElementById('question-screen');
+        const successScreen = document.getElementById('success-screen');
+        const heartsContainer = document.getElementById('hearts');
+        const mainContainer = document.getElementById('main-container');
+
+        let yesBtnSize = 1;
+        let noBtnSize = 1;
+        let noAttempts = 0;
+
+        let heartX = 0.5;
+        let heartY = 0.5;
+        let heartVx = 0.0003;
+        let heartVy = 0.00025;
+        let heartW = 260;
+        let heartH = 260;
+        let heartFloatId = null;
+
+        function floatHeart() {
+            if (!mainContainer.classList.contains('success-heart-mode')) return;
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            heartX += heartVx;
+            heartY += heartVy;
+            if (heartX * vw <= 0 || heartX * vw >= vw - heartW) heartVx *= -1;
+            if (heartY * vh <= 0 || heartY * vh >= vh - heartH) heartVy *= -1;
+            heartX = Math.max(0, Math.min(1 - heartW / vw, heartX));
+            heartY = Math.max(0, Math.min(1 - heartH / vh, heartY));
+            mainContainer.style.left = (heartX * vw) + 'px';
+            mainContainer.style.top = (heartY * vh) + 'px';
+            mainContainer.style.marginLeft = '0';
+            mainContainer.style.marginTop = '0';
+            heartFloatId = requestAnimationFrame(floatHeart);
+        }
+
+        function bounceHeart() {
+            mainContainer.classList.remove('bounce');
+            mainContainer.offsetHeight;
+            mainContainer.classList.add('bounce');
+            setTimeout(() => mainContainer.classList.remove('bounce'), 500);
+        }
+
+
+        // Create floating hearts background
+        function createBackgroundHearts() {
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        createBackgroundHearts();
+
+        // Make "No" button run away
+        noBtn.addEventListener('mouseover', () => {
+            noAttempts++;
+            
+            // Make Yes button bigger
+            yesBtnSize += 0.2;
+            yesBtn.style.transform = `scale(${yesBtnSize})`;
+            
+            // Make No button smaller
+            noBtnSize -= 0.1;
+            if (noBtnSize < 0.3) noBtnSize = 0.3;
+            noBtn.style.transform = `scale(${noBtnSize})`;
+            
+            // Move No button to random position
+            const container = document.querySelector('.buttons');
+            const containerRect = container.getBoundingClientRect();
+            
+            const maxX = containerRect.width - noBtn.offsetWidth;
+            const maxY = containerRect.height - noBtn.offsetHeight;
+            
+            const randomX = Math.random() * maxX - maxX/2;
+            const randomY = Math.random() * maxY - maxY/2;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // After several attempts, make it even harder
+            if (noAttempts > 5) {
+                noBtn.textContent = 'No?';
+            }
+            if (noAttempts > 10) {
+                noBtn.textContent = 'Maybe...';
+            }
+        });
+
+        // Try to click No (make it super hard)
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const responses = [
+                "Are you sure? 🥺",
+                "Really? 💔",
+                "Please? 🙏",
+                "Think again! 💕",
+                "Don't break my heart! 💔"
+            ];
+            alert(responses[Math.floor(Math.random() * responses.length)]);
+        });
+
+        // Yes button - Success!
+        yesBtn.addEventListener('click', () => {
+            // Create heart burst effect
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'burst-heart';
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = Math.random() * 100 + '%';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 2000);
+                }, i * 50);
+            }
+            
+            // Switch to "yes" backdrop and show success screen
+            document.body.classList.add('success-active');
+            setTimeout(() => {
+                questionScreen.style.display = 'none';
+                successScreen.classList.add('active');
+                mainContainer.classList.add('success-heart-mode');
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                heartX = Math.max(0, (vw - heartW) / 2 / vw);
+                heartY = Math.max(0, (vh - heartH) / 2 / vh);
+                if (heartX > 1 - heartW / vw) heartX = 1 - heartW / vw;
+                if (heartY > 1 - heartH / vh) heartY = 1 - heartH / vh;
+                mainContainer.style.left = (heartX * vw) + 'px';
+                mainContainer.style.top = (heartY * vh) + 'px';
+                mainContainer.style.marginLeft = '0';
+                mainContainer.style.marginTop = '0';
+                floatHeart();
+                mainContainer.addEventListener('click', bounceHeart);
+                mainContainer.addEventListener('touchstart', bounceHeart, { passive: true });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
