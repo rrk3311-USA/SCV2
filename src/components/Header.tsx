@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ROUTES } from "@/lib/constants";
@@ -8,8 +9,10 @@ import { Flask } from "@phosphor-icons/react";
 /**
  * Global header – matches deploy-site universal header (topbar + blue-nav).
  * Only Shop has an icon in the nav; Home and Cart are text only.
+ * Logo shows text fallback when image 404s (e.g. before media deploy).
  */
 export function Header() {
+  const [logoError, setLogoError] = useState(false);
   return (
     <div className="header-wrapper w-full bg-white">
       <div className="topbar sticky top-0 z-[100] min-h-[98px] max-h-[98px] h-[98px] w-full border-b border-white/80 bg-white/95 pt-6 pb-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/90">
@@ -19,14 +22,21 @@ export function Header() {
               href={ROUTES.home}
               className="brand absolute left-1/2 inline-flex -translate-x-1/2 items-center justify-center no-underline"
             >
-              <Image
-                src="/images/SC_logo_withR.png"
-                alt="Success Chemistry"
-                width={180}
-                height={58}
-                className="h-[58px] min-h-[58px] max-h-[58px] w-auto"
-                priority
-              />
+              {!logoError ? (
+                <Image
+                  src="/images/SC_logo_withR.png"
+                  alt="Success Chemistry"
+                  width={180}
+                  height={58}
+                  className="h-[58px] min-h-[58px] max-h-[58px] w-auto"
+                  priority
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <span className="text-xl font-bold text-[#2854a6] tracking-tight">
+                  Success Chemistry®
+                </span>
+              )}
             </Link>
           </div>
         </div>

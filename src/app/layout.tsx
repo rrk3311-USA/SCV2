@@ -4,6 +4,9 @@ import { Header } from "@/components/Header";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { StickyCartBanner } from "@/components/StickyCartBanner";
+import { Analytics } from "@/components/Analytics";
+import { RouteTracker } from "@/components/RouteTracker";
+import { OutboundTracker } from "@/components/OutboundTracker";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-medusa" });
@@ -26,6 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen flex flex-col bg-gradient-to-br from-sky-50 via-white to-sky-50 font-sans antialiased">
+        <Analytics />
+        <RouteTracker />
+        <OutboundTracker />
         <Header />
         <Breadcrumbs />
         <main className="flex-1">{children}</main>

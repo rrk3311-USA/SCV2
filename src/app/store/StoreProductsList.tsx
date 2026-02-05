@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { sdk } from "@/lib/sdk";
 import { TOP_7, TOP_PRODUCTS } from "@/data/products";
+import { ViewItemListTracker } from "@/components/ViewItemListTracker";
 import type { Product } from "@/data/products";
 
 type StoreProduct = {
@@ -43,8 +44,15 @@ export function StoreProductsList() {
   }
 
   if (medusaProducts.length > 0) {
+    const items = medusaProducts.map((p) => ({
+      item_id: p.id,
+      item_name: p.title ?? p.handle ?? p.id,
+      price: (p.variants?.[0]?.prices?.[0]?.amount ?? 0) / 100,
+    }));
     return (
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+      <>
+        <ViewItemListTracker items={items} listId="store_all" listName="All Products" />
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
         {medusaProducts.map((p) => (
           <Link
             key={p.id}
@@ -66,6 +74,7 @@ export function StoreProductsList() {
           </Link>
         ))}
       </div>
+      </>
     );
   }
 
@@ -73,9 +82,17 @@ export function StoreProductsList() {
   const topSellerSlugs = new Set(TOP_7.map((p) => p.slug));
   const rest = TOP_PRODUCTS.filter((p) => !topSellerSlugs.has(p.slug));
   const orderedProducts = [...TOP_7, ...rest];
+  const storeItems = orderedProducts.map((p: Product) => ({
+    item_id: p.sku,
+    item_name: p.name,
+    price: p.price,
+    item_category: p.category,
+  }));
 
   return (
-    <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+    <>
+      <ViewItemListTracker items={storeItems} listId="store_all" listName="All Products" />
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
       {orderedProducts.map((p: Product) => (
         <Link
           key={p.sku}
@@ -93,5 +110,6 @@ export function StoreProductsList() {
         </Link>
       ))}
     </div>
+    </>
   );
 }

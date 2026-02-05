@@ -14,6 +14,8 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { PayPalProductButtons } from "@/components/PayPalProductButtons";
+import { ProductHeroImage } from "@/components/ProductHeroImage";
+import { ViewItemTracker } from "@/components/ViewItemTracker";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { RecentlyViewedTracker } from "@/components/RecentlyViewedTracker";
 import type { Metadata } from "next";
@@ -68,21 +70,19 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <ViewItemTracker product={{ slug: product.slug, sku: product.sku, name: product.name, price: product.price, category: product.category }} />
       <RecentlyViewedTracker slug={product.slug} name={product.name} image={product.image} />
       <Container className="py-6 sm:py-10">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Gallery */}
           <div className="space-y-4">
-            <div className="relative aspect-square overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-contain p-4"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-            </div>
+            <ProductHeroImage
+              src={product.image}
+              alt={product.name}
+              className="object-contain p-4"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority
+            />
             {product.images.length > 1 && (
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {product.images.slice(0, 6).map((src, i) => (

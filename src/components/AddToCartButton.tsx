@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ShoppingCart } from "@phosphor-icons/react";
 import { addToCart } from "@/lib/cart";
+import { reportAddToCart } from "@/lib/gtag";
 
 type AddToCartButtonProps = {
   sku: string;
@@ -30,6 +31,7 @@ export function AddToCartButton({
 
   const handleClick = () => {
     addToCart({ sku, name, price, quantity, image });
+    reportAddToCart({ id: sku, name, price, quantity });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };

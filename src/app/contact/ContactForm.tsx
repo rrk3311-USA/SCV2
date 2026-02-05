@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { EnvelopeSimple, PaperPlaneRight } from "@phosphor-icons/react";
+import { reportLeadWithEnhancedConversion } from "@/lib/gtag";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -29,6 +30,7 @@ export function ContactForm() {
     try {
       // Placeholder: replace with your API or form service (e.g. Formspree, Netlify Forms, API route).
       await new Promise((r) => setTimeout(r, 800));
+      await reportLeadWithEnhancedConversion(email, name);
       setStatus("success");
       setName("");
       setEmail("");

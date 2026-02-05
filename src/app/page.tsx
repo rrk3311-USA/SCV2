@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/Container";
+import { HeroBannerImage } from "@/components/HeroBannerImage";
 import { ProductCarousel } from "@/components/ProductCarousel";
+import { ViewItemListTracker } from "@/components/ViewItemListTracker";
 import { HomeVideo } from "@/components/HomeVideo";
 import { TOP_7 } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
@@ -12,7 +14,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero – full width, touches header divider; section background edge-to-edge */}
-      <section className="relative flex min-h-[260px] w-full max-h-[360px] items-start justify-center overflow-hidden rounded-b-2xl bg-slate-100 shadow-sm sm:min-h-[280px] lg:min-h-[260px] lg:max-h-[340px]">
+      <section className="relative flex min-h-[260px] w-full max-h-[360px] items-start justify-center overflow-hidden rounded-b-2xl bg-[#2854a6] shadow-sm sm:min-h-[280px] lg:min-h-[260px] lg:max-h-[340px]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
           style={{ backgroundImage: "url('/images/home/BannerTOP.jpg')" }}
@@ -22,15 +24,7 @@ export default function HomePage() {
           style={{ background: "rgba(0, 31, 52, 0.3)" }}
         />
         <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center px-4 pt-0">
-          <Image
-            src="/images/BlendedHomeheader.png"
-            alt="Success Chemistry Banner"
-            width={1200}
-            height={709}
-            className="hero-banner-float hero-banner-fade h-auto w-full max-w-[1050px] object-contain opacity-90"
-            style={{ filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.3))" }}
-            sizes="(max-width: 1050px) 100vw, 1050px"
-          />
+          <HeroBannerImage />
         </div>
         {/* Frosted bottom bar – same as 8080 */}
         <div
@@ -73,6 +67,11 @@ export default function HomePage() {
       <Container className="py-6 sm:py-8">
         {/* Top Sellers – carousel style (matches 8080), not full grid */}
         <section className="mt-12">
+          <ViewItemListTracker
+            items={TOP_7.map((p) => ({ item_id: p.sku, item_name: p.name, price: p.price, item_category: p.category }))}
+            listId="home_top_sellers"
+            listName="Top Sellers"
+          />
           <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">Top Sellers</h2>
           <p className="mt-2 text-slate-600 text-sm sm:text-base">
             Our best-selling supplements. Scroll the carousel or use the arrows. Tap any product to open its page.

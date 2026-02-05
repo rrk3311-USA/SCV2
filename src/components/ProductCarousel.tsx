@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ROUTES } from "@/lib/constants";
@@ -9,6 +9,29 @@ import type { Product } from "@/data/products";
 type ProductCarouselProps = {
   products: Pick<Product, "slug" | "sku" | "name" | "image" | "category">[];
 };
+
+function CarouselImage({ src, alt }: { src: string; alt: string }) {
+  const [err, setErr] = useState(false);
+  if (err) {
+    return (
+      <div className="flex aspect-square w-full items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-400 text-xs">
+        Image
+      </div>
+    );
+  }
+  return (
+    <div className="relative aspect-square bg-transparent">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-contain p-4 transition group-hover:scale-105"
+        sizes="(max-width: 640px) 50vw, 25vw"
+        onError={() => setErr(true)}
+      />
+    </div>
+  );
+}
 
 /**
  * Carousel – prev/next buttons, horizontal scroll track.
@@ -42,15 +65,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
               href={ROUTES.product(p.slug)}
               className="group flex shrink-0 min-w-[200px] max-w-[200px] flex-col overflow-hidden rounded-2xl transition hover:opacity-90"
             >
-              <div className="relative aspect-square bg-transparent">
-                <Image
-                  src={p.image}
-                  alt={p.name}
-                  fill
-                  className="object-contain p-4 transition group-hover:scale-105"
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                />
-              </div>
+              <CarouselImage src={p.image} alt={p.name} />
               <div className="flex flex-1 flex-col justify-end p-4">
                 <p className="text-xs font-medium text-slate-500">{p.category}</p>
                 <p className="mt-1 line-clamp-2 font-semibold text-slate-900">{p.name}</p>

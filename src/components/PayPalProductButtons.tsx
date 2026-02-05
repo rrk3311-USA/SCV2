@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { reportPurchase } from "@/lib/gtag";
 
 const API_BASE =
   typeof window !== "undefined"
@@ -120,6 +121,7 @@ export function PayPalProductButtons({ sku, name, price, quantity = 1 }: PayPalP
             const result = await res.json();
             if (result.success) {
               const orderId = result.details?.id || data.orderID;
+              reportPurchase(orderId, amount);
               window.location.href = `/order-confirmation?orderId=${orderId}`;
             } else {
               setError(result.error || "Payment failed");
