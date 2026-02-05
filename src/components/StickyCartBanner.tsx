@@ -41,15 +41,8 @@ export function StickyCartBanner() {
 
   return (
     <div className="sticky-cart-slide-up fixed bottom-0 left-0 right-0 z-[9999] flex flex-col shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
-      {/* Top gradient strip – same idea as header divider, thicker for emphasis */}
-      <div
-        className="h-1.5 w-full shrink-0"
-        style={{
-          background: "linear-gradient(90deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #667eea 100%)",
-          backgroundSize: "200% 100%",
-        }}
-        aria-hidden
-      />
+      {/* Top gradient strip – animated color flow (blue, purple, pink, cyan, yellow, green) */}
+      <div className="sticky-cart-gradient-strip h-1.5 w-full shrink-0" aria-hidden />
       <div
         className="flex items-center justify-between gap-4 px-5 py-4 sm:gap-6 sm:px-6"
         style={{

@@ -41,13 +41,7 @@ export function Header() {
           </div>
         </div>
       </div>
-      <div
-        className="header-divider h-1 w-full shrink-0"
-        style={{
-          background: "linear-gradient(90deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #667eea 100%)",
-          backgroundSize: "200% 100%",
-        }}
-      />
+      <div className="header-divider header-divider-gradient h-1 w-full shrink-0" aria-hidden />
       <div className="blue-nav flex h-[54px] min-h-[54px] max-h-[54px] w-full items-center justify-center bg-[#2854a6] py-2">
         <div className="container mx-auto flex h-[52px] w-full max-w-full items-center justify-center gap-8 px-4 text-xl">
           <Link href={ROUTES.home} className="text-[21px] font-medium text-white no-underline opacity-100 transition-opacity hover:opacity-80">
@@ -65,13 +59,7 @@ export function Header() {
           </Link>
         </div>
       </div>
-      <div
-        className="header-divider h-1 w-full shrink-0"
-        style={{
-          background: "linear-gradient(90deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #667eea 100%)",
-          backgroundSize: "200% 100%",
-        }}
-      />
+      <div className="header-divider header-divider-gradient h-1 w-full shrink-0" aria-hidden />
     </div>
   );
 }

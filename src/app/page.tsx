@@ -6,12 +6,12 @@ import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductHeroImage } from "@/components/ProductHeroImage";
 import { ViewItemListTracker } from "@/components/ViewItemListTracker";
 import { HomeVideo } from "@/components/HomeVideo";
-import { TOP_SELLERS_SINGLE_BOTTLE } from "@/data/products";
+import { TOP_8_RECENT } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
 import { Flask, Factory, Leaf, CaretRight } from "@phosphor-icons/react/dist/ssr";
 
-/** Top sellers: single bottles only (no 2-packs, 3-packs, or bundle deals). */
-const CAROUSEL_PRODUCTS = TOP_SELLERS_SINGLE_BOTTLE;
+/** Top 8 recent: single bottles only, no 2/3-packs, no mango drops or yoni. */
+const CAROUSEL_PRODUCTS = TOP_8_RECENT;
 
 /** Home page – clone of main site (localhost:8080) layout and media only, clean code. */
 export default function HomePage() {
@@ -69,22 +69,22 @@ export default function HomePage() {
       </section>
 
       <Container className="py-6 sm:py-8">
-        {/* Top Sellers – carousel style (matches 8080), not full grid */}
-        <section className="mt-12">
+        {/* Top Sellers – top 8 recent, single bottle only; centered */}
+        <section className="mt-12 flex flex-col items-center">
           <ViewItemListTracker
             items={CAROUSEL_PRODUCTS.map((p) => ({ item_id: p.sku, item_name: p.name, price: p.price, item_category: p.category }))}
             listId="home_top_sellers"
             listName="Top Sellers"
           />
           <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">Top Sellers</h2>
-          <p className="mt-2 text-slate-600 text-sm sm:text-base">
+          <p className="mt-2 text-center text-slate-600 text-sm sm:text-base">
             Our best-selling supplements. Tap any product to open its page.
           </p>
           {/* Carousel only on mobile */}
-          <div className="mt-4 md:hidden">
+          <div className="mt-4 w-full md:hidden">
             <ProductCarousel products={CAROUSEL_PRODUCTS} />
           </div>
-          {/* Grid on desktop (no carousel) */}
+          {/* Grid on desktop – 4 cols, centered */}
           <div className="mt-4 hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
             {CAROUSEL_PRODUCTS.map((p) => (
               <Link
@@ -242,14 +242,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hair la Fleur – hero product spotlight */}
+        {/* Hair la Fleur – hero product spotlight; bottle centered (smaller asset) */}
         <section className="mt-12 rounded-2xl border border-slate-200/80 bg-gradient-to-br from-pink-50/80 to-white p-6 shadow-sm sm:flex sm:items-center sm:gap-10 sm:p-8">
-          <div className="flex w-full max-w-[224px] flex-col items-center sm:w-72 sm:max-w-[280px] sm:shrink-0">
+          <div className="flex w-full max-w-[224px] flex-col items-center justify-center sm:w-72 sm:max-w-[280px] sm:shrink-0 mx-auto sm:mx-0">
             <ProductHeroImage
               src="/images/products/B072MMW71X-1/01.png"
               alt="Hair la Fleur Maximum Strength Hair Volume and Regrowth Supplements"
-              className="object-contain p-2"
-              sizes="(max-width: 640px) 192px, 224px"
+              className="object-contain object-center p-2"
+              sizes="(max-width: 640px) 192px, 280px"
             />
             <span className="mt-2 rounded-full bg-pink-100 px-3 py-1 text-xs font-medium text-pink-700">Hair Care</span>
           </div>

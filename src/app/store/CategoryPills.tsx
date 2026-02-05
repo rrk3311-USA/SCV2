@@ -7,7 +7,8 @@ import { ROUTES } from "@/lib/constants";
 import { CATEGORIES } from "@/data/categories";
 
 /**
- * Shop by category – image tiles (not pills). Click resets to page 1.
+ * Shop by category – image tiles (not pills). Grayscale when inactive, color when active; black/white hover.
+ * Click resets to page 1.
  */
 export function CategoryPills() {
   const searchParams = useSearchParams();

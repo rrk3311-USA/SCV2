@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { TOP_PRODUCTS } from "@/data/products";
+import { TOP_PRODUCTS, TOP_12 } from "@/data/products";
 import { BLOG_POST_SLUGS } from "@/data/blog-posts";
 import { ROUTES } from "@/lib/constants";
 
@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}${ROUTES.shippingReturns}`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
     { url: `${BASE}${ROUTES.paymentPolicy}`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
     { url: `${BASE}${ROUTES.blog}`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE}/feeds/google-shopping`, lastModified: new Date(), changeFrequency: "daily", priority: 0.6 },
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = BLOG_POST_SLUGS.map((slug) => ({
@@ -34,5 +35,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...blogRoutes, ...productRoutes];
+  // Markdown product pages for GPT/SEO (TOP_12) – served at /product-pages/{slug}.md
+  const productPageMdSlug = (slug: string) => slug.replace(/[^a-zA-Z0-9-_]/g, "-");
+  const productPageRoutes: MetadataRoute.Sitemap = TOP_12.map((p) => ({
+    url: `${BASE}/product-pages/${productPageMdSlug(p.slug)}.md`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...blogRoutes, ...productRoutes, ...productPageRoutes];
 }

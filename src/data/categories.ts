@@ -16,6 +16,7 @@ export const CATEGORY_ID_TO_PRODUCT_CATEGORIES: Record<string, string[]> = {
   womens: ["Women's Health"],
   eye: ["Eye Health"],
   weight: ["Weight Loss"],
+  /** Bundle Deals = 2-packs, 3-packs, 5-packs, any multi-bottle product. */
   bundles: ["Bundle Deals"],
   legacy: ["Legacy"],
   unisex: ["Unisex"],

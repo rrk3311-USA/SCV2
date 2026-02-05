@@ -10,6 +10,7 @@
  *   so product pages match the main site. Generate with: node SCV2/scripts/sync-products-from-site.js
  *
  * Images: relative URLs (e.g. /images/products/{sku}/01.png); transparent hero style on product pages.
+ * Full image list for swipe: product-images.json (keyed by SKU). Generate with: node scripts/sync-product-images.js
  */
 
 const IMAGE_BASE = "";
@@ -20,6 +21,14 @@ try {
   siteCopyBySku = require("./products-from-site.json") as typeof siteCopyBySku;
 } catch {
   // products-from-site.json not present; run: node SCV2/scripts/sync-products-from-site.js
+}
+
+/** Full image list per SKU from public/images/products (run scripts/sync-product-images.js to refresh). */
+let productImagesBySku: Record<string, string[]> = {};
+try {
+  productImagesBySku = require("./product-images.json") as Record<string, string[]>;
+} catch {
+  // product-images.json not present; run: node scripts/sync-product-images.js
 }
 
 function imageUrls(paths: string[]): string[] {
@@ -67,15 +76,15 @@ export const SKU_TO_CATEGORY: Record<string, string> = {
   "52274-401": "Women's Health",
   "14179-504-2": "Weight Loss",
   "10786-807": "Eye Health",
-  "10786-807-2": "Eye Health",
-  "10786-807-3": "Eye Health",
+  "10786-807-2": "Bundle Deals",
+  "10786-807-3": "Bundle Deals",
   "B072MMW71X-1": "Women's Health",
-  "31412-404U-3": "Men's Health",
+  "31412-404U-3": "Bundle Deals",
   "1960-102": "Men's Health",
   "10777-810": "Weight Loss",
   "783325395333": "Unisex",
   "B01KB6CKV4": "Weight Loss",
-  "20647-507-3": "Lung Health",
+  "20647-507-3": "Bundle Deals",
   "5531-502": "Weight Loss",
   "1994-807-1": "Eye Health",
   "16715-401": "Women's Health",
@@ -198,7 +207,7 @@ export const TOP_PRODUCTS: Product[] = [
     sku: "10786-807-2",
     name: "Lutein Supplement for Eye Health Vision Support with Zeaxanthin 2 Pack 120 Capsules Total",
     price: 37.99,
-    category: "Best Sellers",
+    category: "Bundle Deals",
     short_description:
       "Premium eye health formula with 20mg Lutein and Zeaxanthin. Protects against blue light damage, supports macular health, and promotes clear vision. Essential nutrients for digital age eye protection.",
     description:
@@ -260,7 +269,7 @@ export const TOP_PRODUCTS: Product[] = [
     sku: "31412-404U-3",
     name: "Success Chemistry UTI Relief 3-Pack - 60 Capsules Each - Natural D-Mannose & Cranberry Formula for Urinary Health Support - Vegan Cellulose Capsules - 3-Month Supply",
     price: 49.99,
-    category: "Unisex",
+    category: "Bundle Deals",
     short_description:
       "Powerful urinary tract support with clinically-studied D-Mannose and concentrated Cranberry extract. Prevents UTI recurrence, supports bladder health, and promotes urinary tract wellness. Vegan cellulose capsules, 3-month supply.",
     description:
@@ -417,7 +426,7 @@ export const TOP_PRODUCTS: Product[] = [
     sku: "20647-507-3",
     name: "3 Bottle - BUNDLE DEAL - NEW LUNG - Lung Cleanse",
     price: 45,
-    category: "Lung Health",
+    category: "Bundle Deals",
     short_description:
       "Comprehensive lung cleanse formula with natural herbs and nutrients. Supports respiratory health, promotes clear breathing, and aids lung detoxification. Ideal for smokers, ex-smokers, or anyone seeking respiratory wellness. 3-month supply.",
     description:
@@ -600,6 +609,7 @@ export function getProductBySlug(slug: string): Product | undefined {
   const product = TOP_PRODUCTS.find((p) => p.slug === slug);
   if (!product) return undefined;
   const site = siteCopyBySku[product.sku];
+  const scannedImages = productImagesBySku[product.sku];
   const merged = site
     ? {
         ...product,
@@ -611,7 +621,11 @@ export function getProductBySlug(slug: string): Product | undefined {
         ...(site.faqs != null && { faqs: site.faqs }),
       }
     : product;
-  return resolveProductForDisplay(merged);
+  const withImages =
+    scannedImages?.length > 0
+      ? { ...merged, images: imageUrls(scannedImages) }
+      : merged;
+  return resolveProductForDisplay(withImages);
 }
 
 export function getProductBySku(sku: string): Product | undefined {
@@ -640,6 +654,14 @@ export const TOP_7: Product[] = TOP_PRODUCTS.slice(0, 7);
 
 /** Top sellers: single-bottle products only (no 2-packs, 3-packs, bundle deals). */
 export const TOP_SELLERS_SINGLE_BOTTLE: Product[] = TOP_PRODUCTS.filter(isSingleBottle).slice(0, 7);
+
+/** SKUs to exclude from home "top 8 recent" (e.g. mango drops, yoni). */
+const EXCLUDE_FROM_TOP_8_RECENT = new Set(["1960-102", "5531-502"]);
+
+/** Top 8 recent: single-bottle only, no 2/3-packs, no mango drops or yoni. Used for home Top Sellers. */
+export const TOP_8_RECENT: Product[] = TOP_PRODUCTS.filter(
+  (p) => isSingleBottle(p) && !EXCLUDE_FROM_TOP_8_RECENT.has(p.sku)
+).slice(0, 8);
 
 /** Best-seller slug order for shop: top 12 appear first, then the rest. */
 export const BEST_SELLER_SLUGS: string[] = TOP_12.map((p) => p.slug);

@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 
 /**
- * Product images: swipe only. No zoom, no open-to-gallery.
- * One image at a time on mobile/desktop; horizontal scroll with scroll-snap.
+ * Product images: swipe/slide only. No zoom, no click-to-open, no gallery/lightbox.
+ * Horizontal scroll with scroll-snap; touchAction pan-x for swipe. Images are not clickable.
  */
 type Props = {
   images: string[];

@@ -67,8 +67,30 @@ export default async function ProductPage({ params }: Props) {
     className?: string;
   }>;
 
+  const productUrl = `${SITE_BASE}${ROUTES.product(product.slug)}`;
+  const imageUrl = product.image.startsWith("http") ? product.image : `${SITE_BASE}${product.image}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.sku,
+    ...(product.gtin && { gtin13: product.gtin }),
+    brand: { "@type": "Brand", name: "Success Chemistry" },
+    image: product.images?.length ? product.images.map((src) => (src.startsWith("http") ? src : `${SITE_BASE}${src}`)) : [imageUrl],
+    url: productUrl,
+    description: product.short_description ?? product.description ?? product.name,
+    offers: {
+      "@type": "Offer",
+      url: productUrl,
+      priceCurrency: "USD",
+      price: product.price,
+      availability: "https://schema.org/InStock",
+    },
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ViewItemTracker product={{ slug: product.slug, sku: product.sku, name: product.name, price: product.price, category: product.category }} />
       <RecentlyViewedTracker slug={product.slug} name={product.name} image={product.image} />
       <Container className="py-6 sm:py-10">
@@ -134,8 +156,8 @@ export default async function ProductPage({ params }: Props) {
           sku={product.sku}
           name={product.name}
           price={product.price}
-          productUrl={`${SITE_BASE}${ROUTES.product(product.slug)}`}
-          imageUrl={product.image.startsWith("http") ? product.image : `${SITE_BASE}${product.image}`}
+          productUrl={productUrl}
+          imageUrl={imageUrl}
         />
 
         <RecentlyViewed excludeSlug={product.slug} />

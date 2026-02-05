@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Trophy, ListBullets } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/Container";
+import { getVisitorCount } from "@/lib/constants";
 import { TOTAL_PRODUCTS } from "@/data/products";
 import { CategoryPills } from "./CategoryPills";
 import { StoreProductsList } from "./StoreProductsList";
@@ -39,7 +40,7 @@ export default function StorePage() {
         </section>
       </Container>
 
-      {/* Shop hero – green chemistry / lab flask image */}
+      {/* Shop hero – visitor count (actual from env) + frosted map with live-style pins */}
       <section
         className="relative flex min-h-[250px] flex-col justify-end bg-[#2854a6] bg-cover bg-center bg-no-repeat sm:min-h-[300px]"
         style={{ backgroundImage: "url('/images/home/lab.jpg')" }}
@@ -49,7 +50,7 @@ export default function StorePage() {
         <div className="relative z-10 px-5 py-8 text-center sm:px-6 sm:py-10">
           <div className="mx-auto max-w-4xl">
             <h3 className="mb-4 text-lg font-semibold text-white drop-shadow-md sm:text-xl">
-              Trusted by Over 50,000+ Happy Customers
+              Trusted by {getVisitorCount()} Happy Customers
             </h3>
             <p
               className="mb-2 inline-block rounded-xl px-6 py-3 text-3xl font-extrabold text-white sm:text-4xl"
@@ -61,7 +62,7 @@ export default function StorePage() {
                 textShadow: "0 2px 8px rgba(0,0,0,0.3)",
               }}
             >
-              50,000+
+              {getVisitorCount()}
             </p>
             <p className="text-base text-white/95 drop-shadow sm:text-lg">
               Join thousands who&apos;ve transformed their health with our premium supplements

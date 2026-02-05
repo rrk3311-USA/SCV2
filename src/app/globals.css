@@ -81,7 +81,73 @@ body {
 }
 
 .sticky-cart-slide-up {
-  animation: slideUp 0.3s ease-out;
+  animation: slideUp 0.4s ease-out;
+}
+
+/* Header divider – slow flowing gradient (same palette, gentle flow) */
+@keyframes header-divider-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.header-divider-gradient {
+  background: linear-gradient(
+    90deg,
+    #667eea 0%,
+    #764ba2 25%,
+    #f093fb 50%,
+    #4facfe 75%,
+    #667eea 100%
+  );
+  background-size: 200% 100%;
+  animation: header-divider-flow 14s linear infinite;
+}
+
+/* Sticky cart top strip – flowing gradient, other direction, half as fast */
+@keyframes sticky-cart-gradient-flow {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.sticky-cart-gradient-strip {
+  background: linear-gradient(
+    90deg,
+    #667eea 0%,
+    #764ba2 15%,
+    #f093fb 30%,
+    #4facfe 45%,
+    #fbbf24 60%,
+    #34d399 75%,
+    #667eea 100%
+  );
+  background-size: 200% 100%;
+  animation: sticky-cart-gradient-flow 8s linear infinite;
+}
+
+/* Visitor map – pulsing pin (live visitor look) */
+@keyframes visitor-pin-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.9;
+    border-color: #2854a6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+    border-color: rgba(40, 84, 166, 0.3);
+  }
+}
+
+.visitor-pin-pulse {
+  animation: visitor-pin-pulse 2s ease-out infinite;
 }
 
 /* Selected bundle option – long cinematic idle: text grows and shifts to gold */

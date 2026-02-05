@@ -7,7 +7,8 @@
     "dev": "next dev -p 8000",
     "build": "next build",
     "start": "next start -p 8000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-product-md": "tsx scripts/generate-product-markdown.ts"
   },
   "dependencies": {
     "@medusajs/js-sdk": "^2.8.0",
@@ -26,6 +27,7 @@
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
+    "tsx": "^4.21.0",
     "typescript": "^5.5.4"
   }
 }

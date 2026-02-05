@@ -35,6 +35,18 @@ export function PayPalProductButtons({ sku, name, price, quantity = 1 }: PayPalP
   const [error, setError] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
 
+  /** Zoid is PayPal's iframe lib; "zoid destroyed all components" happens on unmount/navigation – not a real user error. */
+  function setErrorIfUserFacing(msg: string | null) {
+    if (!msg) {
+      setError(null);
+      return;
+    }
+    const zoidDestroyed =
+      /zoid.*destroyed|destroyed.*components/i.test(msg) || msg.includes("zoid destroyed");
+    if (zoidDestroyed) return;
+    setError(msg);
+  }
+
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
 
@@ -124,18 +136,18 @@ export function PayPalProductButtons({ sku, name, price, quantity = 1 }: PayPalP
               reportPurchase(orderId, amount);
               window.location.href = `/order-confirmation?orderId=${orderId}`;
             } else {
-              setError(result.error || "Payment failed");
+              setErrorIfUserFacing(result.error || "Payment failed");
             }
           },
           onError: (err: Error) => {
-            setError(err?.message || "PayPal error");
+            setErrorIfUserFacing(err?.message || "PayPal error");
           },
         })
           .render(containerRef.current)
           .then(() => mounted && setLoaded(true))
-          .catch((err) => mounted && setError(err?.message || "Failed to render buttons"));
+          .catch((err) => mounted && setErrorIfUserFacing(err?.message || "Failed to render buttons"));
       })
-      .catch((err) => mounted && setError(err?.message || "Failed to load PayPal"));
+      .catch((err) => mounted && setErrorIfUserFacing(err?.message || "Failed to load PayPal"));
 
     return () => {
       mounted = false;
