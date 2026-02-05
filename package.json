@@ -1,56 +1,30 @@
 {
-  "name": "success-chemistry",
-  "version": "1.0.0",
-  "description": "E-commerce site for Success Chemistry",
-  "type": "module",
+  "name": "scv2",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Success Chemistry V2 – Medusa storefront with shadcn/ui and Phosphor icons",
   "scripts": {
-    "dev": "vite",
-    "build": "npm run build:all",
-    "build:vite": "vite build",
-    "preview": "vite preview",
-    "server": "node server/index.js",
-    "start": "node local-server.js",
-    "local": "node local-server.js",
-    "life-jet": "cd deploy-site/life-jet && npm run dev",
-    "life-jet:build": "cd deploy-site/life-jet && npm run build",
-    "build:all": "cd deploy-site/life-jet && npm install && npm run build && cd ../.. && echo '✅ All builds complete'",
-    "test:telegram": "node test-telegram.js",
-    "test:zia": "node test-zia-api.js",
-    "test:purchase": "node test-purchase-flow.js",
-    "sclera:i18n": "node deploy-site/sclera/generate-full-i18n-pages.js",
-    "mercor:pdf": "node deploy-site/generate-mercor-pdf.js",
-    "pocketbase": "cd pocketbase && ./start.sh",
-    "pb:migrate": "cd pocketbase && node migrate-products.js"
+    "dev": "next dev -p 8000",
+    "build": "next build",
+    "start": "next start -p 8000",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@paypal/agent-toolkit": "^1.8.0",
-    "amazon-sp-api": "^1.2.0",
-    "axios": "^1.6.2",
-    "cors": "^2.8.5",
-    "csv-parse": "^6.1.0",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "formdata-node": "^6.0.3",
-    "google-ads-api": "^22.0.0",
-    "mysql2": "^3.16.2",
-    "node-fetch": "^3.3.2",
-    "node-telegram-bot-api": "^0.67.0",
-    "nodemailer": "^7.0.13",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "stripe": "^14.10.0",
-    "xlsx": "^0.18.5"
+    "@medusajs/js-sdk": "^2.8.0",
+    "@phosphor-icons/react": "^2.1.6",
+    "clsx": "^2.1.0",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.16",
-    "playwright": "^1.58.0",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0",
-    "vercel": "^50.7.1",
-    "vite": "^5.0.8"
-  },
-  "optionalDependencies": {
-    "better-sqlite3": "^9.6.0"
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.4"
   }
 }

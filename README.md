@@ -1,191 +1,53 @@
-# Success Chemistry
+# SCV2 – Success Chemistry V2
 
-E-commerce platform for Success Chemistry supplements.
+**Project folder:** `success007/SCV2` (this folder).  
+**This is the only SCV2 project.** Do not use `deploy-site/life-jet/app/v2/` – that was a duplicate and is removed.
 
-## 🚀 Quick Start
+## Entry / “index”
 
-### Backend (PocketBase)
+- **Root layout:** `src/app/layout.tsx` (wraps all pages)
+- **Home page (index):** `src/app/page.tsx` – clone of main site (localhost:8080): same sections and media only, clean code (hero, Top 12, Why Trust Us, video+LLE, factory collage, features, Women's Balance, Chat CTA).
+- **Store:** `src/app/store/page.tsx` – categories + **transparent floating bottles** (no product cards; bottles only with drop-shadow, link to product).
 
-```bash
-# Start PocketBase backend
-npm run pocketbase
+Next.js App Router has no `index.html`; the app entry is `layout.tsx` + `page.tsx`.
 
-# Or manually
-cd pocketbase
-./start.sh
-```
+## Vercel (scv2-success-chemistry)
 
-**Admin UI**: http://localhost:8090/_/
+The project [scv2-success-chemistry](https://vercel.com/rrk3311-usas-projects/scv2-success-chemistry) should deploy **this SCV2 app**. In Vercel:
 
-See [pocketbase/QUICKSTART.md](./pocketbase/QUICKSTART.md) for full setup.
+- Set **Root Directory** to `SCV2` (so the build runs from this folder).
+- Build command: `npm run build` (Next.js).
+- Push to `main` to trigger a deploy; the new home page and floating-bottles shop will be live there.
 
-### Frontend (Static Site)
-
-```bash
-# Start local development server
-npm start
-
-# Or
-npm run local
-```
-
-**Site**: http://localhost:8080
-
-## 📁 Project Structure
-
-```
-success007/
-├── pocketbase/              # PocketBase backend (replaces Medusa)
-│   ├── QUICKSTART.md       # 5-minute setup guide
-│   ├── README.md           # Full documentation
-│   ├── start.sh            # Start script (downloads PocketBase)
-│   ├── migrate-products.js # Import products from old data
-│   ├── Dockerfile          # For Railway/Fly deployment
-│   └── fly.toml            # Fly.io config
-│
-├── deploy-site/            # Main static site
-│   ├── index.html         # Homepage
-│   ├── shop/              # Product catalog
-│   ├── cart/              # Shopping cart
-│   ├── contact/           # Contact page
-│   ├── life-jet/          # Life OS app (Next.js)
-│   └── includes/          # Shared components
-│
-├── trading-bot-concept/   # Trading bot experiments
-│   ├── crypto-momentum-bot/
-│   └── workflow-builder/
-│
-├── vision-board/          # Vision board app
-├── cursor-theme-hud-net/  # Cursor theme
-└── docs/                  # Documentation
-```
-
-## 🛠️ Tech Stack
-
-### Backend
-- **[PocketBase](https://pocketbase.io)** - All-in-one backend (DB, auth, files, admin UI)
-  - SQLite database
-  - Built-in auth & file storage
-  - Auto-generated REST API
-  - Real-time subscriptions
-  - No infrastructure needed!
-
-### Frontend
-- **Static HTML/CSS/JS** - Main site
-- **Next.js** - Life Jet app
-- **React** - Interactive components
-
-### Deployment
-- **Vercel** - Static site hosting (free)
-- **Fly.io / Railway** - PocketBase hosting (free tier)
-
-## 📦 Available Scripts
+## Run locally
 
 ```bash
-# Backend
-npm run pocketbase          # Start PocketBase
-npm run pb:migrate          # Import products to PocketBase
-
-# Frontend
-npm start                   # Start local dev server
-npm run local               # Same as above
-
-# Life Jet
-npm run life-jet            # Dev server
-npm run life-jet:build      # Build for production
-
-# Build
-npm run build               # Build all projects
-npm run build:all           # Same as above
-
-# Testing
-npm run test:zia            # Test Zia API
-npm run test:telegram       # Test Telegram bot
+cd SCV2
+npm install
+npm run dev
 ```
 
-## 🚢 Deployment
+Then open **http://localhost:8000**
 
-### Deploy PocketBase Backend
+## Media (images / video)
 
-**Option 1: Fly.io (Recommended)**
+Media is wired so it works **locally without copying**. `SCV2/public/images` and `SCV2/public/videos` are symlinks to `deploy-site/public/images` and `deploy-site/public/videos`. Category thumbnails are linked from `deploy-site/images/Catagory Thumbnail Images` into `deploy-site/public/images/` so the store page gets them too.
 
-```bash
-cd pocketbase
-fly launch
-fly deploy
-```
+- **Local preview:** Just run `npm run dev` in SCV2; images and video load from deploy-site via the symlinks. No commit or deploy needed.
+- **Deploy (e.g. Vercel):** Symlinks may not be followed by the build. For production you can either copy `deploy-site/public/images` and `deploy-site/public/videos` into `SCV2/public/` before building, or use a build step that copies/syncs media, or host media on a CDN and point `next.config.js` / env at that base URL.
 
-**Option 2: Railway**
+## Main files
 
-1. Connect GitHub repo
-2. Select `pocketbase` folder
-3. Deploy!
-
-See [pocketbase/README.md](./pocketbase/README.md) for details.
-
-### Deploy Static Site
-
-**Vercel (Recommended)**
-
-```bash
-vercel deploy
-```
-
-Or connect your GitHub repo to Vercel dashboard.
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create `.env` in root:
-
-```bash
-# PocketBase
-PB_URL=http://localhost:8090
-PB_ADMIN_EMAIL=admin@successchemistry.com
-PB_ADMIN_PASSWORD=your-password
-
-# Zoho (optional)
-ZOHO_CLIENT_ID=your-client-id
-ZOHO_CLIENT_SECRET=your-secret
-
-# PayPal (optional)
-PAYPAL_CLIENT_ID=your-client-id
-PAYPAL_CLIENT_SECRET=your-secret
-```
-
-## 📚 Documentation
-
-- **[PocketBase Setup](./pocketbase/QUICKSTART.md)** - Get started in 5 minutes
-- **[PocketBase Full Docs](./pocketbase/README.md)** - Complete guide
-- **[Deployment Guide](./docs/)** - Deploy to production
-
-## 🎯 What Changed from Medusa
-
-### Before (Medusa)
-- ❌ Needed Postgres database
-- ❌ Needed Redis cache
-- ❌ Complex deployment
-- ❌ Multiple services to manage
-- ❌ Higher hosting costs
-
-### Now (PocketBase)
-- ✅ Single binary (no external DB)
-- ✅ Built-in SQLite
-- ✅ Simple deployment
-- ✅ One service to manage
-- ✅ Free tier available
-
-## 🔗 Links
-
-- **Production**: https://successchemistry.com
-- **PocketBase Docs**: https://pocketbase.io/docs
-- **GitHub**: https://github.com/pocketbase/pocketbase
-
-## 📄 License
-
-MIT
-
----
-
-Made with ❤️ by Success Chemistry
+| What            | Path |
+|-----------------|------|
+| Layout          | `src/app/layout.tsx` |
+| Home            | `src/app/page.tsx` |
+| Store           | `src/app/store/page.tsx` |
+| Store product list | `src/app/store/StoreProductsList.tsx` (floating bottles, no cards) |
+| Container       | `src/components/Container.tsx` |
+| Header / Footer | `src/components/Header.tsx`, `Footer.tsx` |
+| Product card    | `src/components/ProductCard.tsx` (used on home Top 12 only; store uses floating bottles) |
+| Category card   | `src/components/CategoryCard.tsx` |
+| Products data   | `src/data/products.ts` (TOP_12, TOP_PRODUCTS) |
+| Categories      | `src/data/categories.ts` |
+| Routes          | `src/lib/constants.ts` (ROUTES) |

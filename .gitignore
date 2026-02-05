@@ -1,27 +1,24 @@
+# Dependencies
 node_modules
-dist
-*.db
+.pnp
+.pnp.js
+
+# Build
+.next/
+out/
+
+# Env
 .env
-.DS_Store
-
-# Local Netlify folder
-.netlify
-
-# Large files - review repo with PSD files
-review-repo/
-.vercel
 .env*.local
 
-# Large image folders that shouldn't be deployed
-deploy-site/images/UGC & Review/
-deploy-site/images/SC backgrounds/
-deploy-site/images/GMP proccess images/
-deploy-site/images/Great images to sort/
-deploy-site/public/images/UGC & Review/
-deploy-site/public/images/SC backgrounds/
-deploy-site/public/images/GMP proccess images/
-.cursor/debug.log
-.cursor/debug.log
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Personal secrets – never deploy, never commit
-secrets-personal/
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

@@ -1,0 +1,7 @@
+{
+  "/store/page": "app/store/page.js",
+  "/terms-of-service/page": "app/terms-of-service/page.js",
+  "/payment-policy/page": "app/payment-policy/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/product/[slug]/page": "app/product/[slug]/page.js"
+}
