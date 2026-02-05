@@ -44,33 +44,33 @@ export function StickyCartBanner() {
       {/* Top gradient strip – animated color flow (blue, purple, pink, cyan, yellow, green) */}
       <div className="sticky-cart-gradient-strip h-1.5 w-full shrink-0" aria-hidden />
       <div
-        className="flex items-center justify-between gap-4 px-5 py-4 sm:gap-6 sm:px-6"
+        className="flex min-h-0 w-full items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 sm:py-4"
         style={{
           background: "linear-gradient(135deg, #2854a6 0%, #1e3f73 100%)",
           borderTop: "1px solid rgba(255,255,255,0.2)",
         }}
       >
-      <div className="flex flex-1 items-center gap-4">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15">
-          <ShoppingCart size={24} weight="regular" className="text-white" />
+        <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 sm:h-11 sm:w-11">
+            <ShoppingCart size={24} weight="regular" className="text-white" />
+          </div>
+          <div className="min-w-0">
+            <p className="truncate font-semibold text-white text-sm sm:text-lg">{itemsLabel}</p>
+            <p className="text-xs text-white/90 sm:text-sm">${summary.total.toFixed(2)}</p>
+          </div>
         </div>
-        <div>
-          <p className="font-semibold text-white sm:text-lg">{itemsLabel}</p>
-          <p className="text-sm text-white/90">${summary.total.toFixed(2)}</p>
-        </div>
-      </div>
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => setDismissed(true)}
-          aria-label="Close"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20"
-        >
-          <X size={20} weight="bold" />
-        </button>
-        <Link
-          href={ROUTES.cart}
-          className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold no-underline transition hover:opacity-95"
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={() => setDismissed(true)}
+            aria-label="Close"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20 sm:h-10 sm:w-10"
+          >
+            <X size={18} weight="bold" />
+          </button>
+          <Link
+            href={ROUTES.cart}
+            className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-4 py-2 text-xs font-semibold no-underline transition hover:opacity-95 sm:gap-2 sm:px-5 sm:py-2.5 sm:text-sm"
           style={{
             background: "linear-gradient(145deg, #e8e8e8 0%, #c0c0c0 35%, #a8a8a8 70%, #c8c8c8 100%)",
             color: "#2d3748",

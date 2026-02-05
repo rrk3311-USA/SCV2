@@ -166,10 +166,9 @@ body {
   animation: option-selected-cinematic 2.8s ease-in-out forwards;
 }
 
+/* Sticky cart: full width on mobile, no extra padding that could distort */
 @media (max-width: 640px) {
   .sticky-cart-slide-up {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 0;
   }
 }
