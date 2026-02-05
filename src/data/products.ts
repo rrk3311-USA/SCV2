@@ -17,6 +17,7 @@ const IMAGE_BASE = "";
 
 /** Site/JSON copy overlay (description, short_description, etc.) keyed by SKU. */
 let siteCopyBySku: Record<string, {
+  name?: string;
   description?: string;
   short_description?: string;
   suggested_use?: string;
@@ -623,6 +624,7 @@ export function getProductBySlug(slug: string): Product | undefined {
   const merged = site
     ? {
         ...product,
+        ...(site.name != null && { name: site.name }),
         ...(site.description != null && { description: site.description }),
         ...(site.short_description != null && { short_description: site.short_description }),
         ...(site.suggested_use != null && { suggested_use: site.suggested_use }),
