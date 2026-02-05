@@ -66,7 +66,7 @@ export function StickyCartBanner() {
             aria-label="Close"
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20 sm:h-10 sm:w-10"
           >
-            <X size={18} weight="bold" />
+            <X size={20} weight="bold" />
           </button>
           <Link
             href={ROUTES.cart}
