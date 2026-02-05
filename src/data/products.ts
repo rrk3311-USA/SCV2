@@ -16,7 +16,19 @@
 const IMAGE_BASE = "";
 
 /** Site/JSON copy overlay (description, short_description, etc.) keyed by SKU. */
-let siteCopyBySku: Record<string, { description?: string; short_description?: string; suggested_use?: string; supplement_facts?: string; ingredients?: string; faqs?: { question: string; answer: string }[] }> = {};
+let siteCopyBySku: Record<string, {
+  description?: string;
+  short_description?: string;
+  suggested_use?: string;
+  supplement_facts?: string;
+  ingredients?: string;
+  upc?: string;
+  gtin?: string;
+  weight?: string;
+  dimensions?: string;
+  key_search_terms?: string;
+  faqs?: { question: string; answer: string }[]
+}> = {};
 try {
   siteCopyBySku = require("./products-from-site.json") as typeof siteCopyBySku;
 } catch {
@@ -618,6 +630,11 @@ export function getProductBySlug(slug: string): Product | undefined {
         ...(site.suggested_use != null && { suggested_use: site.suggested_use }),
         ...(site.supplement_facts != null && { supplement_facts: site.supplement_facts }),
         ...(site.ingredients != null && { ingredients: site.ingredients }),
+        ...(site.upc != null && { upc: site.upc }),
+        ...(site.gtin != null && { gtin: site.gtin }),
+        ...(site.weight != null && { weight: site.weight }),
+        ...(site.dimensions != null && { dimensions: site.dimensions }),
+        ...(site.key_search_terms != null && { key_search_terms: site.key_search_terms }),
         ...(site.faqs != null && { faqs: site.faqs }),
       }
     : product;

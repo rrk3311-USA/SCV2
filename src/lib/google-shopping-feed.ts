@@ -6,7 +6,7 @@
  * can link Merchant Center reviews to our product URLs.
  */
 
-import { TOP_PRODUCTS } from "@/data/products";
+import { TOP_PRODUCTS, getProductBySku } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
 import type { Product } from "@/data/products";
 
@@ -67,7 +67,10 @@ export function buildGoogleShoppingFeedXml(): string {
 
   let items: string;
   try {
-    items = (TOP_PRODUCTS || []).filter((p) => {
+    // Get merged products with overlay data (GTINs, descriptions, etc.)
+    const mergedProducts = TOP_PRODUCTS.map((p) => getProductBySku(p.sku)).filter((p): p is Product => p != null);
+
+    items = mergedProducts.filter((p) => {
       const imageLink = imageUrl(p, base, p.image);
       return !!imageLink && imageLink.startsWith("https://");
     }).map((p) => {
