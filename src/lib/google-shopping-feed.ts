@@ -16,9 +16,8 @@ const CONSUMER_NOTICE =
   "These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.";
 
 export function getFeedBaseUrl(): string {
-  const raw =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.successchemistry.com");
+  // Always use production domain for Google Shopping feed to avoid mismatched domains
+  const raw = process.env.NEXT_PUBLIC_SITE_URL || "https://www.successchemistry.com";
   const base = raw.replace(/\/$/, "");
   return base.startsWith("http://") ? base.replace("http://", "https://") : base;
 }
@@ -108,6 +107,7 @@ export function buildGoogleShoppingFeedXml(): string {
       <g:mpn>${escapeXml(p.sku)}</g:mpn>`}
       <g:merchant_item_id>${escapeXml(p.sku)}</g:merchant_item_id>
 ${additionalImages ? `\n${additionalImages}` : ""}
+      <g:excluded_destination>Shopping_ads_KR</g:excluded_destination>
       <g:consumer_notice>${escapeXml(CONSUMER_NOTICE)}</g:consumer_notice>
       <g:custom_label_0>${escapeXml(p.category)}</g:custom_label_0>
       <g:custom_label_1>${escapeXml(customLabel1)}</g:custom_label_1>
