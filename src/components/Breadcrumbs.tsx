@@ -10,6 +10,7 @@ import {
   ChatCircle,
   CaretRight,
   FileText,
+  Sparkle,
 } from "@phosphor-icons/react";
 
 type Segment = { href: string; label: string; Icon: typeof House };
@@ -32,7 +33,7 @@ function getBreadcrumbs(pathname: string): Segment[] {
     return [
       { href: ROUTES.home, label: "Home", Icon: House },
       { href: ROUTES.store, label: "Shop", Icon: Flask },
-      { href: pathname, label: "Product", Icon: Flask },
+      { href: pathname, label: "Product", Icon: Sparkle },
     ];
   }
   return [{ href: ROUTES.home, label: "Home", Icon: House }];

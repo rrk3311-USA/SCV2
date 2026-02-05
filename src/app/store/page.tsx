@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { Trophy, ListBullets } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/Container";
 import { TOTAL_PRODUCTS } from "@/data/products";
 import { CategoryPills } from "./CategoryPills";
@@ -21,8 +22,16 @@ export default function StorePage() {
           <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">
             All Products <span className="font-normal text-slate-500">({TOTAL_PRODUCTS})</span>
           </h2>
-          <p className="mt-0.5 text-sm text-slate-600">
-            Top 12 sellers first. Categories above (Bundle Deals last). Use filters to narrow.
+          <p className="mt-0.5 flex flex-wrap items-center gap-2 text-sm text-slate-600 pb-4">
+            <span className="inline-flex items-center gap-1.5">
+              <Trophy className="h-4 w-4 shrink-0 text-amber-500" weight="fill" aria-hidden />
+              Top sellers first
+            </span>
+            <span className="text-slate-400">·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <ListBullets className="h-4 w-4 shrink-0 text-slate-500" aria-hidden />
+              then the rest
+            </span>
           </p>
           <Suspense fallback={<div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 max-w-5xl mx-auto"><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /></div>}>
             <StoreProductsList />

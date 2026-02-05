@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -48,6 +50,15 @@ body {
   -webkit-mask-repeat: no-repeat;
 }
 
+/* Swipe strip – hide scrollbar (product images: swipe only, no zoom) */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Carousel – matches 8080 */
 .carousel .track-inner::-webkit-scrollbar {
   height: 10px;
@@ -71,6 +82,22 @@ body {
 
 .sticky-cart-slide-up {
   animation: slideUp 0.3s ease-out;
+}
+
+/* Selected bundle option – long cinematic idle: text grows and shifts to gold */
+@keyframes option-selected-cinematic {
+  0% {
+    transform: scale(1);
+    color: rgba(255, 255, 255, 1);
+  }
+  100% {
+    transform: scale(1.08);
+    color: rgb(252, 211, 77); /* amber-300 / golden */
+  }
+}
+
+.option-selected-cinematic {
+  animation: option-selected-cinematic 2.8s ease-in-out forwards;
 }
 
 @media (max-width: 640px) {

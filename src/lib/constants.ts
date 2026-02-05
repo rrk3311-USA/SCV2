@@ -36,3 +36,8 @@ export const CONTACT = {
 
 /** Free shipping threshold (USD) for cart upsell messaging. */
 export const FREE_SHIPPING_THRESHOLD = 50;
+
+/** Site origin for absolute URLs (e.g. Yotpo, OG tags). Set NEXT_PUBLIC_SITE_URL in production. */
+export const SITE_BASE =
+  (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_SITE_URL) ||
+  "https://www.successchemistry.com";

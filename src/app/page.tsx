@@ -6,14 +6,12 @@ import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductHeroImage } from "@/components/ProductHeroImage";
 import { ViewItemListTracker } from "@/components/ViewItemListTracker";
 import { HomeVideo } from "@/components/HomeVideo";
-import { TOP_7 } from "@/data/products";
+import { TOP_SELLERS_SINGLE_BOTTLE } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
 import { Flask, Factory, Leaf, CaretRight } from "@phosphor-icons/react/dist/ssr";
 
-/** Top sellers shown in homepage carousel (exclude specific products). */
-const CAROUSEL_PRODUCTS = TOP_7.filter(
-  (p) => p.slug !== "1960-102" && p.slug !== "B072MMW71X-1"
-);
+/** Top sellers: single bottles only (no 2-packs, 3-packs, or bundle deals). */
+const CAROUSEL_PRODUCTS = TOP_SELLERS_SINGLE_BOTTLE;
 
 /** Home page – clone of main site (localhost:8080) layout and media only, clean code. */
 export default function HomePage() {
@@ -80,9 +78,34 @@ export default function HomePage() {
           />
           <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">Top Sellers</h2>
           <p className="mt-2 text-slate-600 text-sm sm:text-base">
-            Our best-selling supplements. Scroll the carousel or use the arrows. Tap any product to open its page.
+            Our best-selling supplements. Tap any product to open its page.
           </p>
-          <ProductCarousel products={CAROUSEL_PRODUCTS} />
+          {/* Carousel only on mobile */}
+          <div className="mt-4 md:hidden">
+            <ProductCarousel products={CAROUSEL_PRODUCTS} />
+          </div>
+          {/* Grid on desktop (no carousel) */}
+          <div className="mt-4 hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+            {CAROUSEL_PRODUCTS.map((p) => (
+              <Link
+                key={p.sku}
+                href={ROUTES.product(p.slug)}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white p-4 transition hover:border-slate-200 hover:shadow-md"
+              >
+                <div className="relative aspect-square w-full">
+                  <Image
+                    src={p.image}
+                    alt={p.name}
+                    fill
+                    className="object-contain p-2 transition group-hover:scale-[1.02]"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
+                <p className="mt-2 text-xs font-medium text-slate-500">{p.category}</p>
+                <p className="mt-0.5 line-clamp-2 font-semibold text-slate-900">{p.name}</p>
+              </Link>
+            ))}
+          </div>
           <p className="mt-6">
             <Link href={ROUTES.store} className="inline-flex items-center gap-1.5 font-medium text-[#2854a6] hover:underline">
               View all products
@@ -219,25 +242,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Women's Balance – transparent hero product image */}
-        <section className="mt-12 rounded-2xl border border-slate-200/80 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm sm:flex sm:items-center sm:gap-10 sm:p-8">
+        {/* Hair la Fleur – hero product spotlight */}
+        <section className="mt-12 rounded-2xl border border-slate-200/80 bg-gradient-to-br from-pink-50/80 to-white p-6 shadow-sm sm:flex sm:items-center sm:gap-10 sm:p-8">
           <div className="flex w-full max-w-[224px] flex-col items-center sm:w-72 sm:max-w-[280px] sm:shrink-0">
             <ProductHeroImage
-              src="/images/products/52274-401/01.png"
-              alt="Women's Balance Supplement"
+              src="/images/products/B072MMW71X-1/01.png"
+              alt="Hair la Fleur Maximum Strength Hair Volume and Regrowth Supplements"
               className="object-contain p-2"
               sizes="(max-width: 640px) 192px, 224px"
             />
-            <span className="mt-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">New Release</span>
+            <span className="mt-2 rounded-full bg-pink-100 px-3 py-1 text-xs font-medium text-pink-700">Hair Care</span>
           </div>
           <div className="mt-6 sm:mt-0">
-            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">Women's Balance — Now Available</h2>
+            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">Hair la Fleur — Maximum Strength Hair Volume & Regrowth</h2>
             <p className="mt-2 text-sm text-slate-600 sm:text-base">
-              Our newest formula supports feminine wellness with L-Arginine, Maca, Ashwagandha & Ginseng. Clean ingredients, made in the USA.
+              Advanced hair support with Horsetail, Bamboo & Peony extracts. May promote hair growth and support healthy skin & strong nails. Single bottle, 60 capsules, made in the USA.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link
-                href={ROUTES.product("52274-401")}
+                href={ROUTES.product("B072MMW71X-1")}
                 className="inline-flex items-center justify-center rounded-full bg-[#2854a6] px-5 py-2 text-sm font-semibold text-white no-underline shadow-md transition hover:opacity-90"
               >
                 View Product

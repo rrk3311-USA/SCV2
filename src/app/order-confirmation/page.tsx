@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { ROUTES } from "@/lib/constants";
 import { PurchaseTracker } from "@/components/PurchaseTracker";
+import { YotpoConversionTracker } from "@/components/YotpoConversionTracker";
 
 export const metadata = {
   title: "Order Confirmed – Success Chemistry",
@@ -16,6 +17,7 @@ export default async function OrderConfirmationPage({ searchParams }: Props) {
   return (
     <Container className="py-16 text-center">
       <PurchaseTracker orderId={orderId} value={Number.isFinite(value) ? value : undefined} />
+      <YotpoConversionTracker orderId={orderId} orderAmount={Number.isFinite(value) ? value : undefined} />
       <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Thank you for your order</h1>
       <p className="mt-3 text-slate-600">
         Your payment was successful. We&apos;ll send confirmation details to your email.

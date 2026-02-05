@@ -1,9 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { getProductBySlug } from "@/data/products";
-import { ROUTES } from "@/lib/constants";
+import { ROUTES, SITE_BASE } from "@/lib/constants";
 import {
   Package,
   Info,
@@ -12,11 +11,12 @@ import {
   ShoppingCart,
   Flask,
 } from "@phosphor-icons/react/dist/ssr";
-import { ProductHeroImage } from "@/components/ProductHeroImage";
+import { ProductImageSwipe } from "@/components/ProductImageSwipe";
 import { ProductPurchaseBlock } from "@/components/ProductPurchaseBlock";
 import { ViewItemTracker } from "@/components/ViewItemTracker";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { RecentlyViewedTracker } from "@/components/RecentlyViewedTracker";
+import { YotpoReviews } from "@/components/YotpoReviews";
 import type { Metadata } from "next";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -73,33 +73,9 @@ export default async function ProductPage({ params }: Props) {
       <RecentlyViewedTracker slug={product.slug} name={product.name} image={product.image} />
       <Container className="py-6 sm:py-10">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-          {/* Gallery */}
-          <div className="space-y-4">
-            <ProductHeroImage
-              src={product.image}
-              alt={product.name}
-              className="object-contain p-4"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-            />
-            {product.images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {product.images.slice(0, 6).map((src, i) => (
-                  <div
-                    key={i}
-                    className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-white"
-                  >
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      className="object-contain p-1"
-                      sizes="80px"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          {/* Gallery: swipe only, no zoom, no open-to-gallery */}
+          <div className="w-full">
+            <ProductImageSwipe images={product.images} alt={product.name} />
           </div>
 
           {/* Details */}
@@ -153,6 +129,14 @@ export default async function ProductPage({ params }: Props) {
             </ul>
           </section>
         )}
+
+        <YotpoReviews
+          sku={product.sku}
+          name={product.name}
+          price={product.price}
+          productUrl={`${SITE_BASE}${ROUTES.product(product.slug)}`}
+          imageUrl={product.image.startsWith("http") ? product.image : `${SITE_BASE}${product.image}`}
+        />
 
         <RecentlyViewed excludeSlug={product.slug} />
       </Container>

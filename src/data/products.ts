@@ -246,14 +246,14 @@ export const TOP_PRODUCTS: Product[] = [
     key_search_terms:
       "hair growth supplements, biotin for hair growth, natural hair vitamins, DHT blocker for hair loss, thicker hair supplements",
     images: imageUrls([
-      "/images/products/B072MMW71X-1/01.jpg",
+      "/images/products/B072MMW71X-1/01.png",
       "/images/products/B072MMW71X-1/02.jpg",
       "/images/products/B072MMW71X-1/03.jpg",
       "/images/products/B072MMW71X-1/04.jpg",
       "/images/products/B072MMW71X-1/05.jpg",
       "/images/products/B072MMW71X-1/06.png",
     ]),
-    image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/B072MMW71X-1/01.jpg`,
+    image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/B072MMW71X-1/01.png`,
   },
   {
     slug: "31412-404U-3",
@@ -624,11 +624,22 @@ export function getProductBySku(sku: string): Product | undefined {
 export const SCLERA_PRODUCT = TOP_PRODUCTS.find((p) => p.sku === "10786-807")!;
 export const STORE_PRODUCTS: Product[] = [SCLERA_PRODUCT];
 
+/** True if product is single-bottle only (no 2-pack, 3-pack, bundle deals). */
+function isSingleBottle(p: Product): boolean {
+  if (p.category === "Bundle Deals") return false;
+  const n = (p.name || "").toLowerCase();
+  if (/\d\s*[-]?\s*pack|\d\s*[-]?\s*bottle\s*bundle|bundle\s*deal/i.test(n)) return false;
+  return true;
+}
+
 /** Top 12 products for homepage and shop – clean slice, no legacy code. */
 export const TOP_12: Product[] = TOP_PRODUCTS.slice(0, 12);
 
 /** Top 7 best sellers – homepage carousel (transparent hero style). */
 export const TOP_7: Product[] = TOP_PRODUCTS.slice(0, 7);
+
+/** Top sellers: single-bottle products only (no 2-packs, 3-packs, bundle deals). */
+export const TOP_SELLERS_SINGLE_BOTTLE: Product[] = TOP_PRODUCTS.filter(isSingleBottle).slice(0, 7);
 
 /** Best-seller slug order for shop: top 12 appear first, then the rest. */
 export const BEST_SELLER_SLUGS: string[] = TOP_12.map((p) => p.slug);

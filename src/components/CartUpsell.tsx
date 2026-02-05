@@ -7,7 +7,7 @@ import { getProductBySlug } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/constants";
 import { AddToCartButton } from "@/components/AddToCartButton";
-import { CaretRight, Sparkle, Tag, Truck } from "@phosphor-icons/react";
+import { Sparkle, Tag, Truck } from "@phosphor-icons/react";
 
 type CartUpsellProps = {
   excludeSkus: string[];
@@ -79,21 +79,45 @@ export function CartUpsell({
       </p>
       <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {resolved.map((p) => {
-          const maxSave = p.bundle_options?.reduce((best, o) => Math.max(best, o.savePercent ?? 0), 0) ?? 0;
+          const basePrice = p.price;
+          const bundleOpts = p.bundle_options ?? [];
+          const maxSavePercent = bundleOpts.reduce((best, o) => Math.max(best, o.savePercent ?? 0), 0);
           const subscribeSave = p.subscribe_save_percent ?? 0;
-          const saveLabel = maxSave >= subscribeSave && maxSave > 0
-            ? `Save up to ${maxSave}%`
-            : subscribeSave > 0
-              ? `Subscribe & Save ${subscribeSave}%`
-              : null;
+          // Dollar savings only from bundles (adding more items: 2-pack, 3-pack vs that many singles)
+          const dollarSaveFromBundles =
+            bundleOpts.length > 0
+              ? Math.max(0, ...bundleOpts.map((o) => basePrice * o.quantity - o.price))
+              : 0;
+          const saveLabel =
+            maxSavePercent >= subscribeSave && maxSavePercent > 0
+              ? `Save up to ${maxSavePercent}%`
+              : subscribeSave > 0
+                ? `Subscribe & Save ${subscribeSave}%`
+                : null;
+          const hasDollarSave = dollarSaveFromBundles >= 0.5;
+          const dollarTag =
+            hasDollarSave &&
+            (dollarSaveFromBundles < 1
+              ? `Save $${dollarSaveFromBundles.toFixed(2)}`
+              : `Save $${Math.round(dollarSaveFromBundles)}`);
+          const showTagRow = saveLabel || dollarTag;
           return (
             <div
               key={p.sku}
               className="flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition hover:shadow-md"
             >
-              {saveLabel && (
-                <div className="bg-[#2854a6] px-2 py-1 text-center text-xs font-bold uppercase tracking-wide text-white">
-                  {saveLabel}
+              {showTagRow && (
+                <div className="flex flex-wrap items-center justify-start gap-1.5 px-3 py-1.5">
+                  {saveLabel && (
+                    <span className="rounded-md bg-[#2854a6] px-2 py-0.5 text-center text-xs font-bold uppercase tracking-wide text-white">
+                      {saveLabel}
+                    </span>
+                  )}
+                  {dollarTag && (
+                    <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 ring-1 ring-amber-200/80">
+                      {dollarTag}
+                    </span>
+                  )}
                 </div>
               )}
               <Link href={ROUTES.product(p.slug)} className="relative block aspect-square overflow-hidden bg-slate-50">
@@ -129,15 +153,6 @@ export function CartUpsell({
           );
         })}
       </div>
-      <p className="mt-4">
-        <Link
-          href={ROUTES.store}
-          className="inline-flex items-center gap-1 font-medium text-[#2854a6] hover:underline"
-        >
-          View all products
-          <CaretRight size={18} weight="bold" />
-        </Link>
-      </p>
     </section>
   );
 }

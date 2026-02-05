@@ -115,6 +115,7 @@ export function CartContents() {
 
   return (
     <>
+      <CartUpsell excludeSkus={cart.map((i) => i.sku)} subtotal={subtotal} title="Add more, save more" className="mt-8" />
       <div className="mt-8 space-y-6">
         <ul className="space-y-4">
           {cart.map((item) => {
@@ -193,39 +194,35 @@ export function CartContents() {
           })}
         </ul>
 
-        <div className="rounded-2xl border border-slate-200/80 bg-slate-50 p-6">
-          <p className="text-right text-xl font-bold text-slate-900">
+        <div className="rounded-2xl border border-white/20 bg-[#2854a6] p-6 shadow-md" style={{ background: "linear-gradient(135deg, #2854a6 0%, #1e3f73 100%)" }}>
+          <p className="text-right text-xl font-bold text-white">
             Subtotal: ${subtotal.toFixed(2)}
           </p>
-          <p className="mt-1 text-right text-sm text-slate-600">
+          <p className="mt-1 text-right text-sm text-white/90">
             Shipping & taxes calculated at checkout
           </p>
           {checkoutError && (
-            <p className="mt-2 text-right text-sm text-red-600" role="alert">
+            <p className="mt-2 text-right text-sm text-red-200" role="alert">
               {checkoutError}
             </p>
           )}
-          <div className="mt-4 flex flex-wrap justify-end gap-3">
-            <Link
-              href={ROUTES.store}
-              className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 no-underline transition hover:bg-slate-50"
-            >
-              <Flask size={20} weight="regular" />
-              Continue shopping
-            </Link>
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
             <button
               type="button"
               onClick={handleMedusaCheckout}
               disabled={checkoutLoading}
-              className="inline-flex rounded-full bg-[#2854a6] px-6 py-3 font-semibold text-white shadow-md transition hover:bg-[#1e3a8a] disabled:opacity-70"
+              className="inline-flex rounded-full px-6 py-3 font-semibold shadow-md transition disabled:opacity-70"
+              style={{
+                background: "linear-gradient(180deg, #FFC439 0%, #FFB700 100%)",
+                color: "#003087",
+                border: "1px solid rgba(0,48,135,0.3)",
+              }}
             >
               {checkoutLoading ? "Redirecting to PayPal…" : "Checkout with PayPal"}
             </button>
           </div>
         </div>
       </div>
-
-      <CartUpsell excludeSkus={cart.map((i) => i.sku)} subtotal={subtotal} title="Add more, save more" className="mt-12" />
     </>
   );
 }

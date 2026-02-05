@@ -75,8 +75,17 @@ export function Footer() {
       </div>
       <div className="h-0.5 w-full bg-gradient-to-r from-[#4fd0ff] via-[#ffd34d] to-[#4fd0ff]" />
       <div className="px-5 py-4 text-center">
-        <p className="m-0 mb-3 text-sm text-white">Copyright 2026 – Success Chemistry®</p>
-        <p className="text-xs text-white/80">Premium supplements, made in the USA.</p>
+        <p className="m-0 text-sm text-white">
+          🗽 Copyright 2026 – Success Chemistry®{" "}
+          <a
+            href="https://www.SuccessChemistry.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-white underline decoration-white/50 underline-offset-2 transition hover:decoration-white"
+          >
+            www.SuccessChemistry.com
+          </a>
+        </p>
       </div>
     </footer>
   );
