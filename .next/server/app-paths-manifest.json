@@ -1,7 +1,20 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/medusa-checkout/route": "app/api/medusa-checkout/route.js",
+  "/page": "app/page.js",
+  "/product/[slug]/page": "app/product/[slug]/page.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
   "/store/page": "app/store/page.js",
-  "/terms-of-service/page": "app/terms-of-service/page.js",
-  "/payment-policy/page": "app/payment-policy/page.js",
+  "/api/feeds/google-shopping/route": "app/api/feeds/google-shopping/route.js",
   "/contact/page": "app/contact/page.js",
-  "/product/[slug]/page": "app/product/[slug]/page.js"
+  "/cart/page": "app/cart/page.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
+  "/order-confirmation/page": "app/order-confirmation/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/privacy-policy/page": "app/privacy-policy/page.js",
+  "/feeds/google-shopping/route": "app/feeds/google-shopping/route.js",
+  "/shipping-returns/page": "app/shipping-returns/page.js",
+  "/payment-policy/page": "app/payment-policy/page.js",
+  "/terms-of-service/page": "app/terms-of-service/page.js"
 }
