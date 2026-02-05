@@ -33,3 +33,6 @@ export const CONTACT = {
   address: "8400 West Sunset Road",
   cityStateZip: "Las Vegas NV, 89113",
 } as const;
+
+/** Free shipping threshold (USD) for cart upsell messaging. */
+export const FREE_SHIPPING_THRESHOLD = 50;

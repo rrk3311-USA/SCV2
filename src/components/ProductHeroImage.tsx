@@ -4,8 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 
 /**
- * Product hero image – transparent style so PNG product shots show through
- * (matches other version’s transparent hero). Fallback when asset 404s.
+ * Product hero image – transparent style so PNG product shots show through.
+ * Tries .png first; if it 404s, falls back to .jpg so products without a
+ * transparent hero still show an image.
  */
 type Props = {
   src: string;
@@ -25,6 +26,16 @@ export function ProductHeroImage({
   priority,
 }: Props) {
   const [error, setError] = useState(false);
+  const [fallbackSrc, setFallbackSrc] = useState<string | null>(null);
+  const displaySrc = fallbackSrc ?? src;
+
+  const handleError = () => {
+    if (!fallbackSrc && src.endsWith(".png")) {
+      setFallbackSrc(src.replace(/\.png$/, ".jpg"));
+      return;
+    }
+    setError(true);
+  };
 
   if (error) {
     return (
@@ -37,13 +48,13 @@ export function ProductHeroImage({
   return (
     <div className="hero-banner-float relative aspect-square w-full bg-transparent">
       <Image
-        src={src}
+        src={displaySrc}
         alt={alt}
         fill={fill}
         className={className || "object-contain p-4"}
         sizes={sizes}
         priority={priority}
-        onError={() => setError(true)}
+        onError={handleError}
       />
     </div>
   );

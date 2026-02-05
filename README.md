@@ -36,6 +36,15 @@ Media is wired so it works **locally without copying**. `SCV2/public/images` and
 - **Local preview:** Just run `npm run dev` in SCV2; images and video load from deploy-site via the symlinks. No commit or deploy needed.
 - **Deploy (e.g. Vercel):** Symlinks may not be followed by the build. For production you can either copy `deploy-site/public/images` and `deploy-site/public/videos` into `SCV2/public/` before building, or use a build step that copies/syncs media, or host media on a CDN and point `next.config.js` / env at that base URL.
 
+## Tracking & tags (GA4, Google Ads, deep linking)
+
+**All pages** get Google tracking: GA4/Ads (or GTM) in layout, plus `page_view` on every route change and outbound link clicks. Product/store/cart/order/contact use full e-commerce and lead events. See **[TRACKING_AND_TAGS.md](./TRACKING_AND_TAGS.md)** for:
+
+- Page-by-page event coverage
+- Env vars (`NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_GOOGLE_ADS_ID`, etc.)
+- How to verify in GA4 DebugView and Google Ads before running ads
+- Checklist before launching campaigns
+
 ## Main files
 
 | What            | Path |
@@ -51,3 +60,5 @@ Media is wired so it works **locally without copying**. `SCV2/public/images` and
 | Products data   | `src/data/products.ts` (TOP_12, TOP_PRODUCTS) |
 | Categories      | `src/data/categories.ts` |
 | Routes          | `src/lib/constants.ts` (ROUTES) |
+| Tracking doc    | `TRACKING_AND_TAGS.md` |
+| gtag helpers    | `src/lib/gtag.ts` |

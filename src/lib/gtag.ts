@@ -126,7 +126,7 @@ export function setPageView(path: string, title?: string) {
   });
 }
 
-/** Fire view_item (product detail). */
+/** Fire view_item (product detail). Used on every product page including new listings. */
 export function reportViewItem(product: {
   item_id: string;
   item_name: string;

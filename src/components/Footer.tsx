@@ -10,7 +10,7 @@ import { ROUTES } from "@/lib/constants";
 export function Footer() {
   return (
     <footer className="footer mt-auto w-full bg-[#2854a6]">
-      <div className="flex flex-wrap items-center justify-center gap-4 px-5 py-5 text-center">
+      <div className="flex flex-wrap items-center justify-center gap-4 px-5 pt-12 pb-6 text-center">
         <Link
           href={ROUTES.store}
           className="footer-btn inline-block rounded-full border-[3px] border-transparent bg-white px-8 py-3.5 text-sm font-bold uppercase tracking-wide text-[#2854a6] no-underline shadow-md transition hover:opacity-90"

@@ -3,11 +3,17 @@ import Image from "next/image";
 import { Container } from "@/components/Container";
 import { HeroBannerImage } from "@/components/HeroBannerImage";
 import { ProductCarousel } from "@/components/ProductCarousel";
+import { ProductHeroImage } from "@/components/ProductHeroImage";
 import { ViewItemListTracker } from "@/components/ViewItemListTracker";
 import { HomeVideo } from "@/components/HomeVideo";
 import { TOP_7 } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
 import { Flask, Factory, Leaf, CaretRight } from "@phosphor-icons/react/dist/ssr";
+
+/** Top sellers shown in homepage carousel (exclude specific products). */
+const CAROUSEL_PRODUCTS = TOP_7.filter(
+  (p) => p.slug !== "1960-102" && p.slug !== "B072MMW71X-1"
+);
 
 /** Home page – clone of main site (localhost:8080) layout and media only, clean code. */
 export default function HomePage() {
@@ -68,7 +74,7 @@ export default function HomePage() {
         {/* Top Sellers – carousel style (matches 8080), not full grid */}
         <section className="mt-12">
           <ViewItemListTracker
-            items={TOP_7.map((p) => ({ item_id: p.sku, item_name: p.name, price: p.price, item_category: p.category }))}
+            items={CAROUSEL_PRODUCTS.map((p) => ({ item_id: p.sku, item_name: p.name, price: p.price, item_category: p.category }))}
             listId="home_top_sellers"
             listName="Top Sellers"
           />
@@ -76,7 +82,7 @@ export default function HomePage() {
           <p className="mt-2 text-slate-600 text-sm sm:text-base">
             Our best-selling supplements. Scroll the carousel or use the arrows. Tap any product to open its page.
           </p>
-          <ProductCarousel products={TOP_7} />
+          <ProductCarousel products={CAROUSEL_PRODUCTS} />
           <p className="mt-6">
             <Link href={ROUTES.store} className="inline-flex items-center gap-1.5 font-medium text-[#2854a6] hover:underline">
               View all products
@@ -85,7 +91,7 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* Why People Trust Us – same media: new-building-full.png */}
+        {/* Why People Trust Us – new-building image + video in same blue module */}
         <section className="mt-12 rounded-2xl bg-[#2854a6] p-6 shadow-lg sm:p-8">
           <h2 className="text-xl font-semibold text-white sm:text-2xl">Why People Trust Us</h2>
           <p className="mt-2 text-sm text-white/95 sm:text-base">
@@ -105,23 +111,14 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Video + LLE – same media: 0124 video, LLEand2x.png */}
-        <section className="mt-12 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:p-6">
-          <div className="relative aspect-video max-h-[500px] w-full">
-            <HomeVideo />
+          <div className="mt-5 overflow-hidden rounded-2xl border border-white/20 shadow-sm">
+            <div className="relative aspect-video max-h-[500px] w-full">
+              <HomeVideo />
+            </div>
           </div>
-          <Image
-            src="/images/home/LLEand2x.png"
-            alt="LLE Extraction, 2x Fine Grind, Made to Order Fresh"
-            width={1200}
-            height={600}
-            className="mt-5 w-full rounded-xl object-cover shadow-sm"
-          />
         </section>
 
-        {/* Factory collage – same media: 4 images */}
+        {/* Factory collage – cleanroom first, then LLE, then 2-up and QA */}
         <section className="mt-12 space-y-4">
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
             <div className="relative aspect-[2.2/1] min-h-[160px] sm:min-h-[190px]">
@@ -136,6 +133,15 @@ export default function HomePage() {
                 <p className="text-xs text-white/90">State-of-the-art cleanroom facilities</p>
               </div>
             </div>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+            <Image
+              src="/images/home/LLEand2x.png"
+              alt="LLE Extraction, 2x Fine Grind, Made to Order Fresh"
+              width={1200}
+              height={600}
+              className="w-full rounded-xl object-cover shadow-sm"
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="relative aspect-[4/3] min-h-[120px] overflow-hidden rounded-xl border border-slate-200/80 bg-slate-100 shadow-sm sm:min-h-[140px]">
@@ -213,15 +219,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Women's Balance – same media: 52274-401/01.png */}
+        {/* Women's Balance – transparent hero product image */}
         <section className="mt-12 rounded-2xl border border-slate-200/80 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm sm:flex sm:items-center sm:gap-10 sm:p-8">
-          <div className="flex flex-col items-center sm:w-72 sm:shrink-0">
-            <Image
+          <div className="flex w-full max-w-[224px] flex-col items-center sm:w-72 sm:max-w-[280px] sm:shrink-0">
+            <ProductHeroImage
               src="/images/products/52274-401/01.png"
               alt="Women's Balance Supplement"
-              width={224}
-              height={280}
-              className="w-48 object-contain drop-shadow-md sm:w-56"
+              className="object-contain p-2"
+              sizes="(max-width: 640px) 192px, 224px"
             />
             <span className="mt-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">New Release</span>
           </div>

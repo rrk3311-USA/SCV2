@@ -44,6 +44,10 @@ Your storefront will be available at: **http://localhost:8000**
 3. The frontend should load products from your Medusa backend
 4. You can add products to cart, browse collections, etc.
 
+## Staying logged in (Admin / sessions)
+
+If you keep getting logged out when using the backend (e.g. Admin at `/app`) on the same device or across phone/other browser, see **[SESSION_AND_LOGOUT_TROUBLESHOOTING.md](./SESSION_AND_LOGOUT_TROUBLESHOOTING.md)**. Fixes are in the Medusa backend repo (e.g. Redis session store and/or sticky sessions on Fly.io).
+
 ## Backend Admin Access
 
 To manage products, collections, and orders:

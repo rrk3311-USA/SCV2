@@ -1,12 +1,12 @@
 # Irish Sea Moss: Complete Guide to Ocean Superfood for Immune Health
 
-Harness the power of the ocean with [Organic Irish Sea Moss Supplement by Success Chemistry](https://successchemistry.com/product/30178-307-1) – a nutrient-dense formula featuring 92 essential minerals from sea moss, bladderwrack, and burdock root, enhanced with BioPerine for maximum absorption and comprehensive wellness support.
+Harness the power of the ocean with [Organic Irish Sea Moss Supplement by Success Chemistry](/product/30178-307-1) – a nutrient-dense formula featuring 92 essential minerals from sea moss, bladderwrack, and burdock root, enhanced with BioPerine for maximum absorption and comprehensive wellness support.
 
 ## What is Irish Sea Moss?
 
 Irish Sea Moss (Chondrus crispus) is a red algae seaweed harvested from the Atlantic coastlines of Ireland, Scotland, and North America. For centuries, coastal communities have used this marine superfood for its exceptional nutritional profile, containing 92 of the 102 minerals the human body needs.
 
-[Organic Irish Sea Moss Supplement](https://successchemistry.com/product/30178-307-1) provides the benefits of this ocean superfood in convenient capsule form, combined synergistically with bladderwrack and burdock root for enhanced health benefits.
+[Organic Irish Sea Moss Supplement](/product/30178-307-1) provides the benefits of this ocean superfood in convenient capsule form, combined synergistically with bladderwrack and burdock root for enhanced health benefits.
 
 ## The 92-Mineral Powerhouse
 
@@ -120,7 +120,7 @@ Irish Sea Moss (Chondrus crispus) is a red algae seaweed harvested from the Atla
 ### Ideal Candidates
 
 **Anyone Seeking Comprehensive Mineral Nutrition**
-Modern diets are often mineral-deficient. [Irish Sea Moss](https://successchemistry.com/product/30178-307-1) provides broad-spectrum mineralization.
+Modern diets are often mineral-deficient. [Irish Sea Moss](/product/30178-307-1) provides broad-spectrum mineralization.
 
 **People with Thyroid Concerns**
 The iodine and minerals support healthy thyroid function. (Consult doctor if you have thyroid condition.)
@@ -298,7 +298,7 @@ The formula provides iodine within safe limits (150mcg). The RDA for iodine is 1
 
 ## Where to Purchase
 
-[Organic Irish Sea Moss Supplement by Success Chemistry](https://successchemistry.com/product/30178-307-1) is available directly from Success Chemistry.
+[Organic Irish Sea Moss Supplement by Success Chemistry](/product/30178-307-1) is available directly from Success Chemistry.
 
 ### Product Details
 - **Size**: 60 vegetable capsules (30-day supply)
@@ -308,7 +308,7 @@ The formula provides iodine within safe limits (150mcg). The RDA for iodine is 1
 
 ## The Bottom Line
 
-For comprehensive mineral nutrition from the ocean's most nutrient-dense superfood, [Irish Sea Moss Supplement](https://successchemistry.com/product/30178-307-1) provides 92 essential minerals plus synergistic herbs for optimal health.
+For comprehensive mineral nutrition from the ocean's most nutrient-dense superfood, [Irish Sea Moss Supplement](/product/30178-307-1) provides 92 essential minerals plus synergistic herbs for optimal health.
 
 ### Key Takeaways
 
@@ -326,7 +326,7 @@ For comprehensive mineral nutrition from the ocean's most nutrient-dense superfo
 
 **✓ Beauty Benefits**: Supports skin, hair, and nails from within
 
-Ready to experience ocean superfood nutrition? **[Try Irish Sea Moss today](https://successchemistry.com/product/30178-307-1)** and nourish your body with 92 essential minerals.
+Ready to experience ocean superfood nutrition? **[Try Irish Sea Moss today](/product/30178-307-1)** and nourish your body with 92 essential minerals.
 
 ---
 

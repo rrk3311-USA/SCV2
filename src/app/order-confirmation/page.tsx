@@ -1,24 +1,29 @@
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { ROUTES } from "@/lib/constants";
+import { PurchaseTracker } from "@/components/PurchaseTracker";
 
 export const metadata = {
   title: "Order Confirmed – Success Chemistry",
   description: "Thank you for your order.",
 };
 
-type Props = { searchParams: Promise<{ orderId?: string }> };
+type Props = { searchParams: Promise<{ orderId?: string; value?: string }> };
 
 export default async function OrderConfirmationPage({ searchParams }: Props) {
-  const { orderId } = await searchParams;
+  const { orderId, value: valueStr } = await searchParams;
+  const value = valueStr != null ? parseFloat(valueStr) : undefined;
   return (
     <Container className="py-16 text-center">
+      <PurchaseTracker orderId={orderId} value={Number.isFinite(value) ? value : undefined} />
       <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">Thank you for your order</h1>
       <p className="mt-3 text-slate-600">
         Your payment was successful. We&apos;ll send confirmation details to your email.
       </p>
       {orderId && (
-        <p className="mt-2 text-sm text-slate-500">Order ID: {orderId}</p>
+        <p className="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-5 py-3 font-mono text-sm font-semibold text-slate-800">
+          Your order number: <span className="text-[#2854a6]">{orderId}</span>
+        </p>
       )}
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <Link

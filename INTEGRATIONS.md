@@ -43,4 +43,12 @@ The root layout loads an **Analytics** component that injects:
 
 ---
 
+---
+
+## Medusa backend
+
+- **Product catalog:** When `NEXT_PUBLIC_MEDUSA_URL` is set, the **store** page fetches products from Medusa (`sdk.store.product.list`). If Medusa is down or unset, the store uses local `TOP_PRODUCTS`.
+- **Orders:** Checkout is **PayPal via PocketBase** (product-page PayPal buttons → `NEXT_PUBLIC_API_BASE`). Orders are **not** created in Medusa, so **Medusa does not get a sale/order count** when customers buy. Customers do get an **order number** on the order-confirmation page (`/order-confirmation?orderId=...`).
+- **To have Medusa track orders:** Either (1) implement Medusa checkout in SCV2 (create cart, add items, complete cart with `sdk.store.cart.complete`), or (2) have your payment backend (e.g. PocketBase) send order data to Medusa via API/webhook after each purchase.
+
 Backend integrations (Medusa PayPal, email, etc.) are in the **medusa-backend** repo: see `INTEGRATIONS.md` there.

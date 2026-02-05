@@ -1,21 +1,15 @@
 /**
  * Product data for SCV2 storefront.
  *
- * DATA SOURCES:
+ * DATA SOURCES (see DATA_SOURCES.md for full details):
  * - Base product list (slug, sku, name, price, images, etc.) lives here in TOP_PRODUCTS.
- *   It was originally harvested from deploy-site/products-data.js and is maintained in this file.
+ *   Order matters: first 7 = best sellers (shop and carousel); add more from deploy-site/products-data.js.
  *
- * - Product COPY (description, short_description, suggested_use, supplement_facts, ingredients, faqs)
- *   is merged from the SITE/JSON source when available:
- *   - products-from-site.json is generated from deploy-site/products-data.js by running:
- *     node SCV2/scripts/sync-products-from-site.js
- *   - getProductBySlug() overlays that copy onto products by SKU so the storefront uses the
- *     same descriptions as the main site (deploy-site) and any JSON you use for Medusa/seeding.
+ * - Main description file: products-from-site.json (optional overlay keyed by SKU).
+ *   Supplies description, short_description, suggested_use, supplement_facts, ingredients, faqs
+ *   so product pages match the main site. Generate with: node SCV2/scripts/sync-products-from-site.js
  *
- * - success-3-products.json (in public/data/) is used for Medusa seeding only; the product page
- *   uses TOP_PRODUCTS + products-from-site.json for built-in products.
- *
- * Images: relative URLs for local build only (served from /images/products/ in this app).
+ * Images: relative URLs (e.g. /images/products/{sku}/01.png); transparent hero style on product pages.
  */
 
 const IMAGE_BASE = "";
@@ -67,6 +61,69 @@ export type Product = {
   /** Subscribe & Save discount percent (e.g. 15). */
   subscribe_save_percent?: number;
 };
+
+/** Map SKU to store category (must match CATEGORY_ID_TO_PRODUCT_CATEGORIES in categories.ts). */
+export const SKU_TO_CATEGORY: Record<string, string> = {
+  "52274-401": "Women's Health",
+  "14179-504-2": "Weight Loss",
+  "10786-807": "Eye Health",
+  "10786-807-2": "Eye Health",
+  "10786-807-3": "Eye Health",
+  "B072MMW71X-1": "Women's Health",
+  "31412-404U-3": "Men's Health",
+  "1960-102": "Men's Health",
+  "10777-810": "Weight Loss",
+  "783325395333": "Unisex",
+  "B01KB6CKV4": "Weight Loss",
+  "20647-507-3": "Lung Health",
+  "5531-502": "Weight Loss",
+  "1994-807-1": "Eye Health",
+  "16715-401": "Women's Health",
+  "20646-838": "Best Seller",
+  "20647-507": "Lung Health",
+  "11209-221": "Best Seller",
+  "2004-817": "Best Seller",
+  "30581-817": "Best Seller",
+  "30178-307-1": "Best Seller",
+  "10788-302-1": "Best Seller",
+  "4872-221": "Best Seller",
+  "3008-221": "Best Seller",
+  "5036-401-1": "Women's Health",
+  "5361-803": "Best Seller",
+  "20644-825": "Lung Health",
+  "20645-306": "Best Seller",
+  "31410-836": "Best Seller",
+  "31411-822-1": "Best Seller",
+  "31412-404U": "Men's Health",
+  "1989-403": "Men's Health",
+  "14182-303": "Best Seller",
+  "14180-830": "Best Seller",
+  "14179-504": "Weight Loss",
+  "30855-849-1": "Best Seller",
+  "31347-405-1": "Women's Health",
+  "21884-502": "Best Seller",
+  "39969-861": "Best Seller",
+  "B071JK6HM2": "Best Seller",
+};
+
+const DEFAULT_SUBSCRIBE_SAVE_PERCENT = 15;
+
+function defaultBundleOptions(price: number): BundleOption[] {
+  return [
+    { label: "1 bottle", quantity: 1, price },
+    { label: "2-Pack", quantity: 2, price: Math.round(price * 2 * 0.9 * 100) / 100, savePercent: 10 },
+    { label: "3-Pack (Best Value)", quantity: 3, price: Math.round(price * 3 * 0.85 * 100) / 100, savePercent: 15 },
+    { label: "5-Pack", quantity: 5, price: Math.round(price * 5 * 0.8 * 100) / 100, savePercent: 20 },
+  ];
+}
+
+/** Resolve category from SKU map, and add default bundle_options + subscribe_save_percent so every product page has them. */
+export function resolveProductForDisplay(p: Product): Product {
+  const category = SKU_TO_CATEGORY[p.sku] ?? p.category;
+  const bundle_options = p.bundle_options?.length ? p.bundle_options : defaultBundleOptions(p.price);
+  const subscribe_save_percent = p.subscribe_save_percent ?? DEFAULT_SUBSCRIBE_SAVE_PERCENT;
+  return { ...p, category, bundle_options, subscribe_save_percent };
+}
 
 export const TOP_PRODUCTS: Product[] = [
   {
@@ -189,14 +246,14 @@ export const TOP_PRODUCTS: Product[] = [
     key_search_terms:
       "hair growth supplements, biotin for hair growth, natural hair vitamins, DHT blocker for hair loss, thicker hair supplements",
     images: imageUrls([
-      "/images/products/B072MMW71X-1/01.png",
+      "/images/products/B072MMW71X-1/01.jpg",
       "/images/products/B072MMW71X-1/02.jpg",
       "/images/products/B072MMW71X-1/03.jpg",
       "/images/products/B072MMW71X-1/04.jpg",
       "/images/products/B072MMW71X-1/05.jpg",
       "/images/products/B072MMW71X-1/06.png",
     ]),
-    image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/B072MMW71X-1/01.png`,
+    image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/B072MMW71X-1/01.jpg`,
   },
   {
     slug: "31412-404U-3",
@@ -405,14 +462,14 @@ export const TOP_PRODUCTS: Product[] = [
     key_search_terms:
       "women's vaginal probiotic, feminine pH balance, yeast infection prevention, vaginal health supplements, organic women's probiotic, intimate health support",
     images: imageUrls([
-      "/images/products/5531-502/01.png",
+      "/images/products/5531-502/01.jpg",
       "/images/products/5531-502/02.jpg",
       "/images/products/5531-502/03.jpg",
       "/images/products/5531-502/04.jpg",
       "/images/products/5531-502/05.jpg",
       "/images/products/5531-502/06.jpg",
     ]),
-    image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/5531-502/01.png`,
+    image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/5531-502/01.jpg`,
   },
   {
     slug: "1994-807-1",
@@ -492,22 +549,69 @@ export const TOP_PRODUCTS: Product[] = [
     ]),
     image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10786-807/01.png`,
   },
+  { slug: "10775-506", sku: "10775-506", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10775-506/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10775-506/01.png` },
+  { slug: "10788-302-1", sku: "10788-302-1", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10788-302-1/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10788-302-1/01.png` },
+  { slug: "11209-221", sku: "11209-221", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/11209-221/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/11209-221/01.png` },
+  { slug: "2004-817", sku: "2004-817", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/2004-817/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/2004-817/01.png` },
+  { slug: "30581-817", sku: "30581-817", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/30581-817/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/30581-817/01.png` },
+  { slug: "30178-307-1", sku: "30178-307-1", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/30178-307-1/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/30178-307-1/01.png` },
+  { slug: "20647-507", sku: "20647-507", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/20647-507/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/20647-507/01.png` },
+  { slug: "10779-123", sku: "10779-123", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10779-123/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10779-123/01.png` },
+  { slug: "1981-126", sku: "1981-126", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/1981-126/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/1981-126/01.png` },
+  { slug: "26131-816", sku: "26131-816", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/26131-816/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/26131-816/01.png` },
+  { slug: "10781-105k", sku: "10781-105k", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10781-105k/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10781-105k/01.png` },
+  { slug: "10783-501", sku: "10783-501", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10783-501/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10783-501/01.png` },
+  { slug: "10784-", sku: "10784-", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10784-/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10784-/01.png` },
+  { slug: "10786-807-3", sku: "10786-807-3", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10786-807-3/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10786-807-3/01.png` },
+  { slug: "10787-1091", sku: "10787-1091", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10787-1091/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10787-1091/01.png` },
+  { slug: "10814-123", sku: "10814-123", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10814-123/01.jpg"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10814-123/01.jpg` },
+  { slug: "14176-805", sku: "14176-805", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14176-805/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14176-805/01.png` },
+  { slug: "14178-832", sku: "14178-832", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14178-832/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14178-832/01.png` },
+  { slug: "14179-504", sku: "14179-504", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14179-504/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14179-504/01.png` },
+  { slug: "14180-830", sku: "14180-830", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14180-830/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14180-830/01.png` },
+  { slug: "14182-303", sku: "14182-303", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14182-303/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14182-303/01.png` },
+  { slug: "14189-717", sku: "14189-717", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14189-717/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14189-717/01.png` },
+  { slug: "16715-401", sku: "16715-401", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/16715-401/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/16715-401/01.png` },
+  { slug: "1962-104", sku: "1962-104", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/1962-104/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/1962-104/01.png` },
+  { slug: "1982-127", sku: "1982-127", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/1982-127/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/1982-127/01.png` },
+  { slug: "1984-128", sku: "1984-128", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/1984-128/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/1984-128/01.png` },
+  { slug: "1989-403", sku: "1989-403", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/1989-403/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/1989-403/01.png` },
+  { slug: "20644-825", sku: "20644-825", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/20644-825/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/20644-825/01.png` },
+  { slug: "20645-306", sku: "20645-306", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/20645-306/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/20645-306/01.png` },
+  { slug: "20646-838", sku: "20646-838", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/20646-838/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/20646-838/01.png` },
+  { slug: "21884-502", sku: "21884-502", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/21884-502/01.jpg"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/21884-502/01.jpg` },
+  { slug: "3008-221", sku: "3008-221", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/3008-221/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/3008-221/01.png` },
+  { slug: "30855-849-1", sku: "30855-849-1", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/30855-849-1/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/30855-849-1/01.png` },
+  { slug: "31347-405-1", sku: "31347-405-1", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/31347-405-1/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/31347-405-1/01.png` },
+  { slug: "31410-836", sku: "31410-836", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/31410-836/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/31410-836/01.png` },
+  { slug: "31411-822-1", sku: "31411-822-1", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/31411-822-1/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/31411-822-1/01.png` },
+  { slug: "31412-404U", sku: "31412-404U", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/31412-404U/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/31412-404U/01.png` },
+  { slug: "39969-861", sku: "39969-861", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/39969-861/01.jpg"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/39969-861/01.jpg` },
+  { slug: "4872-221", sku: "4872-221", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/4872-221/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/4872-221/01.png` },
+  { slug: "5036-401-1", sku: "5036-401-1", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/5036-401-1/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/5036-401-1/01.png` },
+  { slug: "5361-803", sku: "5361-803", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/5361-803/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/5361-803/01.png` },
+  { slug: "6.45E+11", sku: "6.45E+11", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/6.45E+11/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/6.45E+11/01.png` },
+  { slug: "6.52E+11", sku: "6.52E+11", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/6.52E+11/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/6.52E+11/01.png` },
+  { slug: "7.83E+11", sku: "7.83E+11", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/7.83E+11/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/7.83E+11/01.png` },
+  { slug: "B071JK6HM2", sku: "B071JK6HM2", name: "Supplement", price: 19.99, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/B071JK6HM2/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/B071JK6HM2/01.png` },
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
   const product = TOP_PRODUCTS.find((p) => p.slug === slug);
   if (!product) return undefined;
   const site = siteCopyBySku[product.sku];
-  if (!site) return product;
-  return {
-    ...product,
-    ...(site.description != null && { description: site.description }),
-    ...(site.short_description != null && { short_description: site.short_description }),
-    ...(site.suggested_use != null && { suggested_use: site.suggested_use }),
-    ...(site.supplement_facts != null && { supplement_facts: site.supplement_facts }),
-    ...(site.ingredients != null && { ingredients: site.ingredients }),
-    ...(site.faqs != null && { faqs: site.faqs }),
-  };
+  const merged = site
+    ? {
+        ...product,
+        ...(site.description != null && { description: site.description }),
+        ...(site.short_description != null && { short_description: site.short_description }),
+        ...(site.suggested_use != null && { suggested_use: site.suggested_use }),
+        ...(site.supplement_facts != null && { supplement_facts: site.supplement_facts }),
+        ...(site.ingredients != null && { ingredients: site.ingredients }),
+        ...(site.faqs != null && { faqs: site.faqs }),
+      }
+    : product;
+  return resolveProductForDisplay(merged);
 }
 
 export function getProductBySku(sku: string): Product | undefined {
@@ -523,5 +627,21 @@ export const STORE_PRODUCTS: Product[] = [SCLERA_PRODUCT];
 /** Top 12 products for homepage and shop – clean slice, no legacy code. */
 export const TOP_12: Product[] = TOP_PRODUCTS.slice(0, 12);
 
-/** Top 7 sellers for homepage carousel – transparent hero style. */
+/** Top 7 best sellers – homepage carousel (transparent hero style). */
 export const TOP_7: Product[] = TOP_PRODUCTS.slice(0, 7);
+
+/** Best-seller slug order for shop: top 12 appear first, then the rest. */
+export const BEST_SELLER_SLUGS: string[] = TOP_12.map((p) => p.slug);
+
+/** Total number of products in the catalog. */
+export const TOTAL_PRODUCTS = TOP_PRODUCTS.length;
+
+/** All products for shop, sorted: best sellers first, then the rest. Resolved so category + bundle + subscribe apply for display & tracking. */
+export function getStoreProductsSortedByBestSellers(): Product[] {
+  const bestSet = new Set(BEST_SELLER_SLUGS);
+  const best = TOP_PRODUCTS.filter((p) => bestSet.has(p.slug));
+  const rest = TOP_PRODUCTS.filter((p) => !bestSet.has(p.slug));
+  const order = new Map(BEST_SELLER_SLUGS.map((s, i) => [s, i]));
+  best.sort((a, b) => (order.get(a.slug) ?? 99) - (order.get(b.slug) ?? 99));
+  return [...best, ...rest].map(resolveProductForDisplay);
+}

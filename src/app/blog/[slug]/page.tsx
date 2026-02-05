@@ -37,8 +37,10 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
-  // Make product links work on any domain (relative)
-  const content = raw.replace(/https:\/\/successchemistry\.com/g, "");
+  // Point product links to this site's product pages (relative /product/SLUG)
+  const content = raw
+    .replace(/https:\/\/successchemistry\.com\/product\/([^)\s#]+)/g, "/product/$1")
+    .replace(/https:\/\/successchemistry\.com/g, "");
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">

@@ -13,6 +13,8 @@ import { CartUpsell } from "./CartUpsell";
 export function CartContents() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -69,6 +71,46 @@ export function CartContents() {
   const handleQtyChange = (sku: string, qty: number, optionLabel?: string, isSubscription?: boolean) => {
     updateCartQuantity(sku, qty, optionLabel, isSubscription);
     setCart(getCart());
+  };
+
+  const handleMedusaCheckout = async () => {
+    setCheckoutError(null);
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch("/api/medusa-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: cart.map((i) => ({
+            sku: i.sku,
+            quantity: i.quantity,
+            optionLabel: i.optionLabel,
+            isSubscription: i.isSubscription,
+          })),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setCheckoutError(data.error || "Checkout failed");
+        return;
+      }
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+        return;
+      }
+      if (data.cartId) {
+        const base = process.env.NEXT_PUBLIC_MEDUSA_URL || "";
+        if (base) {
+          window.location.href = `${base.replace(/\/$/, "")}/checkout?cart_id=${data.cartId}`;
+          return;
+        }
+      }
+      setCheckoutError("No checkout URL returned");
+    } catch (e) {
+      setCheckoutError(e instanceof Error ? e.message : "Checkout failed");
+    } finally {
+      setCheckoutLoading(false);
+    }
   };
 
   return (
@@ -158,6 +200,11 @@ export function CartContents() {
           <p className="mt-1 text-right text-sm text-slate-600">
             Shipping & taxes calculated at checkout
           </p>
+          {checkoutError && (
+            <p className="mt-2 text-right text-sm text-red-600" role="alert">
+              {checkoutError}
+            </p>
+          )}
           <div className="mt-4 flex flex-wrap justify-end gap-3">
             <Link
               href={ROUTES.store}
@@ -166,17 +213,19 @@ export function CartContents() {
               <Flask size={20} weight="regular" />
               Continue shopping
             </Link>
-            <Link
-              href={ROUTES.store}
-              className="inline-flex rounded-full bg-[#2854a6] px-6 py-3 font-semibold text-white no-underline shadow-md transition hover:bg-[#1e3a8a]"
+            <button
+              type="button"
+              onClick={handleMedusaCheckout}
+              disabled={checkoutLoading}
+              className="inline-flex rounded-full bg-[#2854a6] px-6 py-3 font-semibold text-white shadow-md transition hover:bg-[#1e3a8a] disabled:opacity-70"
             >
-              Checkout (PayPal on product page)
-            </Link>
+              {checkoutLoading ? "Redirecting to PayPal…" : "Checkout with PayPal"}
+            </button>
           </div>
         </div>
       </div>
 
-      <CartUpsell excludeSkus={cart.map((i) => i.sku)} title="You might also like" className="mt-12" />
+      <CartUpsell excludeSkus={cart.map((i) => i.sku)} subtotal={subtotal} title="Add more, save more" className="mt-12" />
     </>
   );
 }
