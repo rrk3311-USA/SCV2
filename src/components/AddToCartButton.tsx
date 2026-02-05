@@ -11,6 +11,8 @@ type AddToCartButtonProps = {
   price: number;
   image?: string;
   quantity?: number;
+  optionLabel?: string;
+  isSubscription?: boolean;
   className?: string;
   children?: React.ReactNode;
 };
@@ -24,13 +26,15 @@ export function AddToCartButton({
   price,
   image,
   quantity = 1,
+  optionLabel,
+  isSubscription,
   className = "",
   children,
 }: AddToCartButtonProps) {
   const [added, setAdded] = useState(false);
 
   const handleClick = () => {
-    addToCart({ sku, name, price, quantity, image });
+    addToCart({ sku, name, price, quantity, image, optionLabel, isSubscription });
     reportAddToCart({ id: sku, name, price, quantity });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);

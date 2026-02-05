@@ -11,6 +11,8 @@ export type CartItem = {
   price: string;
   quantity: number;
   image?: string;
+  optionLabel?: string;
+  isSubscription?: boolean;
 };
 
 export function getCart(): CartItem[] {
@@ -29,19 +31,35 @@ export function saveCart(cart: CartItem[]): void {
   window.dispatchEvent(new CustomEvent("cartUpdated"));
 }
 
+/** Same option = same cart line (so 1-bottle and 3-pack are separate lines). */
+function sameLine(a: CartItem, sku: string, optionLabel?: string, isSubscription?: boolean): boolean {
+  if (a.sku !== sku) return false;
+  const optA = a.optionLabel ?? "";
+  const optB = optionLabel ?? "";
+  if (optA !== optB) return false;
+  const subA = a.isSubscription ?? false;
+  const subB = isSubscription ?? false;
+  return subA === subB;
+}
+
 export function addToCart(item: {
   sku: string;
   name: string;
   price: number;
   quantity?: number;
   image?: string;
+  optionLabel?: string;
+  isSubscription?: boolean;
 }): CartItem[] {
   const cart = getCart();
-  const existing = cart.find((c) => c.sku === item.sku);
+  const existing = cart.find((c) => sameLine(c, item.sku, item.optionLabel, item.isSubscription));
   const qty = item.quantity ?? 1;
 
   if (existing) {
     existing.quantity += qty;
+    if (item.optionLabel != null) existing.optionLabel = item.optionLabel;
+    if (item.isSubscription != null) existing.isSubscription = item.isSubscription;
+    existing.price = item.price.toFixed(2);
   } else {
     cart.push({
       sku: item.sku,
@@ -49,6 +67,8 @@ export function addToCart(item: {
       price: item.price.toFixed(2),
       quantity: qty,
       image: item.image,
+      optionLabel: item.optionLabel,
+      isSubscription: item.isSubscription,
     });
   }
 
@@ -61,4 +81,31 @@ export function getCartSummary(): { count: number; total: number } {
   const count = cart.reduce((s, i) => s + (i.quantity || 1), 0);
   const total = cart.reduce((s, i) => s + parseFloat(i.price || "0") * (i.quantity || 1), 0);
   return { count, total };
+}
+
+export function removeFromCart(
+  sku: string,
+  optionLabel?: string,
+  isSubscription?: boolean
+): CartItem[] {
+  const cart = getCart().filter(
+    (c) => !sameLine(c, sku, optionLabel, isSubscription)
+  );
+  saveCart(cart);
+  return cart;
+}
+
+export function updateCartQuantity(
+  sku: string,
+  quantity: number,
+  optionLabel?: string,
+  isSubscription?: boolean
+): CartItem[] {
+  const cart = getCart();
+  const item = cart.find((c) => sameLine(c, sku, optionLabel, isSubscription));
+  if (!item) return cart;
+  if (quantity < 1) return removeFromCart(sku, optionLabel, isSubscription);
+  item.quantity = quantity;
+  saveCart(cart);
+  return cart;
 }

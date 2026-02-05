@@ -65,6 +65,10 @@ export function Footer() {
           Contact
         </Link>
         <span className="text-white/30">|</span>
+        <Link href={ROUTES.blog} className="font-medium text-white no-underline transition-opacity hover:opacity-80">
+          Blog
+        </Link>
+        <span className="text-white/30">|</span>
         <Link href={ROUTES.store} className="font-medium text-white no-underline transition-opacity hover:opacity-80">
           Shop
         </Link>

@@ -32,4 +32,15 @@ The root layout loads an **Analytics** component that injects:
 
 ---
 
+## Google Search Console & when to connect
+
+**When to connect:** You can add the same GA4/Ads env vars **now** so the Vercel deployment (e.g. `scv2-success-chemistry.vercel.app`) already sends data. When you point your **domain** (e.g. successchemistry.com or a subdomain) to this site:
+
+1. **Search Console** – Add the **property** for that domain (or URL prefix) in [search.google.com/search-console](https://search.google.com/search-console). Verify ownership (HTML meta tag or DNS record as instructed). Then submit the sitemap: `https://your-domain.com/sitemap.xml`. SCV2 exposes `/sitemap.xml` (generated from `app/sitemap.ts`) and `/robots.txt` (from `app/robots.ts`).
+2. **Analytics** – No change: GA4/Ads keep working. If you use a different property per domain, set the new `NEXT_PUBLIC_GA_MEASUREMENT_ID` (and optionally Ads ID) for the production domain and redeploy.
+
+**What the other Success project (deploy-site / success.com) has:** GA4 `G-WNZH4JKEL5`, static `sitemap.xml` and `robots.txt`, meta `robots` on pages, and an admin reminder to check Search Console and sitemap submission. SCV2 now has a **dynamic sitemap** (home, store, cart, contact, policy pages, all product URLs) and **robots.txt** that points to it. Optional: set `NEXT_PUBLIC_SITE_URL` in Vercel to your final domain so sitemap URLs use that base (e.g. `https://successchemistry.com/...`) once you switch.
+
+---
+
 Backend integrations (Medusa PayPal, email, etc.) are in the **medusa-backend** repo: see `INTEGRATIONS.md` there.

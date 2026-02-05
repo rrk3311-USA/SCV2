@@ -510,6 +510,12 @@ export function getProductBySlug(slug: string): Product | undefined {
   };
 }
 
+export function getProductBySku(sku: string): Product | undefined {
+  const product = TOP_PRODUCTS.find((p) => p.sku === sku);
+  if (!product) return undefined;
+  return getProductBySlug(product.slug);
+}
+
 /** Single product shown on store when not using Medusa – Sclera White. */
 export const SCLERA_PRODUCT = TOP_PRODUCTS.find((p) => p.sku === "10786-807")!;
 export const STORE_PRODUCTS: Product[] = [SCLERA_PRODUCT];

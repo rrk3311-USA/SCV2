@@ -4,7 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 
 /**
- * Product hero image with fallback when asset 404s (e.g. before media deploy).
+ * Product hero image – transparent style so PNG product shots show through
+ * (matches other version’s transparent hero). Fallback when asset 404s.
  */
 type Props = {
   src: string;
@@ -34,12 +35,12 @@ export function ProductHeroImage({
   }
 
   return (
-    <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+    <div className="hero-banner-float relative aspect-square w-full bg-transparent">
       <Image
         src={src}
         alt={alt}
         fill={fill}
-        className={className}
+        className={className || "object-contain p-4"}
         sizes={sizes}
         priority={priority}
         onError={() => setError(true)}

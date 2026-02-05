@@ -57,6 +57,9 @@ export function Header() {
             <Flask size={20} weight="regular" />
             Shop
           </Link>
+          <Link href={ROUTES.blog} className="text-[21px] font-medium text-white no-underline opacity-100 transition-opacity hover:opacity-80">
+            Blog
+          </Link>
           <Link href={ROUTES.cart} className="text-[21px] font-medium text-white no-underline opacity-100 transition-opacity hover:opacity-80">
             Cart
           </Link>

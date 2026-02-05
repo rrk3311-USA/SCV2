@@ -39,10 +39,10 @@ export default function StorePage() {
         </section>
       </Container>
 
-      {/* Shop hero + social proof – bottom of page, above footer */}
+      {/* Shop hero – transparent PNG (Viewing Shop Banner top) from successchemistry.com/shop */}
       <section
-        className="relative flex min-h-[250px] flex-col justify-end bg-cover bg-center bg-no-repeat sm:min-h-[300px]"
-        style={{ backgroundImage: "url('/images/shop View Banner .jpg')" }}
+        className="relative flex min-h-[250px] flex-col justify-end bg-[#2854a6] bg-cover bg-center bg-no-repeat sm:min-h-[300px]"
+        style={{ backgroundImage: "url('/images/Viewing Shop Banner top.png')" }}
         aria-label="Shop banner"
       >
         <div className="bg-[#f8f9fa] px-5 py-8 text-center sm:px-6 sm:py-10">

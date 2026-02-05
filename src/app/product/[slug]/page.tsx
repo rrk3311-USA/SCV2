@@ -12,9 +12,8 @@ import {
   ShoppingCart,
   Flask,
 } from "@phosphor-icons/react/dist/ssr";
-import { AddToCartButton } from "@/components/AddToCartButton";
-import { PayPalProductButtons } from "@/components/PayPalProductButtons";
 import { ProductHeroImage } from "@/components/ProductHeroImage";
+import { ProductPurchaseBlock } from "@/components/ProductPurchaseBlock";
 import { ViewItemTracker } from "@/components/ViewItemTracker";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { RecentlyViewedTracker } from "@/components/RecentlyViewedTracker";
@@ -114,48 +113,7 @@ export default async function ProductPage({ params }: Props) {
                 {product.short_description}
               </p>
             )}
-            <p className="mt-4 text-2xl font-bold text-[#2854a6]">
-              ${product.price.toFixed(2)}
-            </p>
-
-            {/* Bundle options */}
-            {product.bundle_options && product.bundle_options.length > 0 && (
-              <div className="mt-4 space-y-2">
-                <p className="text-sm font-medium text-slate-700">Options</p>
-                <div className="flex flex-wrap gap-2">
-                  {product.bundle_options.map((opt) => (
-                    <button
-                      key={opt.label}
-                      type="button"
-                      className="rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-[#2854a6] hover:bg-[#2854a6]/5"
-                    >
-                      {opt.label}
-                      {opt.savePercent != null && (
-                        <span className="ml-1 text-green-600">
-                          Save {opt.savePercent}%
-                        </span>
-                      )}
-                      <span className="ml-1">${opt.price.toFixed(2)}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <AddToCartButton
-                sku={product.sku}
-                name={product.name}
-                price={product.price}
-                image={product.image}
-              />
-            </div>
-
-            <PayPalProductButtons
-              sku={product.sku}
-              name={product.name}
-              price={product.price}
-            />
+            <ProductPurchaseBlock product={product} />
           </div>
         </div>
 

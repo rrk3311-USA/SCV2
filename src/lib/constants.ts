@@ -15,6 +15,7 @@ export const ROUTES = {
   admin: "/admin",
   preview: "/preview",
   blog: "/blog",
+  blogPost: (slug: string) => `/blog/${slug}`,
   blogSample: "/blog-sample",
   blogIngredients: "/blog/ingredients-we-use",
   product: (slug: string) => `/product/${slug}`,
