@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}${ROUTES.shippingReturns}`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
     { url: `${BASE}${ROUTES.paymentPolicy}`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
     { url: `${BASE}${ROUTES.blog}`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE}/feeds/google-shopping`, lastModified: new Date(), changeFrequency: "daily", priority: 0.6 },
+    { url: `${BASE}/api/feeds/google-shopping`, lastModified: new Date(), changeFrequency: "daily", priority: 0.6 },
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = BLOG_POST_SLUGS.map((slug) => ({

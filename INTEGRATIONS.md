@@ -3,6 +3,7 @@
 ## Already connected
 
 - **PayPal** – Product pages use `PayPalProductButtons`; orders go through PocketBase (`NEXT_PUBLIC_API_BASE`). Set **Vercel** env: `NEXT_PUBLIC_PAYPAL_CLIENT_ID` and `NEXT_PUBLIC_API_BASE`.
+- **Yotpo** – Reviews and star ratings on product pages; conversion tracking on order confirmation. Set **Vercel** env: `NEXT_PUBLIC_YOTPO_APP_KEY` (from Yotpo → Settings → General → App Key). Optional: `NEXT_PUBLIC_SITE_URL` for absolute product/image URLs (defaults to `https://www.successchemistry.com`). Components: `YotpoScript` (layout), `YotpoReviews` (product page), `YotpoConversionTracker` (order confirmation).
 
 ## Google Analytics & Google Ads
 
@@ -10,7 +11,7 @@ The root layout loads an **Analytics** component that injects:
 
 - **Google Analytics 4** when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set (e.g. `G-XXXXXXXXXX`).
 - **Google Tag Manager** when `NEXT_PUBLIC_GTM_ID` is set (e.g. `GTM-XXXXXXX`). Use GTM to add GA4, Google Ads conversion, or other tags without code changes.
-- **Google Ads** when `NEXT_PUBLIC_GOOGLE_ADS_ID` is set (e.g. `AW-XXXXXXXX`), only if GTM is not set. Purchase conversions fire after PayPal success; add_to_cart on Add to Cart. **Enhanced conversions**: contact form submits send hashed email/name (SHA-256) via `user_data`; turn on “Enhanced conversions” in Google Ads (Goals → Settings) and accept customer data terms.
+- **Google Ads** when `NEXT_PUBLIC_GOOGLE_ADS_ID` is set (e.g. `AW-XXXXXXXX`), only if GTM is not set. Purchase conversions fire after PayPal success; add_to_cart on Add to Cart. **Enhanced conversions**: contact form submits send hashed email/name (SHA-256) via `user_data`; turn on “Enhanced conversions” in Google Ads (Goals → Settings) and accept customer data terms. When Google Ads asks “Choose a method,” select **Google Tag** (or **Google Tag Manager** if you use GTM)—**not** “Google Ads API.” We send conversion and user data via the website gtag/GTM, not via the API.
 - **Deep tracking (all pages)**: page_view on every route change, view_item on product pages, view_item_list on home (Top Sellers) and store, begin_checkout on cart when not empty, generate_lead with hashed user_data on contact success, outbound clicks (external links, mailto, tel) tracked.
 
 ### Set in Vercel

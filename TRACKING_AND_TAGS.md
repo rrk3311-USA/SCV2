@@ -93,7 +93,8 @@ If both GA4 and Ads IDs are set and GTM is not, a single gtag load configures bo
 
 4. **Enhanced conversions (contact form)**  
    - Contact form calls `reportLeadWithEnhancedConversion(email, name)` (hashed user data + `generate_lead`).  
-   - In Google Ads, enable enhanced conversions for the lead conversion and ensure the tag sends user data (we use hashed email/name).
+   - In Google Ads, enable enhanced conversions for the lead conversion. When asked to “Choose a method,” select **Google Tag** (or **Google Tag Manager** if you use GTM)—**not** “Google Ads API.” Our site sends user data via gtag/GTM only.  
+   - Ensure the tag sends user data (we use hashed email/name).
 
 5. **Order confirmation and value**  
    - Medusa (or your backend) should redirect to:  

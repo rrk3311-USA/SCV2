@@ -132,7 +132,7 @@ export async function POST(request: Request) {
 
     const sessions = (payment_collection as { payment_sessions?: unknown[] })?.payment_sessions ?? [];
     const paypalSession = sessions.find(
-      (s: { provider_id?: string }) => s?.provider_id === paypalProvider.id
+      (s: unknown) => (s as { provider_id?: string })?.provider_id === paypalProvider.id
     ) as { data?: { redirect_url?: string; url?: string } } | undefined;
     const redirectUrl =
       paypalSession?.data?.redirect_url ?? paypalSession?.data?.url ?? null;

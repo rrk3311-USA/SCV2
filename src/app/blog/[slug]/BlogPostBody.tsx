@@ -16,7 +16,7 @@ export function BlogPostBody({ content }: Props) {
     <ReactMarkdown
       components={{
         a: ({ href, children, ...props }) => {
-          if (isInternalLink(href)) {
+          if (isInternalLink(href) && typeof href === "string") {
             return (
               <Link href={href} {...props}>
                 {children}

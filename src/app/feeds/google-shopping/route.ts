@@ -9,6 +9,10 @@ import { TOP_PRODUCTS } from "@/data/products";
 import { ROUTES } from "@/lib/constants";
 import type { Product } from "@/data/products";
 
+// Ensure route is built and run in Node (required for data imports in production)
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 const GOOGLE_PRODUCT_CATEGORY =
   "Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements";
 const CONSUMER_NOTICE =
@@ -61,14 +65,16 @@ export async function GET() {
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
     <title>Success Chemistry – Product Feed</title>
-    <link>${base}</link>
+    <link>${escapeXml(base)}</link>
     <description>Premium dietary supplements and vitamins – Success Chemistry</description>
 `;
 
-  const items = TOP_PRODUCTS.filter((p) => {
-    const imageLink = imageUrl(p, base, p.image);
-    return !!imageLink && imageLink.startsWith("https://");
-  }).map((p) => {
+  let items: string;
+  try {
+    items = (TOP_PRODUCTS || []).filter((p) => {
+      const imageLink = imageUrl(p, base, p.image);
+      return !!imageLink && imageLink.startsWith("https://");
+    }).map((p) => {
     const title = escapeXml(cleanText(p.name, 150));
     const description = escapeXml(cleanText(p.short_description || p.description || p.name, 5000));
     const link = `${base}${ROUTES.product(p.slug)}`;
@@ -110,6 +116,10 @@ ${additionalImages ? `\n${additionalImages}` : ""}
       <g:custom_label_2>${escapeXml(customLabel2)}</g:custom_label_2>
     </item>`;
   }).join("");
+  } catch (err) {
+    console.error("[google-shopping feed]", err);
+    items = "<!-- Feed error: check server logs -->";
+  }
 
   const xml = channelStart + items + `
   </channel>
@@ -120,6 +130,7 @@ ${additionalImages ? `\n${additionalImages}` : ""}
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
       "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+      "Access-Control-Allow-Origin": "*",
     },
   });
 }

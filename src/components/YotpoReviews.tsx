@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-function toYotpoProductId(sku) {
+function toYotpoProductId(sku: string): string {
   return sku.replace(/[^a-zA-Z0-9_-]/g, "_");
 }
 
