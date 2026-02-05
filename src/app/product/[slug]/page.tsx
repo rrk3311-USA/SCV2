@@ -69,12 +69,17 @@ export default async function ProductPage({ params }: Props) {
 
   const productUrl = `${SITE_BASE}${ROUTES.product(product.slug)}`;
   const imageUrl = product.image.startsWith("http") ? product.image : `${SITE_BASE}${product.image}`;
+  // Same sku/gtin/brand as Merchant Center feed so Google links MC reviews to this URL
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     sku: product.sku,
-    ...(product.gtin && { gtin13: product.gtin }),
+    ...((): Record<string, string> => {
+      const g = (product.gtin || product.upc || "").trim();
+      if (!g) return {};
+      return g.length === 12 ? { gtin12: g } : { gtin13: g };
+    })(),
     brand: { "@type": "Brand", name: "Success Chemistry" },
     image: product.images?.length ? product.images.map((src) => (src.startsWith("http") ? src : `${SITE_BASE}${src}`)) : [imageUrl],
     url: productUrl,

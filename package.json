@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start -p 8000",
     "lint": "next lint",
-    "generate-product-md": "tsx scripts/generate-product-markdown.ts"
+    "generate-product-md": "tsx scripts/generate-product-markdown.ts",
+    "upload-merchant-feed": "tsx scripts/upload-feed-to-merchant-center.ts"
   },
   "dependencies": {
     "@medusajs/js-sdk": "^2.8.0",
@@ -24,8 +25,10 @@
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/ssh2-sftp-client": "^9.0.6",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
+    "ssh2-sftp-client": "^12.0.1",
     "tailwindcss": "^3.4.4",
     "tsx": "^4.21.0",
     "typescript": "^5.5.4"

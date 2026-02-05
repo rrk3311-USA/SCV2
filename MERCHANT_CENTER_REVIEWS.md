@@ -17,19 +17,17 @@
 
 So you **cannot** bulk-import Merchant Center reviews into SCV2 (or into Yotpo) via an official Google API.
 
-### Linking so Google matches our products
+### Linking so Google matches our products (~20k Merchant Center reviews)
 
 We **can** (and did) link your product pages to the same products in Merchant Center so Google can associate its reviews with your URLs:
 
-1. **Product feed**  
-   Use the same feed for Merchant Center as the site:  
-   `https://www.successchemistry.com/feeds/google-shopping`  
-   Same **SKU**, **GTIN**, **brand**, and product **link** (your SCV2 product URL).
+1. **Product feed** (URL or SFTP)  
+   Feed uses **id** = SKU, **gtin** (UPC when present), **brand** = "Success Chemistry", **link** = your product URL, **merchant_item_id** = SKU. Same identifiers as your existing Merchant Center products so Google matches feed items (and thus your URLs) to the products that have reviews.
 
 2. **Product page schema (JSON-LD)**  
-   Every product page now outputs **schema.org Product** with:
-   - `sku`
-   - `gtin13` (when you have GTIN)
+   Every product page outputs **schema.org Product** with:
+   - `sku` (same as feed)
+   - `gtin12` (12-digit UPC) or `gtin13` (13-digit EAN), matching feed `gtin`
    - `brand`: "Success Chemistry"
    - `url`, `image`, `offers`  
    So Google can match the page to the same product (and thus to Merchant Center reviews) by identifier.
