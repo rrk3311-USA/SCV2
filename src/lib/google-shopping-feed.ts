@@ -73,7 +73,10 @@ export function buildGoogleShoppingFeedXml(): string {
       const imageLink = imageUrl(p, base, p.image);
       return !!imageLink && imageLink.startsWith("https://");
     }).map((p) => {
-      const title = escapeXml(cleanText(p.name, 150));
+      // Clean text first, then escape, then truncate to account for XML entities
+      const cleanedTitle = cleanText(p.name, 200); // Pre-truncate at 200 to be safe
+      const escapedTitle = escapeXml(cleanedTitle);
+      const title = escapedTitle.length > 150 ? escapedTitle.substring(0, 147) + "..." : escapedTitle;
       const description = escapeXml(cleanText(p.short_description || p.description || p.name, 5000));
       const link = `${base}${ROUTES.product(p.slug)}`;
       const imageLink = imageUrl(p, base, p.image);
