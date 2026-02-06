@@ -16,8 +16,6 @@ import type { Product } from "@/data/products";
 
 const GOOGLE_PRODUCT_CATEGORY =
   "Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements";
-const CONSUMER_NOTICE =
-  "These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.";
 
 export function getFeedBaseUrl(): string {
   // Always use production domain for Google Shopping feed to avoid mismatched domains
@@ -113,6 +111,7 @@ function buildItemXml(p: Product, base: string, variant: FeedVariant): string {
       <g:image_link>${escapeXml(imgLink)}</g:image_link>
       <g:price>${price}</g:price>
       <g:availability>in_stock</g:availability>
+      <g:channel>online</g:channel>
       <g:brand>${escapeXml(brand)}</g:brand>
       <g:condition>new</g:condition>
       <g:google_product_category>${escapeXml(GOOGLE_PRODUCT_CATEGORY)}</g:google_product_category>
@@ -120,7 +119,6 @@ function buildItemXml(p: Product, base: string, variant: FeedVariant): string {
       ${identifierBlock}
       <g:merchant_item_id>${escapeXml(p.sku)}</g:merchant_item_id>
 ${additionalImages ? `\n${additionalImages}` : ""}${shippingBlock}${feedLabelBlock}
-      <g:consumer_notice>${escapeXml(CONSUMER_NOTICE)}</g:consumer_notice>
       <g:custom_label_0>${escapeXml(p.category)}</g:custom_label_0>
       <g:custom_label_1>${escapeXml(customLabel1)}</g:custom_label_1>
       <g:custom_label_2>${escapeXml(customLabel2)}</g:custom_label_2>
