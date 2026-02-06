@@ -10,7 +10,8 @@
     "gtin": "783325397399",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "women's libido enhancement, female arousal supplement, natural intimacy support, sexual health vitamins, hormonal balance for women, energy boost for women, mood enhancement supplement, natural aphrodisiac for women"
+    "key_search_terms": "women's libido enhancement, female arousal supplement, natural intimacy support, sexual health vitamins, hormonal balance for women, energy boost for women, mood enhancement supplement, natural aphrodisiac for women",
+    "price": 28
   },
   "14179-504-2": {
     "name": "Success Chemistry® Prostate Renew - 2 pack! - Natural Prostate Supplement for Men with Saw Palmetto & Quercetin - Supports Urinary Flow, Reduces Nighttime Trips, Promotes Healthy Prostate - 60 Veggie Capsules",
@@ -22,7 +23,8 @@
     "gtin": "783325397405",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "prostate health supplement, saw palmetto for men, urinary flow support, natural prostate relief, men's wellness vitamins, nighttime bathroom trips reduction, prostate health supplements for men over 40"
+    "key_search_terms": "prostate health supplement, saw palmetto for men, urinary flow support, natural prostate relief, men's wellness vitamins, nighttime bathroom trips reduction, prostate health supplements for men over 40",
+    "price": 37.99
   },
   "10786-807-2": {
     "name": "Lutein Supplement for Eye Health Vision Support with Zeaxanthin 2 Pack 120 Capsules Total",
@@ -34,7 +36,8 @@
     "gtin": "783325396675",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "eye health supplements, lutein and zeaxanthin vitamins, blue light protection supplements, macular degeneration support, vision health for digital age, eye strain relief supplements"
+    "key_search_terms": "eye health supplements, lutein and zeaxanthin vitamins, blue light protection supplements, macular degeneration support, vision health for digital age, eye strain relief supplements",
+    "price": 37.99
   },
   "B072MMW71X-1": {
     "name": "Hair La Fluer Maximum, Hair Growth, Island formulation with Horsetail, Bamboo and Peony extract",
@@ -45,7 +48,8 @@
     "gtin": "651536055516",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "hair growth supplements, biotin for hair growth, natural hair vitamins, DHT blocker for hair loss, thicker hair supplements, women's hair growth pills, men's hair regrowth"
+    "key_search_terms": "hair growth supplements, biotin for hair growth, natural hair vitamins, DHT blocker for hair loss, thicker hair supplements, women's hair growth pills, men's hair regrowth",
+    "price": 32.99
   },
   "31412-404U-3": {
     "name": "Success Chemistry UTI Relief 3-Pack - 60 Capsules Each - Natural D-Mannose & Cranberry Formula for Urinary Health Support - Vegan Cellulose Capsules - 3-Month Supply",
@@ -56,7 +60,8 @@
     "gtin": "783325396668",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "UTI relief supplements, D-mannose cranberry pills, urinary tract health support, bladder health vitamins, natural UTI prevention, women's urinary health, urinary tract infection relief"
+    "key_search_terms": "UTI relief supplements, D-mannose cranberry pills, urinary tract health support, bladder health vitamins, natural UTI prevention, women's urinary health, urinary tract infection relief",
+    "price": 49.99
   },
   "1960-102": {
     "name": "Skinny Bean African Mango Extract Drops - Ketogenic, Beauty Support, 2 fl oz",
@@ -67,7 +72,8 @@
     "gtin": "651536055646",
     "weight": "2oz",
     "dimensions": "1.5 inches wide x 4 inches tall",
-    "key_search_terms": "African mango extract, keto diet drops, weight loss supplements, metabolism booster, appetite suppressant, ketogenic diet support, fat burning drops"
+    "key_search_terms": "African mango extract, keto diet drops, weight loss supplements, metabolism booster, appetite suppressant, ketogenic diet support, fat burning drops",
+    "price": 25
   },
   "10777-810": {
     "name": "Liver Cleanse Pills with Detox Support Formula by Success Chemistry – Supports liver health with Milk Thistle, Dandelion Root, and Artichoke Extract. Contains 60 capsules.",
@@ -120,7 +126,8 @@
         "question": "Is this liver supplement vegetarian-friendly?",
         "answer": "Yes, Liver Cleanse Pills use vegetable capsules (Hypromellose) and contain no animal-derived ingredients, making them suitable for vegetarians seeking liver support."
       }
-    ]
+    ],
+    "price": 25.97
   },
   "783325395333": {
     "name": "Moringa Oleifera Supplement by Success Chemistry - 800mg Natural Leaf Extract for Energy, Joint Health, and Sleep Quality - 60 Capsules",
@@ -131,7 +138,8 @@
     "gtin": "783325395333",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "moringa oleifera supplements, moringa leaf extract, natural energy supplements, joint health vitamins, sleep quality support, superfood supplements, antioxidant vitamins"
+    "key_search_terms": "moringa oleifera supplements, moringa leaf extract, natural energy supplements, joint health vitamins, sleep quality support, superfood supplements, antioxidant vitamins",
+    "price": 18
   },
   "B01KB6CKV4": {
     "name": "Womens Probiotic by Skinny Bean Probiotics best for Slimming",
@@ -142,7 +150,8 @@
     "gtin": "635635749859",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "women's probiotic for weight loss, slimming probiotics, gut health supplements, digestive health for women, metabolism boosting probiotics, 40 billion CFU probiotic"
+    "key_search_terms": "women's probiotic for weight loss, slimming probiotics, gut health supplements, digestive health for women, metabolism boosting probiotics, 40 billion CFU probiotic",
+    "price": 34
   },
   "20647-507-3": {
     "name": "3 Bottle - BUNDLE DEAL - NEW LUNG - Lung Cleanse",
@@ -153,7 +162,8 @@
     "gtin": "783325396644",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "lung cleanse supplements, lung detox pills, respiratory health support, smoker's lung cleanse, breathing support vitamins, lung health formula, respiratory detox"
+    "key_search_terms": "lung cleanse supplements, lung detox pills, respiratory health support, smoker's lung cleanse, breathing support vitamins, lung health formula, respiratory detox",
+    "price": 45
   },
   "5531-502": {
     "name": "Perfect Yoni Organic Women's Probiotic - Vaginal Health Supplement | Perfect Yoni - 60 Capsules of Probiotics for Women",
@@ -164,7 +174,8 @@
     "gtin": "783325395579",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "women's vaginal probiotic, feminine pH balance, yeast infection prevention, vaginal health supplements, organic women's probiotic, intimate health support"
+    "key_search_terms": "women's vaginal probiotic, feminine pH balance, yeast infection prevention, vaginal health supplements, organic women's probiotic, intimate health support",
+    "price": 26.68
   },
   "1994-807-1": {
     "name": "EyesWhite - Eye Whitening Supplement for Bright, Radiant Eyes",
@@ -175,7 +186,8 @@
     "gtin": "783325395944",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "eye whitening supplements, bright eyes vitamins, eye redness relief, sclera whitening pills, eye health supplements, clear eyes vitamins, eye detox"
+    "key_search_terms": "eye whitening supplements, bright eyes vitamins, eye redness relief, sclera whitening pills, eye health supplements, clear eyes vitamins, eye detox",
+    "price": 26.99
   },
   "31410-836": {
     "name": "Japanese Resveratrol Supplement - Anti-Aging Formula with Organically Sourced Knotweed & Wine Extract for Youthful Skin & Longevity - 60 Capsules by Success Chemistry",
@@ -186,7 +198,8 @@
     "gtin": "783325396224",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "resveratrol supplements, anti-aging vitamins, Japanese knotweed extract, youthful skin supplements, longevity vitamins, antioxidant supplements, wine extract pills"
+    "key_search_terms": "resveratrol supplements, anti-aging vitamins, Japanese knotweed extract, youthful skin supplements, longevity vitamins, antioxidant supplements, wine extract pills",
+    "price": 28.54
   },
   "4872-221": {
     "name": "Captain Long Beard Rapid Beard Growth Formula - Powerful Blend with PABA, Horsetail Extract, Fo-Ti, Bamboo Extract, Stinging Nettle, Chinese Peony, Spirulina, Saw Palmetto, Plant Sterols, Alfalfa, and Barley - 60 Capsules",
@@ -197,7 +210,8 @@
     "gtin": "783325395593",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "beard growth supplements, rapid beard growth formula, thicker beard vitamins, men's facial hair growth, beard health supplements, fuller beard pills, beard growth vitamins"
+    "key_search_terms": "beard growth supplements, rapid beard growth formula, thicker beard vitamins, men's facial hair growth, beard health supplements, fuller beard pills, beard growth vitamins",
+    "price": 20.23
   },
   "10814-123": {
     "name": "Dragon FIRE E-Sports Supplement - Boost Energy, Focus & Endurance for Gamers - 60 Capsules",
@@ -208,7 +222,8 @@
     "gtin": "783325396453",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "gaming supplements, e-sports energy pills, gamer focus formula, gaming endurance supplements, mental clarity for gamers, esports performance vitamins"
+    "key_search_terms": "gaming supplements, e-sports energy pills, gamer focus formula, gaming endurance supplements, mental clarity for gamers, esports performance vitamins",
+    "price": 20.36
   },
   "14176-805": {
     "name": "CoQ10 Supplement for Heart Health - 200mg Coenzyme Q-10 (Ubiquinone) for Blood Pressure Support & Cardiovascular Wellness - High-Quality Heart Health Vitamin - 60 Capsules",
@@ -219,7 +234,8 @@
     "gtin": "783325395159",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "CoQ10 supplements, heart health vitamins, coenzyme Q10 for blood pressure, cardiovascular wellness, ubiquinone supplements, energy boosting CoQ10"
+    "key_search_terms": "CoQ10 supplements, heart health vitamins, coenzyme Q10 for blood pressure, cardiovascular wellness, ubiquinone supplements, energy boosting CoQ10",
+    "price": 25.76
   },
   "10787-1091": {
     "name": "Vitamin K2 + D3 Supplement with BioPerine - Enhanced Absorption for Heart Health, Stronger Bones, and Immune Support",
@@ -230,7 +246,8 @@
     "gtin": "742779533142",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "vitamin K2 D3 supplements, bone health vitamins, heart health with vitamin D, calcium absorption supplements, immune support vitamins, BioPerine enhanced vitamins"
+    "key_search_terms": "vitamin K2 D3 supplements, bone health vitamins, heart health with vitamin D, calcium absorption supplements, immune support vitamins, BioPerine enhanced vitamins",
+    "price": 20
   },
   "B071JK6HM2": {
     "name": "CLA Safflower Oil Weight Loss Supplement - 1000mg Conjugated Linoleic Acid for Fat Burning and BMI Lowering",
@@ -241,7 +258,8 @@
     "gtin": "651536055387",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "CLA safflower oil, conjugated linoleic acid, weight loss supplements, fat burning pills, BMI lowering supplements, lean muscle support, natural diet pills"
+    "key_search_terms": "CLA safflower oil, conjugated linoleic acid, weight loss supplements, fat burning pills, BMI lowering supplements, lean muscle support, natural diet pills",
+    "price": 27.53
   },
   "7.83E+11": {
     "name": "PMS Relief Krill Oil Supplement - Advanced Omega-3 Formula with EPA, DHA, Phospholipids, and Astaxanthin for Women‚Äôs Heart Health, Brain Function, Anti-Aging, and Overall Well-Being",
@@ -252,7 +270,8 @@
     "gtin": "783325395449",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "PMS relief supplements, krill oil for women, omega-3 for hormonal balance, women's heart health, brain function supplements, anti-aging omega-3, menstrual relief vitamins"
+    "key_search_terms": "PMS relief supplements, krill oil for women, omega-3 for hormonal balance, women's heart health, brain function supplements, anti-aging omega-3, menstrual relief vitamins",
+    "price": 24
   },
   "1962-104": {
     "name": "African Mango Ultra Keto Stack - Potent Weight Loss Supplement with African Mango, Raspberry Ketones, Green Tea Extract, Caffeine, Apple Cider Vinegar, Kelp, and Grape Seed Extract for Enhanced Metabolism, Energy, and Fat Burning",
@@ -263,7 +282,8 @@
     "gtin": "651536055349",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "African mango keto stack, weight loss supplements, keto diet pills, raspberry ketones, green tea extract weight loss, fat burning supplements, metabolism boosters"
+    "key_search_terms": "African mango keto stack, weight loss supplements, keto diet pills, raspberry ketones, green tea extract weight loss, fat burning supplements, metabolism boosters",
+    "price": 30.58
   },
   "6.45E+11": {
     "name": "Perfect Harmony Stress Relief Formula for Women by Success Chemistry - Anti Anxiety and Panic Aid with Natural Ingredients - Ashwagandha, Chamomile, GABA, and More - 60 Capsules",
@@ -274,7 +294,8 @@
     "gtin": "645080279443",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "stress relief supplements for women, anti-anxiety natural formula, ashwagandha for stress, chamomile calming pills, GABA supplements, panic relief vitamins, mood enhancement"
+    "key_search_terms": "stress relief supplements for women, anti-anxiety natural formula, ashwagandha for stress, chamomile calming pills, GABA supplements, panic relief vitamins, mood enhancement",
+    "price": 26.86
   },
   "10784-": {
     "name": "Advanced Neurotropic Focus Aid Supplement - Enhance Brain Function and Clarity with DMAE, Bacopa, and GABA - 60 Capsules",
@@ -285,7 +306,8 @@
     "gtin": "651074168525",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "nootropic supplements, brain focus pills, DMAE cognitive support, bacopa memory enhancement, GABA for mental clarity, brain health vitamins, focus and concentration"
+    "key_search_terms": "nootropic supplements, brain focus pills, DMAE cognitive support, bacopa memory enhancement, GABA for mental clarity, brain health vitamins, focus and concentration",
+    "price": 25.54
   },
   "6.52E+11": {
     "name": "Female Libido Enhancement Pill by Skinny Bean - Boost Sex Drive & Mood with Natural Aphrodisiac for Women - Enhance Sexual Arousal, Sensation, and Overall Well-Being - 60 Capsules",
@@ -296,7 +318,8 @@
     "gtin": "651536055318",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "female libido enhancement, women's sex drive supplements, natural aphrodisiac for women, sexual arousal pills, mood enhancement for women, intimacy support vitamins"
+    "key_search_terms": "female libido enhancement, women's sex drive supplements, natural aphrodisiac for women, sexual arousal pills, mood enhancement for women, intimacy support vitamins",
+    "price": 26.14
   },
   "10775-506": {
     "name": "Testosterone Booster by Success Chemistry - Increase Healthy Sex Drive & Libido, Boost Lean Muscle Growth & Burn Fat - Improve Performance, Stamina & Strength - Natural Testosterone Support Supplement - 60 Capsules",
@@ -307,7 +330,8 @@
     "gtin": "651074168389",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "testosterone booster, men's libido supplements, muscle growth vitamins, tribulus terrestris, natural testosterone support, lean muscle supplements, men's performance enhancement"
+    "key_search_terms": "testosterone booster, men's libido supplements, muscle growth vitamins, tribulus terrestris, natural testosterone support, lean muscle supplements, men's performance enhancement",
+    "price": 26.68
   },
   "1981-126": {
     "name": "Raspberry Ketone Ultra - Potent Fat Burner with African Mango, Green Tea, Apple Cider Vinegar - Natural Weight Loss Supplement for Enhanced Metabolism and Energy Boost - 60 Capsules",
@@ -318,7 +342,8 @@
     "gtin": "651536055257",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "raspberry ketone supplements, fat burner pills, weight loss with African mango, green tea extract diet, metabolism booster, natural weight loss, energy boost supplements"
+    "key_search_terms": "raspberry ketone supplements, fat burner pills, weight loss with African mango, green tea extract diet, metabolism booster, natural weight loss, energy boost supplements",
+    "price": 32.26
   },
   "10779-123": {
     "name": "Keto Diet Pills - Advanced Ketosis Fat Burner & Weight Loss Supplement with Energy and Focus Blend - Caffeine, Raspberry Ketones, Yohimbe, and Green Tea Extract - 60 Capsules",
@@ -329,7 +354,8 @@
     "gtin": "783325396477",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "keto diet pills, ketosis fat burner, weight loss supplements, energy and focus blend, raspberry ketones keto, green tea extract diet, thermogenic supplements"
+    "key_search_terms": "keto diet pills, ketosis fat burner, weight loss supplements, energy and focus blend, raspberry ketones keto, green tea extract diet, thermogenic supplements",
+    "price": 26.86
   },
   "31412-404U": {
     "name": "UTI Relief Complete Urinary Tract Health Supplement - D-Mannose, Cranberry, Hibiscus, and Dandelion Extract - Prevent and Treat UTIs Naturally - 60 Capsules",
@@ -382,7 +408,8 @@
         "question": "Are there any side effects from UTI Relief?",
         "answer": "UTI Relief is made with natural, well-tolerated ingredients. D-Mannose may cause mild bloating in some people initially. The formula is non-GMO, free from artificial additives, and uses vegetable capsules for easy digestion."
       }
-    ]
+    ],
+    "price": 28.72
   },
   "30581-817": {
     "name": "Str82sleep Sleep Support Supplement - Natural Sleep Aid with Melatonin, Ashwagandha, and Goji Berries - 60 Capsules",
@@ -393,7 +420,8 @@
     "gtin": "783325396033",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "sleep support supplements, natural sleep aid, melatonin for sleep, ashwagandha sleep, goji berry relaxation, insomnia relief, better sleep vitamins"
+    "key_search_terms": "sleep support supplements, natural sleep aid, melatonin for sleep, ashwagandha sleep, goji berry relaxation, insomnia relief, better sleep vitamins",
+    "price": 31
   },
   "10783-501": {
     "name": "Horny Goat Weed Supplement for Men & Women by Success Chemistry - Libido Enhancer with Maca Root, Tongkat Ali, L-Arginine, and Ginseng - Boosts Libido, Stamina, and Performance - 60 Capsules",
@@ -404,7 +432,8 @@
     "gtin": "783325395234",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "horny goat weed supplements, libido enhancer for men and women, maca root for stamina, tongkat ali performance, L-arginine blood flow, ginseng energy, sexual health vitamins"
+    "key_search_terms": "horny goat weed supplements, libido enhancer for men and women, maca root for stamina, tongkat ali performance, L-arginine blood flow, ginseng energy, sexual health vitamins",
+    "price": 29.62
   },
   "16715-401": {
     "name": "BabyBean Female Fertility Support Supplement - Natural Non-GMO Conception Aid & Reproductive Health Support for Women, Hormone Balance & Prenatal Wellness",
@@ -415,7 +444,8 @@
     "gtin": "783325395555",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "female fertility supplements, conception aid for women, reproductive health support, hormone balance vitamins, prenatal wellness, natural fertility boost, women's fertility vitamins"
+    "key_search_terms": "female fertility supplements, conception aid for women, reproductive health support, hormone balance vitamins, prenatal wellness, natural fertility boost, women's fertility vitamins",
+    "price": 30.4
   },
   "10781-105k": {
     "name": "KETO CORE Extra Strength - Advanced Keto Booster for Weight Loss & Enhanced Focus - 60 Capsules",
@@ -468,7 +498,8 @@
         "question": "Is KETO CORE suitable for vegetarians?",
         "answer": "Yes, KETO CORE uses vegetable capsules (Hypromellose) and contains no animal-derived ingredients, making it suitable for vegetarians following a keto lifestyle."
       }
-    ]
+    ],
+    "price": 26.68
   },
   "39969-861": {
     "name": "Slay Vocal Complete - Advanced Lung & Larynx Health Support for Singers - 60 Capsules",
@@ -479,7 +510,8 @@
     "gtin": "783325395036",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "vocal health supplements, singer's voice support, lung and larynx health, vocal performance vitamins, respiratory health for singers, voice strain relief, organic vocal supplements"
+    "key_search_terms": "vocal health supplements, singer's voice support, lung and larynx health, vocal performance vitamins, respiratory health for singers, voice strain relief, organic vocal supplements",
+    "price": 37.88
   },
   "10788-302-1": {
     "name": "Colon Cleanse Natural Body Detox Pills by Success Chemistry - Enhance Digestive Health and Detoxification with Psyllium Husk, Senna Leaf, and Aloe Vera - 60 Capsules",
@@ -532,7 +564,8 @@
         "question": "Is Colon Cleanse suitable for vegetarians?",
         "answer": "Yes, Colon Cleanse uses vegetable capsules and contains plant-based ingredients including Psyllium Husk, Senna Leaf, and Aloe Vera, making it suitable for vegetarians seeking digestive support."
       }
-    ]
+    ],
+    "price": 17.32
   },
   "11209-221": {
     "name": "Hair Growth Supplement for Longer, Stronger, Healthier Hair by Success Chemistry - 60 Capsules",
@@ -585,7 +618,8 @@
         "question": "Does this supplement help with hair damaged from heat styling or coloring?",
         "answer": "Yes! The Collagen, Keratin, and Vitamin E in our formula help repair and strengthen damaged hair. While it won't reverse existing damage, it supports healthier new growth and helps protect hair from future damage by fortifying each strand."
       }
-    ]
+    ],
+    "price": 24.46
   },
   "14182-303": {
     "name": "Digestive Enzymes with Probiotics by Success Chemistry - 60 Capsules",
@@ -596,7 +630,8 @@
     "gtin": "783325395173",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "digestive enzymes supplements, probiotics for digestion, reduce bloating pills, gut health support, nutrient absorption vitamins, digestive health formula, enzyme probiotic blend"
+    "key_search_terms": "digestive enzymes supplements, probiotics for digestion, reduce bloating pills, gut health support, nutrient absorption vitamins, digestive health formula, enzyme probiotic blend",
+    "price": 30.16
   },
   "14189-717": {
     "name": "Multi-Collagen Capsules with Types I, II, III, V, and X Collagen by Success Chemistry - 90 Capsules",
@@ -607,7 +642,8 @@
     "gtin": "783325395340",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "multi-collagen supplements, collagen for skin hair nails, joint health collagen, types I II III V X collagen, anti-aging collagen, skin elasticity vitamins, collagen peptides"
+    "key_search_terms": "multi-collagen supplements, collagen for skin hair nails, joint health collagen, types I II III V X collagen, anti-aging collagen, skin elasticity vitamins, collagen peptides",
+    "price": 33.64
   },
   "5361-803": {
     "name": "Balance Blood Sugar with Body Supplement by Success Chemistry - Support Healthy Glucose Levels and Metabolic Health with Natural Ingredients for Blood Sugar Control - 30 Day Supply - 470mg Per Serving - 60 Capsules",
@@ -618,7 +654,8 @@
     "gtin": "783325395098",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "blood sugar supplements, glucose control vitamins, berberine for blood sugar, cinnamon blood sugar support, insulin sensitivity supplements, metabolic health, diabetes support vitamins"
+    "key_search_terms": "blood sugar supplements, glucose control vitamins, berberine for blood sugar, cinnamon blood sugar support, insulin sensitivity supplements, metabolic health, diabetes support vitamins",
+    "price": 24.46
   },
   "26131-816": {
     "name": "Oral Health Probiotic by Success Chemistry - 60 Capsules",
@@ -629,7 +666,8 @@
     "gtin": "783325395388",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "oral health probiotic, fresh breath supplements, teeth and gum health, oral microbiome balance, dental hygiene vitamins, plaque prevention, gum disease support"
+    "key_search_terms": "oral health probiotic, fresh breath supplements, teeth and gum health, oral microbiome balance, dental hygiene vitamins, plaque prevention, gum disease support",
+    "price": 34.26
   },
   "2004-817": {
     "name": "Beauty Sleep Pill with Melatonin and 5-HTP by Success Chemistry - 60 Capsules",
@@ -640,7 +678,8 @@
     "gtin": "783325395166",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "beauty sleep supplements, melatonin sleep aid, 5-HTP for relaxation, natural sleep pills, chamomile valerian sleep, restful sleep vitamins, sleep quality support"
+    "key_search_terms": "beauty sleep supplements, melatonin sleep aid, 5-HTP for relaxation, natural sleep pills, chamomile valerian sleep, restful sleep vitamins, sleep quality support",
+    "price": 25.24
   },
   "30178-307-1": {
     "name": "Organic Irish Sea Moss Supplement Capsules for Super Immune Support by Success Chemistry - 60 Capsules",
@@ -651,7 +690,8 @@
     "gtin": "783325395739",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "Irish sea moss supplements, immune support vitamins, bladderwrack thyroid health, burdock root detox, organic sea moss, skin and joint health, nutrient-dense seaweed"
+    "key_search_terms": "Irish sea moss supplements, immune support vitamins, bladderwrack thyroid health, burdock root detox, organic sea moss, skin and joint health, nutrient-dense seaweed",
+    "price": 23.32
   },
   "30855-849-1": {
     "name": "Ginseng Supplement with Ginkgo Biloba and Red Korean Panax Root by Success Chemistry - 60 Capsules",
@@ -662,7 +702,8 @@
     "gtin": "783325395982",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "ginseng supplements, ginkgo biloba cognitive support, red Korean panax root, energy boost vitamins, mental clarity supplements, immune health support, focus and memory"
+    "key_search_terms": "ginseng supplements, ginkgo biloba cognitive support, red Korean panax root, energy boost vitamins, mental clarity supplements, immune health support, focus and memory",
+    "price": 26.92
   },
   "31347-405-1": {
     "name": "Maca Force Organic Root Supplement with Red, Black, and Yellow Maca by Success Chemistry - 60 Capsules",
@@ -673,7 +714,8 @@
     "gtin": "783325396040",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "maca root supplements, organic maca for energy, red black yellow maca, stamina and libido boost, hormonal balance vitamins, adaptogen supplements, performance enhancement"
+    "key_search_terms": "maca root supplements, organic maca for energy, red black yellow maca, stamina and libido boost, hormonal balance vitamins, adaptogen supplements, performance enhancement",
+    "price": 22.96
   },
   "31411-822-1": {
     "name": "Organic Ashwagandha Supplement to Reduce Stress and Improve Muscle Health by Success Chemistry - 60 Capsules",
@@ -684,7 +726,8 @@
     "gtin": "783325396217",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "ashwagandha supplements, stress relief vitamins, muscle health support, organic adaptogen, anxiety reduction, sleep quality improvement, natural relaxation"
+    "key_search_terms": "ashwagandha supplements, stress relief vitamins, muscle health support, organic adaptogen, anxiety reduction, sleep quality improvement, natural relaxation",
+    "price": 23.44
   },
   "5036-401-1": {
     "name": "Skinny Bean¬Æ Estrogen Enhancement Supplement - Balance Hormones Naturally and Improve Overall Well-Being with Our Unique Formula - Supports Hormonal Health with Epimedium, Dong Quai, Maca, and More - 60 Capsules",
@@ -695,7 +738,8 @@
     "gtin": "651536055608",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "estrogen enhancement supplements, hormone balance vitamins, menopause relief, dong quai for women, maca hormonal support, hot flash relief, women's hormonal health"
+    "key_search_terms": "estrogen enhancement supplements, hormone balance vitamins, menopause relief, dong quai for women, maca hormonal support, hot flash relief, women's hormonal health",
+    "price": 26.68
   },
   "1982-127": {
     "name": "Saffron Extract Pure for Metabolism and All-Natural Appetite Suppression by Success Chemistry - 60 Capsules",
@@ -706,7 +750,8 @@
     "gtin": "651536055325",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "saffron extract supplements, appetite suppressant natural, metabolism booster, weight management pills, mood enhancement vitamins, hunger control, saffron for weight loss"
+    "key_search_terms": "saffron extract supplements, appetite suppressant natural, metabolism booster, weight management pills, mood enhancement vitamins, hunger control, saffron for weight loss",
+    "price": 23.27
   },
   "1984-128": {
     "name": "Carb Blocker with Pure White Kidney Bean Extract for Appetite Suppression by Success Chemistry - 60 Capsules",
@@ -717,7 +762,8 @@
     "gtin": "651074168501",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "carb blocker supplements, white kidney bean extract, appetite suppression, weight management pills, low carb diet support, calorie reduction, keto diet supplements"
+    "key_search_terms": "carb blocker supplements, white kidney bean extract, appetite suppression, weight management pills, low carb diet support, calorie reduction, keto diet supplements",
+    "price": 22.12
   },
   "14178-832": {
     "name": "Berberine Supplement for Weight Loss and Blood Sugar Management by Success Chemistry - 60 Capsules",
@@ -728,7 +774,8 @@
     "gtin": "651074168570",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "berberine supplements, blood sugar management, weight loss support, insulin sensitivity vitamins, metabolism booster, heart health supplements, glucose regulation"
+    "key_search_terms": "berberine supplements, blood sugar management, weight loss support, insulin sensitivity vitamins, metabolism booster, heart health supplements, glucose regulation",
+    "price": 33.3
   },
   "14179-504": {
     "name": "Success Chemistry Prostate Renew - A blend of Saw Palmetto, Quercetin, and Juniper, traditionally used to assist with urinary function and well-being. Each bottle contains 60 veggie capsules.",
@@ -739,7 +786,8 @@
     "gtin": "651074168440",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "prostate health supplements, saw palmetto for men, urinary function support, quercetin prostate, men's wellness vitamins, bladder health, nighttime bathroom relief"
+    "key_search_terms": "prostate health supplements, saw palmetto for men, urinary function support, quercetin prostate, men's wellness vitamins, bladder health, nighttime bathroom relief",
+    "price": 30.28
   },
   "1989-403": {
     "name": "Goddess Unleashed - Mood and Beauty Best Daily Women's Multivitamin - 60 Capsules",
@@ -750,7 +798,8 @@
     "gtin": "635635749835",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "women's multivitamin, mood and beauty vitamins, daily women's health, energy boost for women, antioxidant supplements, herbal adaptogens, women's wellness"
+    "key_search_terms": "women's multivitamin, mood and beauty vitamins, daily women's health, energy boost for women, antioxidant supplements, herbal adaptogens, women's wellness",
+    "price": 26.32
   },
   "20647-507": {
     "name": "Lung Detox Premium Cleanse with Herbal Ingredients - Promote Lung Health and Detoxification with Mullein, Marshmallow Root, Ginger, and Antioxidant Fruit & Energy Blend - Support Respiratory Function and Immune Health - 60 Capsules",
@@ -803,7 +852,8 @@
         "question": "Is Lung Detox suitable for vegetarians and vegans?",
         "answer": "Yes, Lung Detox uses vegetable capsules (Hypromellose) and contains no animal-derived ingredients, making it suitable for vegetarians and vegans seeking respiratory support."
       }
-    ]
+    ],
+    "price": 26.32
   },
   "20646-838": {
     "name": "Mushroom Immune Aid and Lung Health Immunity - Boost Your Immune System and Lung Function with Medicinal Mushrooms - Reishi, Cordyceps, Chaga, and More - Natural Ingredients for Respiratory Health and Overall Well-being - 60 Servings",
@@ -856,7 +906,8 @@
         "question": "Does this supplement help with seasonal immune challenges?",
         "answer": "Yes! The combination of immune-boosting mushrooms with Vitamin C, D3, and Zinc makes this formula excellent for seasonal immune support. Many customers increase their intake during cold and flu season for extra protection."
       }
-    ]
+    ],
+    "price": 24.73
   },
   "20645-306": {
     "name": "Lung and Body Immune Support with Echinacea and Probiotics - Total Body Respiratory Vitality and Overall Health Supplement - Enhanced with Elderberry, Vitamin C, and Probiotics for Immune Boost and Digestive Health - 60 Capsules",
@@ -867,7 +918,8 @@
     "gtin": "701575296323",
     "weight": "3oz",
     "dimensions": "2 inches wide x 3.5 inches tall",
-    "key_search_terms": "lung and body immune support, echinacea probiotics, elderberry vitamin C, respiratory vitality, immune boost supplements, digestive health, total body wellness"
+    "key_search_terms": "lung and body immune support, echinacea probiotics, elderberry vitamin C, respiratory vitality, immune boost supplements, digestive health, total body wellness",
+    "price": 27
   },
   "14180-830": {
     "name": "Maximum Strength Height Growth Support |  Natural Supplement with 13 Essential Nutrients",
@@ -876,7 +928,8 @@
     "suggested_use": "As a dietary supplement take two (2) veggie capsules once a day after a meal with an 8oz. glass of water or as directed by your healthcare professional.",
     "supplement_facts": "Serving Size: 2 Capsules\nServings Per Container: 30\n\nTurmeric Root 800 mg\nGlucosamine Sulfate 200 mg\nTurmeric 95% 100 mg\nGinger Extract 100 mg\nChondroitin Sulfate 50 mg\nBoswellia Extract 40 mg\nMSM (Methylsulfonylmethane) 10 mg\nBioPerine® 10 mg\nQuercetin 8 mg\nMethionine 8 mg\nBromelain 8 mg\n\nInactive Ingredients: Cellulose (Vegetable Capsule), Rice Flour.\nContains: Shellfish.",
     "gtin": "651074168143",
-    "key_search_terms": "height growth supplements, bone health vitamins, joint support nutrients, turmeric glucosamine, skeletal development, growth support for teens, natural height boost"
+    "key_search_terms": "height growth supplements, bone health vitamins, joint support nutrients, turmeric glucosamine, skeletal development, growth support for teens, natural height boost",
+    "price": 25.24
   },
   "3008-221": {
     "name": "Eyelash Growth and Eyebrow Dietary Supplement by Success Chemistry - Achieve Longer, Fuller Lashes and Thicker Eyebrows with Natural Ingredients - 500mg Plus Per Serving - 60 Capsules",
@@ -885,7 +938,8 @@
     "suggested_use": "As a dietary supplement take two (2) veggie capsules once a day after a meal with an 8oz. glass of water or as directed by your healthcare professional.",
     "supplement_facts": "Serving Size: 2 Capsules\nServings Per Container: 30\n\nVitamin A (as Beta-carotene) 120 mcg RAE 13%\nVitamin C (as Ascorbic acid) 120 mg 133%\nCalcium (as Calcium carbonate) 80 mg 6%\nIron (as Ferrous fumarate) 14.5 mg 81%\nVitamin D3 (as Cholecalciferol) 20 mcg 100%\nVitamin E (as DL-Alpha tocopheryl acetate) 14 mg 93%\nVitamin B1 (as Thiamine mononitrate) 6 mg 500%\nVitamin B6 (as Pyridoxine HCl) 8 mg 471%\nFolate 1,467 mcg DFE 367%\nVitamin B12 (as Cyanocobalamin) 12 mcg 500%\nBiotin 600 mcg 2,000%\nVitamin B5 (as D-Calcium pantothenate) 30 mg 600%\nMagnesium (as Magnesium Oxide) 120 mg 29%\nZinc (as Zinc Oxide) 7 mg 64%\nManganese (as Manganese amino acid chelate) 4 mg 174%\nPotassium (as Potassium gluconate) 12 mg\nProprietary Blend: 409 mg (PABA, L-Tyrosine HCL, Horsetail extract, Fo-Ti, Bamboo extract, Nettle root, Peony, Spirulina, Saw palmetto, Plant sterols, Alfalfa, Barley grass)\n\nInactive Ingredients: Cellulose (Vegetable Capsule), Rice Flour, Magnesium stearate, Silicon dioxide. Contains: Soy.",
     "gtin": "635635749798",
-    "key_search_terms": "eyelash growth supplements, eyebrow enhancement vitamins, longer fuller lashes, thicker brows naturally, hair follicle support, biotin for lashes, natural lash growth"
+    "key_search_terms": "eyelash growth supplements, eyebrow enhancement vitamins, longer fuller lashes, thicker brows naturally, hair follicle support, biotin for lashes, natural lash growth",
+    "price": 27
   },
   "10786-807": {
     "name": "Sclera White - Eye Beauty Dietary Supplement With Eyebright & Lutein",
@@ -936,7 +990,8 @@
         "question": "Where is Sclera White manufactured and is it quality tested?",
         "answer": "Sclera White is proudly made in Utah, USA, in an FDA-compliant facility following strict GMP (Good Manufacturing Practice) guidelines. Each batch is tested for purity and potency to ensure you receive a safe, high-quality product."
       }
-    ]
+    ],
+    "price": 27.36
   },
   "10786-807-3": {
     "name": "3 Bottle - BUNDLE DEAL - Sclera White | Eye-Whitening",
@@ -967,6 +1022,7 @@
         "question": "What's the shelf life of Sclera White supplements in the bundle?",
         "answer": "Sclera White has a shelf life of 2 years from the manufacturing date when stored properly in a cool, dry place. The bundle gives you plenty of time to use all three bottles while maintaining full potency."
       }
-    ]
+    ],
+    "price": 45
   }
 }

@@ -41,6 +41,7 @@ const overlay = {};
 for (const [sku, p] of Object.entries(PRODUCTS_DATA)) {
   if (!p || typeof p !== "object") continue;
   const entry = {};
+  if (p.price != null) entry.price = p.price;
   if (p.description != null) entry.description = p.description;
   if (p.short_description != null) entry.short_description = p.short_description;
   if (p.suggested_use != null) entry.suggested_use = p.suggested_use;
