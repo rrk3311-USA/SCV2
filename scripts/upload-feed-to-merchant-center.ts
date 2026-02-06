@@ -1,7 +1,10 @@
 #!/usr/bin/env npx tsx
 /**
- * Build the Google Shopping feed XML and upload it to Merchant Center via SFTP.
- * Use this when "scheduled fetch" URL is not available (e.g. 404) or for manual uploads.
+ * Build the Google Shopping feed XML files and upload them to Merchant Center via SFTP.
+ *
+ * Uploads TWO feeds:
+ *  1. google-shopping-feed.xml          – International (primary data source)
+ *  2. google-shopping-feed-us.xml       – USA supplemental (shipping + feed_label)
  *
  * Prerequisites:
  * 1. In Merchant Center: Data sources → SFTP and Google Cloud Storage → Create password.
@@ -15,7 +18,6 @@ import * as fs from "fs";
 import * as path from "path";
 import SftpClient from "ssh2-sftp-client";
 
-// Run from project root so path aliases resolve when we load the lib
 const projectRoot = path.resolve(__dirname, "..");
 
 async function main() {
@@ -26,15 +28,24 @@ async function main() {
   }
 
   // Dynamic import so path aliases (@/) resolve via tsconfig from project root
-  const { buildGoogleShoppingFeedXml } = await import("../src/lib/google-shopping-feed");
-  const xml = buildGoogleShoppingFeedXml();
+  const { buildGoogleShoppingFeedXml, buildGoogleShoppingFeedXmlUS } = await import("../src/lib/google-shopping-feed");
 
-  const filename = "google-shopping-feed.xml";
-  const localPath = path.join(projectRoot, filename);
+  const feeds = [
+    { builder: buildGoogleShoppingFeedXml, filename: "google-shopping-feed.xml", label: "International" },
+    { builder: buildGoogleShoppingFeedXmlUS, filename: "google-shopping-feed-us.xml", label: "USA" },
+  ];
 
-  fs.writeFileSync(localPath, xml, "utf8");
-  console.log(`Wrote ${filename} (${(xml.length / 1024).toFixed(1)} KB). Uploading via SFTP...`);
+  const localPaths: string[] = [];
 
+  for (const feed of feeds) {
+    const xml = feed.builder();
+    const localPath = path.join(projectRoot, feed.filename);
+    fs.writeFileSync(localPath, xml, "utf8");
+    localPaths.push(localPath);
+    console.log(`Wrote ${feed.filename} [${feed.label}] (${(xml.length / 1024).toFixed(1)} KB)`);
+  }
+
+  console.log("Uploading via SFTP...");
   const sftp = new SftpClient();
   try {
     await sftp.connect({
@@ -44,17 +55,19 @@ async function main() {
       password: password.trim(),
       readyTimeout: 15000,
     });
-    await sftp.put(localPath, filename);
-    console.log(`Uploaded ${filename} to Merchant Center SFTP.`);
+
+    for (const feed of feeds) {
+      const localPath = path.join(projectRoot, feed.filename);
+      await sftp.put(localPath, feed.filename);
+      console.log(`Uploaded ${feed.filename} [${feed.label}] to Merchant Center SFTP.`);
+    }
   } catch (err) {
     console.error("SFTP upload failed:", err);
     process.exit(1);
   } finally {
     await sftp.end();
-    try {
-      fs.unlinkSync(localPath);
-    } catch {
-      // ignore
+    for (const lp of localPaths) {
+      try { fs.unlinkSync(lp); } catch { /* ignore */ }
     }
   }
 }

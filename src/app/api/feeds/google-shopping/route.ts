@@ -1,6 +1,6 @@
 /**
- * Google Merchant Center / Google Shopping product feed (RSS 2.0 + g: namespace).
- * Served at /api/feeds/google-shopping – use this URL in Merchant Center if /feeds/google-shopping returns 404.
+ * Google Merchant Center – International product feed (fallback route).
+ * Served at /api/feeds/google-shopping – use if /feeds/google-shopping returns 404.
  */
 
 import { NextResponse } from "next/server";
