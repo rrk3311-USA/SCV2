@@ -52,8 +52,8 @@ If you keep getting logged out when using the backend (e.g. Admin at `/app`) on 
 
 To manage products, collections, and orders:
 - **Admin Panel**: https://medusa-backend-dark-resonance-4960.fly.dev/app
-- **Email**: rrk3311@gmail.com
-- **Password**: Captainkirk888
+- **Email**: (use your Medusa admin email)
+- **Password**: (use your Medusa admin password — never commit real passwords to Git)
 
 ## Backend CORS Settings
 
