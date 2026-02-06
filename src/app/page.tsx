@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero – full width, touches header divider; section background edge-to-edge */}
-      <section className="relative flex min-h-[260px] w-full max-h-[360px] items-start justify-center overflow-hidden rounded-b-2xl bg-[#2854a6] shadow-sm sm:min-h-[280px] lg:min-h-[260px] lg:max-h-[340px]">
+      <section className="relative flex min-h-[280px] w-full max-h-[420px] items-start justify-center overflow-hidden rounded-b-2xl bg-[#2854a6] shadow-sm sm:min-h-[320px] lg:min-h-[300px] lg:max-h-[400px]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
           style={{ backgroundImage: "url('/images/home/BannerTOP.jpg')" }}
@@ -30,9 +30,9 @@ export default function HomePage() {
         <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center px-4 pt-0">
           <HeroBannerImage />
         </div>
-        {/* Frosted bottom bar – same as 8080 */}
+        {/* Frosted bottom bar – ~half height so more of hero image shows */}
         <div
-          className="absolute bottom-0 left-0 right-0 z-20 px-5 py-6 sm:px-6"
+          className="absolute bottom-0 left-0 right-0 z-20 px-4 py-3 sm:px-5 sm:py-4"
           style={{
             background: "rgba(255, 255, 255, 0.15)",
             backdropFilter: "blur(20px) saturate(180%)",
@@ -44,10 +44,10 @@ export default function HomePage() {
             <h1
               className="text-white"
               style={{
-                fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                fontSize: "clamp(1.5rem, 3.5vw, 2.75rem)",
                 fontWeight: 800,
                 textShadow: "0 4px 20px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.5)",
-                marginBottom: "15px",
+                marginBottom: "6px",
                 lineHeight: 1.2,
               }}
             >
@@ -56,10 +56,10 @@ export default function HomePage() {
             <p
               className="mx-auto max-w-2xl text-white"
               style={{
-                fontSize: "clamp(1rem, 2vw, 1.3rem)",
+                fontSize: "clamp(0.875rem, 1.75vw, 1.1rem)",
                 fontWeight: 500,
                 textShadow: "0 3px 15px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.5)",
-                lineHeight: 1.6,
+                lineHeight: 1.4,
               }}
             >
               Formulated With The Freshest Nutrients
