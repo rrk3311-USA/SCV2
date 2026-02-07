@@ -23,6 +23,24 @@ if (!fs.existsSync(productsDir)) {
 const skuDirs = fs.readdirSync(productsDir, { withFileTypes: true })
   .filter((d) => d.isDirectory() && !d.name.startsWith("."));
 
+// Prefer .png for hero (01) when both .png and .jpg exist; otherwise one per base name.
+function pickOnePerBase(files) {
+  const byBase = new Map();
+  for (const f of files) {
+    const base = path.basename(f, path.extname(f));
+    const ext = path.extname(f).toLowerCase();
+    const existing = byBase.get(base);
+    if (!existing) {
+      byBase.set(base, f);
+    } else if (base === "01" && ext === ".png") {
+      byBase.set(base, f);
+    } else if (base !== "01" && ext === ".png" && path.extname(existing).toLowerCase() !== ".png") {
+      byBase.set(base, f);
+    }
+  }
+  return Array.from(byBase.values()).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+}
+
 const map = {};
 for (const dir of skuDirs) {
   const sku = dir.name;
@@ -31,7 +49,8 @@ for (const dir of skuDirs) {
     .filter((f) => EXT.includes(path.extname(f).toLowerCase()))
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
   if (files.length) {
-    map[sku] = files.map((f) => `/images/products/${sku}/${f}`);
+    const chosen = pickOnePerBase(files);
+    map[sku] = chosen.map((f) => `/images/products/${sku}/${f}`);
   }
 }
 
