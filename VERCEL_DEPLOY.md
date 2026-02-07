@@ -1,4 +1,13 @@
-# Why the new site design isn’t showing on Vercel
+# Deploy SCV2 to the live site (Vercel)
+
+**Live site:** https://www.successchemistry.com  
+**Deploys from:** Vercel → GitHub repo **rrk3311-USA/SCV2** (not success007).
+
+To get your latest SCV2 changes live, push the SCV2 folder into that repo (see below). Render is not used for the storefront.
+
+---
+
+## Why the new site design isn’t showing on Vercel
 
 **What’s going on**
 

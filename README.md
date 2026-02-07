@@ -11,13 +11,20 @@
 
 Next.js App Router has no `index.html`; the app entry is `layout.tsx` + `page.tsx`.
 
-## Vercel (scv2-success-chemistry)
+## Deploy to live site (Vercel)
 
-The project [scv2-success-chemistry](https://vercel.com/rrk3311-usas-projects/scv2-success-chemistry) should deploy **this SCV2 app**. In Vercel:
+The live storefront is **https://www.successchemistry.com**. It deploys from the **SCV2** GitHub repo (rrk3311-USA/SCV2), not from success007.
 
-- Set **Root Directory** to `SCV2` (so the build runs from this folder).
-- Build command: `npm run build` (Next.js).
-- Push to `main` to trigger a deploy; the new home page and floating-bottles shop will be live there.
+**To update the live site:** From the **success007** repo root run:
+
+```bash
+./sync-scv2-to-vercel.sh
+```
+
+If push is rejected (non–fast-forward), use `./sync-scv2-to-vercel.sh --force`.  
+See **[VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md)** for details.
+
+**Vercel project:** [scv2-success-chemistry](https://vercel.com/rrk3311-usas-projects/scv2-success-chemistry). Root Directory = `SCV2`, build = `npm run build`. Pushes to rrk3311-USA/SCV2 `main` trigger the deploy.
 
 ## Run locally
 
