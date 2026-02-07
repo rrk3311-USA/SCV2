@@ -100,9 +100,12 @@ export default async function ProductPage({ params }: Props) {
       <RecentlyViewedTracker slug={product.slug} name={product.name} image={product.image} />
       <Container className="py-6 sm:py-10">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-          {/* Gallery: swipe only, no zoom, no open-to-gallery */}
+          {/* Gallery: swipe only, no zoom. Use full images array; fallback to hero so every product shows at least one image. */}
           <div className="w-full">
-            <ProductImageSwipe images={product.images} alt={product.name} />
+            <ProductImageSwipe
+              images={product.images?.length > 0 ? product.images : [product.image]}
+              alt={product.name}
+            />
           </div>
 
           {/* Details */}

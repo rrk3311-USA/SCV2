@@ -10,8 +10,18 @@
   --sc-blue-dark: #1e3a8a;
 }
 
+/* Mobile: remove 300ms tap delay and visible tap highlight */
+html {
+  -webkit-tap-highlight-color: rgba(40, 84, 166, 0.15);
+  touch-action: manipulation;
+}
+
 body {
   font-family: var(--font-medusa);
+  /* Sharper text in scaled/embedded views (e.g. IDE preview) */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Focus ring for accessibility */

@@ -7,6 +7,7 @@ import {
   BatteryVerticalMedium,
   BatteryVerticalHigh,
   BatteryVerticalFull,
+  Flask,
 } from "@phosphor-icons/react";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { PayPalProductButtons } from "@/components/PayPalProductButtons";
@@ -72,7 +73,7 @@ export function ProductPurchaseBlock({ product }: ProductPurchaseBlockProps) {
           <div className="relative min-h-[2.5rem] flex-1 rounded-lg bg-white px-3 py-2 shadow-sm ring-1 ring-amber-200/60">
             <span className="absolute -left-1.5 top-1/2 h-0 w-0 -translate-y-1/2 border-y-[6px] border-r-[6px] border-transparent border-r-white" aria-hidden />
             <div className="flex items-center gap-2">
-              <i className="ph ph-test-tube shrink-0 text-[18px] text-amber-600" aria-hidden />
+              <Flask size={18} weight="regular" className="shrink-0 text-amber-600" aria-hidden />
               <p className="text-sm font-medium text-slate-800">
                 {getOptionComment(selected)}
               </p>

@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     "Premium dietary supplements and vitamins made in USA. Medusa storefront.",
 };
 
+/** Explicit viewport so embedded previews (e.g. IDE) don’t scale the page and blur it. */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 /**
  * Root layout: universal header and footer on every page (home, shop, cart, contact, all policy pages).
  * No route opts out – same nav and footer site-wide.

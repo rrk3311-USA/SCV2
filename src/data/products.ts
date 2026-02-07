@@ -120,7 +120,6 @@ export const SKU_TO_CATEGORY: Record<string, string> = {
   "1989-403": "Men's Health",
   "14182-303": "Best Seller",
   "14180-830": "Best Seller",
-  "14179-504": "Weight Loss",
   "30855-849-1": "Best Seller",
   "31347-405-1": "Women's Health",
   "21884-502": "Best Seller",
@@ -589,7 +588,6 @@ export const TOP_PRODUCTS: Product[] = [
   { slug: "10814-123", sku: "10814-123", name: "Supplement", price: 20.36, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/10814-123/01.jpg"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/10814-123/01.jpg` },
   { slug: "14176-805", sku: "14176-805", name: "Supplement", price: 25.76, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14176-805/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14176-805/01.png` },
   { slug: "14178-832", sku: "14178-832", name: "Supplement", price: 33.30, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14178-832/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14178-832/01.png` },
-  { slug: "14179-504", sku: "14179-504", name: "Supplement", price: 30.28, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14179-504/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14179-504/01.png` },
   { slug: "14180-830", sku: "14180-830", name: "Supplement", price: 25.24, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14180-830/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14180-830/01.png` },
   { slug: "14182-303", sku: "14182-303", name: "Supplement", price: 30.16, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14182-303/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14182-303/01.png` },
   { slug: "14189-717", sku: "14189-717", name: "Supplement", price: 33.64, category: "Best Seller", short_description: "Dietary supplement.", description: "Dietary supplement. See product page for details.", images: imageUrls(["/images/products/14189-717/01.png"]), image: `${IMAGE_BASE ? IMAGE_BASE + "/" : "/"}images/products/14189-717/01.png` },
@@ -640,10 +638,11 @@ export function getProductBySlug(slug: string): Product | undefined {
         ...(site.faqs != null && { faqs: site.faqs }),
       }
     : product;
-  const withImages =
-    scannedImages?.length > 0
-      ? { ...merged, images: imageUrls(scannedImages) }
-      : merged;
+  const baseImages = merged.images ?? [];
+  const useScanned =
+    scannedImages && scannedImages.length > 0 && scannedImages.length >= baseImages.length;
+  const images = useScanned ? imageUrls(scannedImages) : baseImages;
+  const withImages = { ...merged, images };
   return resolveProductForDisplay(withImages);
 }
 

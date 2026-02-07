@@ -30,6 +30,15 @@ type GooglePayButtonProps = {
   compact?: boolean;
 };
 
+/** ButtonOptions per https://developers.google.com/pay/api/web/reference/request-objects#ButtonOptions */
+type ButtonOptions = {
+  buttonColor?: "default" | "black" | "white";
+  buttonType?: "book" | "buy" | "checkout" | "donate" | "order" | "pay" | "plain" | "subscribe";
+  buttonSizeMode?: "static" | "fill";
+  buttonLocale?: string;
+  onClick?: (event: Event) => void;
+};
+
 declare global {
   interface Window {
     google?: {
@@ -38,7 +47,7 @@ declare global {
           PaymentsClient: new (opts: { environment: string }) => {
             isReadyToPay(request: unknown): Promise<{ result: boolean }>;
             loadPaymentData(request: unknown): Promise<unknown>;
-            createButton(opts: unknown): unknown;
+            createButton(opts: ButtonOptions): HTMLElement;
           };
         };
       };
@@ -57,6 +66,29 @@ function loadScript(): Promise<void> {
     script.onload = () => resolve();
     script.onerror = () => reject(new Error("Failed to load Google Pay script"));
     document.head.appendChild(script);
+  });
+}
+
+/** Google Pay API can attach to window shortly after script load. Wait for it. */
+function getGooglePayApi(): typeof window.google | null {
+  const g = typeof window !== "undefined" ? (window as Window & { google?: typeof window.google }).google : undefined;
+  return g?.payments?.api ? g : null;
+}
+
+function waitForGooglePayApi(maxMs = 3000): Promise<NonNullable<ReturnType<typeof getGooglePayApi>>> {
+  return new Promise((resolve, reject) => {
+    const api = getGooglePayApi();
+    if (api) return resolve(api);
+    const start = Date.now();
+    const t = setInterval(() => {
+      if (getGooglePayApi()) {
+        clearInterval(t);
+        resolve(getGooglePayApi()!);
+      } else if (Date.now() - start > maxMs) {
+        clearInterval(t);
+        reject(new Error("Google Pay script loaded but API not ready. Try Chrome, or disable ad blockers for this site."));
+      }
+    }, 100);
   });
 }
 
@@ -123,49 +155,10 @@ export function GooglePayButton({
   compact,
 }: GooglePayButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const handlerRef = useRef<() => void>(() => {});
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!ENABLED || typeof window === "undefined" || total <= 0) return;
-
-    let mounted = true;
-
-    loadScript()
-      .then(() => {
-        if (!mounted || !window.google?.payments?.api) {
-          setError("Google Pay not available");
-          return;
-        }
-        const client = new window.google.payments.api.PaymentsClient({ environment: ENV });
-        const baseRequest = { apiVersion: 2, apiVersionMinor: 0 };
-        const tokenizationSpec = getTokenizationSpec();
-        const isReadyRequest = {
-          ...baseRequest,
-          allowedPaymentMethods: [
-            {
-              type: "CARD",
-              parameters: {
-                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                allowedCardNetworks: ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"],
-              },
-              tokenizationSpecification: tokenizationSpec,
-            },
-          ],
-        };
-        return client.isReadyToPay(isReadyRequest).then((res) => {
-          if (mounted && res?.result) setReady(true);
-        });
-      })
-      .catch((e) => {
-        if (mounted) setError(e instanceof Error ? e.message : "Google Pay unavailable");
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [total]);
 
   const handlePay = async () => {
     if (!ready || !window.google?.payments?.api || total <= 0) return;
@@ -206,6 +199,69 @@ export function GooglePayButton({
     }
   };
 
+  handlerRef.current = handlePay;
+
+  useEffect(() => {
+    if (!ENABLED || typeof window === "undefined" || total <= 0) return;
+
+    let mounted = true;
+
+    loadScript()
+      .then(() => waitForGooglePayApi())
+      .then((googlePay) => {
+        if (!mounted) return;
+        const client = new googlePay.payments.api.PaymentsClient({ environment: ENV });
+        const baseRequest = { apiVersion: 2, apiVersionMinor: 0 };
+        const tokenizationSpec = getTokenizationSpec();
+        const isReadyRequest = {
+          ...baseRequest,
+          allowedPaymentMethods: [
+            {
+              type: "CARD",
+              parameters: {
+                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+                allowedCardNetworks: ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"],
+              },
+              tokenizationSpecification: tokenizationSpec,
+            },
+          ],
+        };
+        return client.isReadyToPay(isReadyRequest).then((res) => {
+          if (mounted && res?.result) setReady(true);
+        });
+      })
+      .catch((e) => {
+        if (mounted) setError(e instanceof Error ? e.message : "Google Pay unavailable");
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [total]);
+
+  useEffect(() => {
+    if (!ready || !containerRef.current || !window.google?.payments?.api || loading) return;
+
+    const client = new window.google.payments.api.PaymentsClient({ environment: ENV });
+    const buttonOptions: ButtonOptions = {
+      buttonColor: "white",
+      buttonType: "pay",
+      buttonSizeMode: "fill",
+      onClick: () => handlerRef.current(),
+    };
+    const gpayButton = client.createButton(buttonOptions);
+    if (!gpayButton) return;
+
+    containerRef.current.innerHTML = "";
+    containerRef.current.appendChild(gpayButton);
+
+    return () => {
+      if (containerRef.current?.contains(gpayButton)) {
+        containerRef.current.removeChild(gpayButton);
+      }
+    };
+  }, [ready, loading, total]);
+
   if (!ENABLED) return null;
   if (error) {
     return (
@@ -219,23 +275,23 @@ export function GooglePayButton({
   if (!ready) return null;
 
   return (
-    <div ref={containerRef} className={compact ? "mt-2" : "mt-4"}>
-      <button
-        type="button"
-        onClick={handlePay}
-        disabled={loading}
-        className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 font-medium text-slate-800 shadow-sm transition hover:bg-slate-50 disabled:opacity-70"
-        aria-label={buttonLabel || "Pay with Google Pay"}
+    <div className={compact ? "mt-2" : "mt-4"}>
+      <div
+        className="min-h-[48px] w-full overflow-hidden rounded-lg border-2 border-white/30 bg-[#2854a6] p-1.5 shadow-sm"
+        style={{ minWidth: compact ? 140 : 200 }}
       >
-        <img
-          src="https://www.gstatic.com/instantbuy/svg/dark_gpay.svg"
-          alt=""
-          width={compact ? 80 : 100}
-          height={40}
-          className="h-8 w-auto object-contain"
+        <div
+          ref={containerRef}
+          className="flex min-h-[44px] items-stretch justify-center [&_button]:min-h-[44px]"
+          style={{ height: compact ? 44 : 52 }}
+          aria-label={buttonLabel || "Pay with Google Pay"}
         />
-        {loading && <span className="text-sm">Processing…</span>}
-      </button>
+      </div>
+      {loading && (
+        <p className="mt-2 text-center text-sm text-white/90" role="status">
+          Processing…
+        </p>
+      )}
     </div>
   );
 }
