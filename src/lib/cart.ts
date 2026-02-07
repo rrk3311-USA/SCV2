@@ -83,6 +83,11 @@ export function getCartSummary(): { count: number; total: number } {
   return { count, total };
 }
 
+/** Clear the cart (e.g. after successful Google Pay checkout before redirect). */
+export function clearCart(): void {
+  saveCart([]);
+}
+
 export function removeFromCart(
   sku: string,
   optionLabel?: string,

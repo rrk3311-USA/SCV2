@@ -53,3 +53,16 @@ The root layout loads an **Analytics** component that injects:
 - **To have Medusa track orders:** Either (1) implement Medusa checkout in SCV2 (create cart, add items, complete cart with `sdk.store.cart.complete`), or (2) have your payment backend (e.g. PocketBase) send order data to Medusa via API/webhook after each purchase.
 
 Backend integrations (Medusa PayPal, email, etc.) are in the **medusa-backend** repo: see `INTEGRATIONS.md` there.
+
+---
+
+## Google Pay
+
+**Google Pay** is implemented alongside PayPal:
+
+- **Payment Policy** lists Google Pay as an accepted method.
+- **Cart** and **product page** show a Google Pay button when `NEXT_PUBLIC_GOOGLE_PAY_ENABLED=true`. Set `NEXT_PUBLIC_GOOGLE_PAY_ENVIRONMENT=TEST` for dummy payments (no charge) or `PRODUCTION` with merchant ID and a payment gateway (e.g. Stripe via `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`).
+- **Flow:** User clicks Google Pay → payment sheet → POST `/api/google-pay` with token + items → API returns orderId/value (stub by default) → redirect to `/order-confirmation?orderId=...&value=...`. Cart is cleared when paying from cart.
+- **Tracking:** `PurchaseTracker` on order-confirmation fires `reportPurchase` and Google Ads conversion; no extra code needed.
+
+See **GOOGLE_PAY_SETUP.md** for TEST vs PRODUCTION, merchant ID, and wiring a real processor in `/api/google-pay/route.ts`.

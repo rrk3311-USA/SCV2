@@ -31,6 +31,16 @@ Both read `deploy-site/products-data.js` and write `SCV2/src/data/products-from-
 ## Images & transparent hero batch
 
 - **Hero image:** Every product uses `01.png` as the main/hero image so transparent PNGs show correctly in the transparent hero layout. If `01.png` is missing, the UI falls back to `01.jpg` automatically.
+- **Full image list (product gallery):** The product page swipe gallery uses **all** image files in `public/images/products/<sku>/`. The list is built by:
+  ```bash
+  node scripts/sync-product-images.js
+  ```
+  Run this **after adding or changing product images** so `src/data/product-images.json` is up to date. If a product has only one image, add more files (e.g. `02.jpg`, `03.png`) in that SKU folder and run the sync again.
+- **Check missing or low-image products:**
+  ```bash
+  node scripts/check-product-images.js
+  ```
+  This reports missing image files and lists how many images each product has (so you can see which need more).
 - **Sync transparent heroes from the other project:** If you add a batch of transparent hero images (01.png) to `deploy-site/public/images/products/<sku>/`, copy them into SCV2 with:
 
   ```bash

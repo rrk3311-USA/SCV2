@@ -6,12 +6,18 @@
  * Enhanced conversions: enable in Google Ads (Goals → Settings); we send user_data via gtag('set','user_data',...) before conversion events.
  */
 import Script from "next/script";
+import { useEffect } from "react";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
 export function Analytics() {
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development" && ADS_ID) {
+      console.info("[SCV2] Google Ads tag: configured (ID set). View page source in production to confirm gtag script.");
+    }
+  }, []);
   const useGtag = (GA_ID || ADS_ID) && !GTM_ID;
   const gtagSrcId = GA_ID || ADS_ID || "";
 

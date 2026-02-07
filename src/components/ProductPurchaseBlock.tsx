@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { PayPalProductButtons } from "@/components/PayPalProductButtons";
+import { GooglePayButton } from "@/components/GooglePayButton";
 import type { Product, BundleOption } from "@/data/products";
 
 /** Narrative compliments (Halbert-style) that tell the reader to select this option – each option a different story. */
@@ -168,6 +169,18 @@ export function ProductPurchaseBlock({ product }: ProductPurchaseBlockProps) {
         name={product.name}
         price={effectivePrice}
         quantity={effectiveQuantity}
+      />
+      <GooglePayButton
+        total={effectivePrice * effectiveQuantity}
+        items={[
+          {
+            sku: product.sku,
+            name: product.name,
+            price: effectivePrice,
+            quantity: effectiveQuantity,
+          },
+        ]}
+        compact
       />
     </>
   );

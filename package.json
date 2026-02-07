@@ -9,7 +9,8 @@
     "start": "next start -p 8000",
     "lint": "next lint",
     "generate-product-md": "tsx scripts/generate-product-markdown.ts",
-    "upload-merchant-feed": "tsx scripts/upload-feed-to-merchant-center.ts"
+"upload-merchant-feed": "tsx scripts/upload-feed-to-merchant-center.ts",
+    "fill-google-pay-form": "node scripts/fill-google-pay-web-form.mjs"
   },
   "dependencies": {
     "@medusajs/js-sdk": "^2.8.0",
@@ -22,6 +23,7 @@
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
+    "playwright": "^1.49.0",
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

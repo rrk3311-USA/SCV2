@@ -76,6 +76,15 @@ If both GA4 and Ads IDs are set and GTM is not, a single gtag load configures bo
 
 ## 5. How to verify tracking (before running ads)
 
+### Confirm Google Ads tag is working
+
+- **Env:** Set `NEXT_PUBLIC_GOOGLE_ADS_ID` (e.g. `AW-123456789`) in `.env.local` and in Vercel (or your host) for production. Optional: `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL` if your conversion uses a label.
+- **Page source:** After deploy (or `npm run build` + inspect `.next` output), view source on any page. You should see:
+  - `googletagmanager.com/gtag/js?id=AW-...` (when not using GTM), or
+  - GTM container plus a separate gtag script with your Ads ID when using GTM with `NEXT_PUBLIC_GOOGLE_ADS_ID` set.
+- **Google Ads Diagnostics:** In Google Ads go to **Tools & settings → Conversions → [your conversion] → Tag setup → Diagnostics**. The tag should be detected; fix any “No tag found” by ensuring the env var is set and a new deployment was run.
+- **Conversions:** Complete a test purchase (or contact lead). Purchase fires from `PurchaseTracker` (order-confirmation URL with `orderId` and `value`) and from `PayPalProductButtons` after PayPal success. Conversions can take up to 24 hours to show in Ads.
+
 1. **Tag in page source**  
    - Deploy with `NEXT_PUBLIC_GOOGLE_ADS_ID` (and GA4 if used) set.  
    - View source on any page; you should see `gtag/js?id=...` (or GTM).  

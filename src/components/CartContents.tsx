@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { getCart, removeFromCart, updateCartQuantity } from "@/lib/cart";
+import { getCart, removeFromCart, updateCartQuantity, clearCart } from "@/lib/cart";
 import { ROUTES } from "@/lib/constants";
 import { getProductBySku } from "@/data/products";
 import { Flask, Trash } from "@phosphor-icons/react";
 import type { CartItem } from "@/lib/cart";
 import { CartUpsell } from "./CartUpsell";
+import { GooglePayButton } from "./GooglePayButton";
 
 export function CartContents() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -220,6 +221,20 @@ export function CartContents() {
             >
               {checkoutLoading ? "Redirecting to PayPal…" : "Checkout with PayPal"}
             </button>
+            <GooglePayButton
+              total={subtotal}
+              items={cart.map((i) => ({
+                sku: i.sku,
+                name: i.name,
+                price: parseFloat(i.price || "0"),
+                quantity: i.quantity || 1,
+              }))}
+              onSuccess={() => {
+                clearCart();
+                setCart([]);
+              }}
+              buttonLabel="Pay with Google Pay"
+            />
           </div>
         </div>
       </div>

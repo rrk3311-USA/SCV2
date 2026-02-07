@@ -20,6 +20,8 @@ export default function PaymentPolicyPage() {
           <PolicyH2>Accepted Payment Methods</PolicyH2>
           <ul className="list-disc pl-6 space-y-2">
             <li>Major credit/debit cards are accepted at checkout.</li>
+            <li>PayPal (including Pay Later and Venmo where available).</li>
+            <li>Google Pay (where available at checkout).</li>
             <li>Available payment options may vary by location.</li>
           </ul>
 
