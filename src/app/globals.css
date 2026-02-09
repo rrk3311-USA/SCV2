@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  --font-medusa: ui-sans-serif, system-ui, sans-serif;
+  --font-inter: ui-sans-serif, system-ui, sans-serif;
   --sc-blue: #2854a6;
   --sc-blue-dark: #1e3a8a;
 }
@@ -17,7 +17,7 @@ html {
 }
 
 body {
-  font-family: var(--font-medusa);
+  font-family: var(--font-inter);
   /* Sharper text in scaled/embedded views (e.g. IDE preview) */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

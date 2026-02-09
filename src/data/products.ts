@@ -652,7 +652,7 @@ export function getProductBySku(sku: string): Product | undefined {
   return getProductBySlug(product.slug);
 }
 
-/** Single product shown on store when not using Medusa – Sclera White. */
+/** Featured product – Sclera White. */
 export const SCLERA_PRODUCT = TOP_PRODUCTS.find((p) => p.sku === "10786-807")!;
 export const STORE_PRODUCTS: Product[] = [SCLERA_PRODUCT];
 

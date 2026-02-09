@@ -10,12 +10,12 @@ import { OutboundTracker } from "@/components/OutboundTracker";
 import { YotpoScript } from "@/components/YotpoScript";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-medusa" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Success Chemistry – Premium Supplements | SCV2",
   description:
-    "Premium dietary supplements and vitamins made in USA. Medusa storefront.",
+    "Premium dietary supplements and vitamins made in USA. Next.js Commerce storefront with Directus CMS.",
 };
 
 /** Explicit viewport so embedded previews (e.g. IDE) don’t scale the page and blur it. */

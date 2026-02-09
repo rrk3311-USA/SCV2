@@ -1,4 +1,4 @@
-// File: /Users/r-kammer/Documents/GitHub/success007/SCV2/src/app/terms-of-service/page.tsx
+// File: /workspace/src/app/terms-of-service/page.tsx
 import * as entry from '../../../../src/app/terms-of-service/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

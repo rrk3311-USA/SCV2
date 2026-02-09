@@ -131,7 +131,7 @@ export async function getProducts() {
       readItems('products', {
         filter: { status: { _eq: 'published' } },
         fields: ['*', 'bundle_options.*', 'faqs.*'] as any,
-        sort: ['sort', 'date_created'],
+        sort: ['date_created'] as any,
       })
     );
   } catch (error) {
@@ -196,7 +196,7 @@ export async function getProductsByCategory(category: string) {
           status: { _eq: 'published' }
         },
         fields: ['*', 'bundle_options.*'] as any,
-        sort: ['sort', 'date_created'],
+        sort: ['date_created'] as any,
       })
     );
   } catch (error) {
@@ -213,7 +213,7 @@ export async function getCategories() {
     return await directus.request(
       readItems('categories', {
         filter: { status: { _eq: 'published' } },
-        sort: ['sort'],
+        sort: ['id'] as any,
       })
     );
   } catch (error) {
