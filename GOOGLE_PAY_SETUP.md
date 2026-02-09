@@ -23,8 +23,27 @@ Google Pay is integrated on the cart and product pages. When enabled, a Google P
    - If using Stripe: `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...`
 4. **API route** – Edit `src/app/api/google-pay/route.ts` to:
    - Use `paymentMethodData.tokenizationData` (token + type) to charge via your gateway.
-   - Create the order in your backend (PocketBase, Medusa, etc.).
+   - Create the order in your backend (PocketBase, Directus, etc.).
    - Return the real `orderId` and `value`.
+
+## Get Google Pay on your live site (for screenshots)
+
+So the **real** site (e.g. successchemistry.com or your Vercel URL) shows the Google Pay button and you can capture the buyflow screenshots:
+
+1. **Vercel** (or your host) → your SCV2 project → **Settings** → **Environment Variables**.
+2. Add (for **Production**, and optionally Preview):
+   - `NEXT_PUBLIC_GOOGLE_PAY_ENABLED` = `true`
+   - `NEXT_PUBLIC_GOOGLE_PAY_ENVIRONMENT` = `TEST`
+   - `NEXT_PUBLIC_GOOGLE_PAY_MERCHANT_ID` = `BCR2DN5T5367NUIC` (or your merchant ID)
+3. **Redeploy**: **Deployments** → … on latest → **Redeploy** (or push a commit).  
+   Next.js bakes `NEXT_PUBLIC_*` at **build** time, so a new deployment is required after adding/changing these.
+4. **Verify on the live URL:**
+   - Open your **live** site (not localhost).
+   - Add a product to the cart and go to the cart page: you should see **“Pay with Google Pay”** next to “Checkout with PayPal”.
+   - Open a product page: you should see the Google Pay button below the PayPal block.
+   - If you don’t, check the env vars are set for **Production** and that you redeployed **after** saving them.
+
+Then use the live site to take the five buyflow screenshots (item selection, pre-purchase, payment method, Google Pay sheet, post-purchase).
 
 ## Where the button appears
 

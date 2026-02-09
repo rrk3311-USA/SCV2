@@ -4,7 +4,7 @@
 
 **What it is:** An optional JSON overlay (in `src/data/products-from-site.json`) that supplies product **copy** for the storefront: long description, short description, suggested use, supplement facts, ingredients, and FAQs, keyed by **SKU**.
 
-**Why use it:** So SCV2 product pages show the same wording as the main site (deploy-site) and any Medusa/feed exports, without duplicating long text in `products.ts`.
+**Why use it:** So SCV2 product pages show the same wording as the main site (deploy-site) and any feed exports, without duplicating long text in `products.ts`.
 
 **Source of truth:** `deploy-site/products-data.js` (the main site’s product data).
 

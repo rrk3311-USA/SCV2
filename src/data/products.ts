@@ -639,9 +639,9 @@ export function getProductBySlug(slug: string): Product | undefined {
       }
     : product;
   const baseImages = merged.images ?? [];
-  const useScanned =
-    scannedImages && scannedImages.length > 0 && scannedImages.length >= baseImages.length;
-  const images = useScanned ? imageUrls(scannedImages) : baseImages;
+  // Use the longer image list so product pages always show the full gallery (swipe, no zoom).
+  const scanned = scannedImages?.length ? imageUrls(scannedImages) : [];
+  const images = scanned.length >= baseImages.length ? scanned : baseImages;
   const withImages = { ...merged, images };
   return resolveProductForDisplay(withImages);
 }
@@ -652,7 +652,7 @@ export function getProductBySku(sku: string): Product | undefined {
   return getProductBySlug(product.slug);
 }
 
-/** Single product shown on store when not using Medusa – Sclera White. */
+/** Single product shown on store – Sclera White. */
 export const SCLERA_PRODUCT = TOP_PRODUCTS.find((p) => p.sku === "10786-807")!;
 export const STORE_PRODUCTS: Product[] = [SCLERA_PRODUCT];
 

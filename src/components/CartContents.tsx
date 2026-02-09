@@ -74,17 +74,19 @@ export function CartContents() {
     setCart(getCart());
   };
 
-  const handleMedusaCheckout = async () => {
+  const handleCheckout = async () => {
     setCheckoutError(null);
     setCheckoutLoading(true);
     try {
-      const res = await fetch("/api/medusa-checkout", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: cart.map((i) => ({
             sku: i.sku,
             quantity: i.quantity,
+            name: i.name,
+            price: i.price,
             optionLabel: i.optionLabel,
             isSubscription: i.isSubscription,
           })),
@@ -95,16 +97,9 @@ export function CartContents() {
         setCheckoutError(data.error || "Checkout failed");
         return;
       }
-      if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
         return;
-      }
-      if (data.cartId) {
-        const base = process.env.NEXT_PUBLIC_MEDUSA_URL || "";
-        if (base) {
-          window.location.href = `${base.replace(/\/$/, "")}/checkout?cart_id=${data.cartId}`;
-          return;
-        }
       }
       setCheckoutError("No checkout URL returned");
     } catch (e) {
@@ -210,7 +205,7 @@ export function CartContents() {
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <button
               type="button"
-              onClick={handleMedusaCheckout}
+              onClick={handleCheckout}
               disabled={checkoutLoading}
               className="inline-flex rounded-full px-6 py-3 font-semibold shadow-md transition disabled:opacity-70"
               style={{

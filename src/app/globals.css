@@ -10,19 +10,30 @@
   --sc-blue-dark: #1e3a8a;
 }
 
-/* Mobile: remove 300ms tap delay and visible tap highlight */
+/* Mobile: remove 300ms tap delay, tap highlight, prevent overflow blur */
 html {
   -webkit-tap-highlight-color: rgba(40, 84, 166, 0.15);
   touch-action: manipulation;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
   font-family: var(--font-medusa);
-  /* Sharper text in scaled/embedded views (e.g. IDE preview) */
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+/* Crisper text on mobile/tablet – optimizeLegibility can cause blur on touch devices */
+@media (max-width: 1024px) {
+  body {
+    text-rendering: auto;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}
+
 
 /* Focus ring for accessibility */
 *:focus-visible {
@@ -174,6 +185,74 @@ body {
 
 .option-selected-cinematic {
   animation: option-selected-cinematic 2.8s ease-in-out forwards;
+}
+
+/* Add to Cart button – gradient travels around border like a track */
+.add-to-cart-wrapper {
+  position: relative;
+  display: inline-flex;
+  place-content: center;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 9999px;
+  contain: layout;
+}
+
+.add-to-cart-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  background: conic-gradient(
+    rgb(0, 183, 255),
+    rgb(255, 48, 255),
+    rgb(0, 183, 255)
+  );
+  animation: add-to-cart-track 2.5s linear infinite;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes add-to-cart-track {
+  from {
+    transform: rotate(0deg) translateZ(0);
+  }
+  to {
+    transform: rotate(360deg) translateZ(0);
+  }
+}
+
+.add-to-cart-wrapper::after {
+  content: "";
+  position: absolute;
+  background: #0a1628;
+  inset: 3px;
+  border-radius: 9999px;
+}
+
+.add-to-cart-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  transition: opacity 0.2s;
+}
+
+.add-to-cart-btn-inner:hover {
+  opacity: 0.95;
+}
+
+.add-to-cart-btn-inner:active {
+  opacity: 0.9;
 }
 
 /* Sticky cart: full width on mobile, no extra padding that could distort */

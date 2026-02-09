@@ -41,16 +41,15 @@ export function AddToCartButton({
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      className={`inline-flex items-center justify-center gap-2 ${
-        className ||
-        "rounded-full bg-[#2854a6] px-8 py-3 font-semibold text-white shadow-md transition hover:bg-[#1e3a8a]"
-      }`}
-    >
-      <ShoppingCart size={22} weight="regular" />
-      {added ? "Added!" : children ?? "Add to Cart"}
-    </button>
+    <span className={`add-to-cart-wrapper ${className || ""}`.trim()}>
+      <button
+        type="button"
+        onClick={handleClick}
+        className="add-to-cart-btn-inner"
+      >
+        <ShoppingCart size={22} weight="regular" />
+        {added ? "Added!" : children ?? "Add to Cart"}
+      </button>
+    </span>
   );
 }

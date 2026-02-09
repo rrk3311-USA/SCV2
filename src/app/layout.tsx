@@ -15,7 +15,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-medusa" });
 export const metadata: Metadata = {
   title: "Success Chemistry – Premium Supplements | SCV2",
   description:
-    "Premium dietary supplements and vitamins made in USA. Medusa storefront.",
+    "Premium dietary supplements and vitamins made in USA.",
 };
 
 /** Explicit viewport so embedded previews (e.g. IDE) don’t scale the page and blur it. */
@@ -36,14 +36,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen flex flex-col bg-gradient-to-br from-sky-50 via-white to-sky-50 font-sans antialiased">
+      <body className="min-h-screen min-w-0 flex flex-col overflow-x-hidden bg-gradient-to-br from-sky-50 via-white to-sky-50 font-sans antialiased">
         <YotpoScript />
         <Analytics />
         <RouteTracker />
         <OutboundTracker />
         <Header />
         <Breadcrumbs />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 min-w-0 w-full">{children}</main>
         <Footer />
         <StickyCartBanner />
       </body>

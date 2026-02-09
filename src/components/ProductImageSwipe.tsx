@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 /**
@@ -14,6 +14,8 @@ type Props = {
 
 export function ProductImageSwipe({ images, alt }: Props) {
   const [errors, setErrors] = useState<Record<number, boolean>>({});
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   if (images.length === 0) return null;
 
@@ -21,12 +23,24 @@ export function ProductImageSwipe({ images, alt }: Props) {
     setErrors((prev) => ({ ...prev, [i]: true }));
   };
 
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || images.length <= 1) return;
+    const onScroll = () => {
+      const index = Math.round(el.scrollLeft / el.clientWidth);
+      setActiveIndex(Math.min(index, images.length - 1));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [images.length]);
+
   return (
     <div
       className="relative w-full overflow-hidden rounded-2xl bg-transparent"
       style={{ touchAction: "pan-x" }}
     >
       <div
+        ref={scrollRef}
         className="scrollbar-hide flex overflow-x-auto overflow-y-hidden scroll-smooth pb-2"
         style={{
           scrollSnapType: "x mandatory",
@@ -60,6 +74,18 @@ export function ProductImageSwipe({ images, alt }: Props) {
           </div>
         ))}
       </div>
+      {images.length > 1 && (
+        <div className="mt-2 flex justify-center gap-1.5" aria-hidden>
+          {images.map((_, i) => (
+            <span
+              key={i}
+              className={`h-2 w-2 rounded-full transition-colors ${
+                i === activeIndex ? "bg-slate-700" : "bg-slate-300"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

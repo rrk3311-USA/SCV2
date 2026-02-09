@@ -1,79 +1,42 @@
-# SCV2 Frontend ↔️ Medusa Backend Connection
+# SCV2 Frontend ↔️ Directus Backend
 
-## ✅ Configuration Complete!
+SCV2 uses **Directus** for orders (and optionally products). Medusa has been removed.
 
-Your SCV2 Next.js frontend is now connected to your Medusa backend at:
-**https://medusa-backend-dark-resonance-4960.fly.dev**
+## Configuration
 
-## What Was Configured
+### Environment variables
 
-### 1. Environment Variable
-Created `.env.local` with:
+In `.env.local` and in **Vercel**:
+
 ```bash
-NEXT_PUBLIC_MEDUSA_URL=https://medusa-backend-dark-resonance-4960.fly.dev
+DIRECTUS_URL=https://your-directus-instance.com
+DIRECTUS_STATIC_TOKEN=your-static-token
 ```
 
-This tells your frontend where to find the Medusa API.
+See **DIRECTUS_SETUP.md** for the required Directus schema (`orders` and `order_items` collections).
 
-### 2. Existing Setup
-Your SCV2 project already had:
-- ✅ `@medusajs/js-sdk` v2.8.0 installed
-- ✅ SDK client configured in `src/lib/sdk.ts`
-- ✅ Next.js 14 with App Router
-- ✅ TypeScript, Tailwind CSS, shadcn/ui components
+### Checkout flow
 
-## Run Your Frontend Locally
+1. Cart (localStorage) → **Checkout with PayPal** → `POST /api/checkout` creates order in Directus.
+2. Redirect to `/checkout?order_id=<id>`.
+3. Customer pays with PayPal (via PocketBase); on success the order is marked **paid** in Directus and the customer is sent to `/order-confirmation`.
+
+### PayPal
+
+PayPal is handled by **PocketBase** (`NEXT_PUBLIC_API_BASE`). Set `NEXT_PUBLIC_PAYPAL_CLIENT_ID` and `NEXT_PUBLIC_API_BASE` for product-page and cart checkout PayPal buttons.
+
+## Run locally
 
 ```bash
-# Navigate to the SCV2 directory
-cd /Users/r-kammer/Documents/GitHub/success007
-
-# Install dependencies (if needed)
+cd SCV2
 npm install
-
-# Start the development server
 npm run dev
 ```
 
-Your storefront will be available at: **http://localhost:8000**
+Open **http://localhost:8000**. Ensure Directus is running and env vars are set so checkout works.
 
-## Test the Connection
+## Next steps
 
-1. Start the dev server (`npm run dev`)
-2. Visit http://localhost:8000/store
-3. The frontend should load products from your Medusa backend
-4. You can add products to cart, browse collections, etc.
-
-## Staying logged in (Admin / sessions)
-
-If you keep getting logged out when using the backend (e.g. Admin at `/app`) on the same device or across phone/other browser, see **[SESSION_AND_LOGOUT_TROUBLESHOOTING.md](./SESSION_AND_LOGOUT_TROUBLESHOOTING.md)**. Fixes are in the Medusa backend repo (e.g. Redis session store and/or sticky sessions on Fly.io).
-
-## Backend Admin Access
-
-To manage products, collections, and orders:
-- **Admin Panel**: https://medusa-backend-dark-resonance-4960.fly.dev/app
-- **Email**: (use your Medusa admin email)
-- **Password**: (use your Medusa admin password — never commit real passwords to Git)
-
-## Backend CORS Settings
-
-Your backend is already configured to accept requests from `http://localhost:8000` for local development.
-
-If you deploy your frontend to production later, you'll need to add that URL to your backend CORS settings:
-
-```bash
-fly secrets set STORE_CORS="http://localhost:8000,https://your-frontend-url.com" -a medusa-backend-dark-resonance-4960
-fly secrets set AUTH_CORS="http://localhost:8000,https://your-frontend-url.com" -a medusa-backend-dark-resonance-4960
-```
-
-## Next Steps
-
-1. **Add Products**: Log into the admin panel and add your Success Chemistry products
-2. **Configure Regions**: Set up shipping regions and currencies
-3. **Test Checkout**: Try a complete purchase flow
-4. **Customize Storefront**: Update colors, text, and branding in the SCV2 code
-5. **Deploy Frontend**: When ready, deploy to Vercel, Netlify, or another hosting platform
-
----
-
-**Your e-commerce stack is ready! 🚀 Backend is live, frontend is connected!**
+1. Create the `orders` and `order_items` collections in Directus (see DIRECTUS_SETUP.md).
+2. Create a static token with create/read/update access to those collections.
+3. Set `DIRECTUS_URL` and `DIRECTUS_STATIC_TOKEN` in Vercel and redeploy.

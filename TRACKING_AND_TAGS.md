@@ -40,7 +40,7 @@ So: **every page** gets at least:
 
 **PayPal product-page checkout** (if used): `purchase` + Google Ads conversion — from `PayPalProductButtons.tsx` after successful payment.
 
-**Medusa checkout**: `purchase` + Google Ads conversion when user lands on `/order-confirmation?orderId=...&value=...` — from `PurchaseTracker`.
+**Checkout (Directus + PayPal)**: `purchase` + Google Ads conversion when user lands on `/order-confirmation?orderId=...&value=...` — from `PurchaseTracker`.
 
 ---
 
@@ -106,7 +106,7 @@ If both GA4 and Ads IDs are set and GTM is not, a single gtag load configures bo
    - Ensure the tag sends user data (we use hashed email/name).
 
 5. **Order confirmation and value**  
-   - Medusa (or your backend) should redirect to:  
+   - Your backend (e.g. Directus/PocketBase) should redirect to:  
      `/order-confirmation?orderId=ORDER_ID&value=ORDER_TOTAL`  
    - So `PurchaseTracker` can fire `reportPurchase(orderId, value)` and pass value to Ads.
 

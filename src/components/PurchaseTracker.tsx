@@ -5,7 +5,7 @@ import { reportPurchase } from "@/lib/gtag";
 
 /**
  * Fires reportPurchase (GA4 + Google Ads) once when order confirmation page is viewed with orderId.
- * Used for both Medusa and legacy PayPal flows so we do not break Google tracking.
+ * Used for Directus checkout and legacy PayPal flows so we do not break Google tracking.
  */
 export function PurchaseTracker({
   orderId,

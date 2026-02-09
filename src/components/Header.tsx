@@ -45,9 +45,10 @@ export function Header() {
 
   return (
     <div className="header-wrapper w-full bg-white">
-      <div className="topbar sticky top-0 z-[100] min-h-[98px] max-h-[98px] h-[98px] w-full border-b border-white/80 bg-white/95 pt-6 pb-3 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/90">
+      {/* Solid bg on mobile to avoid iOS Safari backdrop-blur blurriness; backdrop-blur only on desktop */}
+      <div className="topbar sticky top-0 z-[100] min-h-[98px] max-h-[98px] h-[98px] w-full border-b border-white/80 bg-white pt-6 pb-3 shadow-sm md:bg-white/95 md:backdrop-blur supports-[backdrop-filter]:md:bg-white/90">
         <div className="container relative mx-auto w-full max-w-full px-4">
-          <div className="topbar-inner flex min-h-[58px] max-h-[58px] h-[58px] w-full items-center justify-between md:justify-center">
+          <div className="topbar-inner grid min-h-[58px] max-h-[58px] h-[58px] w-full grid-cols-3 items-center justify-between gap-2 md:flex md:justify-center">
             {/* Mobile: hamburger (min 44px touch target) */}
             <button
               type="button"
@@ -58,9 +59,10 @@ export function Header() {
               <List size={28} weight="bold" />
             </button>
 
+            {/* Logo: centered via grid (no transform) to avoid Retina blur */}
             <Link
               href={ROUTES.home}
-              className="brand absolute left-1/2 inline-flex -translate-x-1/2 items-center justify-center no-underline md:static md:translate-x-0"
+              className="brand col-start-2 flex justify-center self-center md:static"
             >
               {!logoError ? (
                 <Image
@@ -79,11 +81,11 @@ export function Header() {
               )}
             </Link>
 
-            {/* Mobile: Cart shortcut (min 44px touch target) */}
+            {/* Mobile: Cart shortcut (min 44px touch target); grid col 3 */}
             <Link
               href={ROUTES.cart}
               aria-label="Cart"
-              className="md:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#2854a6] hover:bg-[#2854a6]/10 active:bg-[#2854a6]/20 touch-manipulation"
+              className="md:hidden col-start-3 flex h-11 w-11 shrink-0 items-center justify-center justify-self-end rounded-lg text-[#2854a6] hover:bg-[#2854a6]/10 active:bg-[#2854a6]/20 touch-manipulation"
             >
               <ShoppingCart size={24} weight="regular" />
             </Link>
