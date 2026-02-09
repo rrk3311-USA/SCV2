@@ -2,19 +2,18 @@
   "name": "scv2",
   "version": "0.1.0",
   "private": true,
-  "description": "Success Chemistry V2 – Medusa storefront with shadcn/ui and Phosphor icons",
+  "description": "Success Chemistry V2 – Next.js Commerce storefront with Directus CMS and Phosphor icons",
   "scripts": {
     "dev": "next dev -p 8000",
     "build": "next build",
     "start": "next start -p 8000",
     "lint": "next lint",
     "generate-product-md": "tsx scripts/generate-product-markdown.ts",
-"upload-merchant-feed": "tsx scripts/upload-feed-to-merchant-center.ts",
+    "upload-merchant-feed": "tsx scripts/upload-feed-to-merchant-center.ts",
     "fill-google-pay-form": "node scripts/fill-google-pay-web-form.mjs"
   },
   "dependencies": {
     "@directus/sdk": "^17.0.1",
-    "@medusajs/js-sdk": "^2.8.0",
     "@phosphor-icons/react": "^2.1.6",
     "clsx": "^2.1.0",
     "next": "14.2.35",
@@ -24,12 +23,12 @@
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
-    "playwright": "^1.49.0",
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/ssh2-sftp-client": "^9.0.6",
     "autoprefixer": "^10.4.19",
+    "playwright": "^1.49.0",
     "postcss": "^8.4.38",
     "ssh2-sftp-client": "^12.0.1",
     "tailwindcss": "^3.4.4",

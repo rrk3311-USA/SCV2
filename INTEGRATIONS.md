@@ -46,13 +46,16 @@ The root layout loads an **Analytics** component that injects:
 
 ---
 
-## Medusa backend
+## Commerce Backend (Next.js Commerce + Directus)
 
-- **Product catalog:** When `NEXT_PUBLIC_MEDUSA_URL` is set, the **store** page fetches products from Medusa (`sdk.store.product.list`). If Medusa is down or unset, the store uses local `TOP_PRODUCTS`.
-- **Orders:** Checkout is **PayPal via PocketBase** (product-page PayPal buttons → `NEXT_PUBLIC_API_BASE`). Orders are **not** created in Medusa, so **Medusa does not get a sale/order count** when customers buy. Customers do get an **order number** on the order-confirmation page (`/order-confirmation?orderId=...`).
-- **To have Medusa track orders:** Either (1) implement Medusa checkout in SCV2 (create cart, add items, complete cart with `sdk.store.cart.complete`), or (2) have your payment backend (e.g. PocketBase) send order data to Medusa via API/webhook after each purchase.
+SCV2 uses a **Next.js Commerce** architecture with:
 
-Backend integrations (Medusa PayPal, email, etc.) are in the **medusa-backend** repo: see `INTEGRATIONS.md` there.
+- **Product catalog:** Products come from local data (`src/data/products.ts`) with optional Directus CMS integration. When `NEXT_PUBLIC_DIRECTUS_URL` is set, products can be managed via the Directus admin UI at `http://localhost:8055`.
+- **Orders:** Checkout uses the `/api/checkout` endpoint which calculates totals and initiates payment. Orders can optionally be stored in Directus.
+- **Payment:** Direct PayPal and Google Pay integration (no intermediary backend required for payment). Set `NEXT_PUBLIC_PAYPAL_CLIENT_ID` for PayPal.
+- **Cart:** localStorage-based cart with React hooks (`useCart()` from `src/lib/commerce/hooks.ts`).
+
+See **[COMMERCE.md](./COMMERCE.md)** for full architecture details and API documentation.
 
 ---
 

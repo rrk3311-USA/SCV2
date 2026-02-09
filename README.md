@@ -1,5 +1,7 @@
 # SCV2 – Success Chemistry V2
 
+**Next.js Commerce storefront** with Directus CMS backend, MIT licensed.
+
 **Project folder:** `success007/SCV2` (this folder).  
 **This is the only SCV2 project.** Do not use `deploy-site/life-jet/app/v2/` – that was a duplicate and is removed.
 
@@ -35,6 +37,16 @@ npm run dev
 ```
 
 Then open **http://localhost:8000**
+
+## Commerce Architecture
+
+SCV2 uses a **Next.js Commerce** style architecture with:
+- **Directus CMS** for content management (products, categories, orders)
+- **Commerce library** (`src/lib/commerce/`) with React hooks and utilities
+- **Direct payment integration** (PayPal, Google Pay)
+- **No dependencies on heavy e-commerce platforms** - lean, fast, and flexible
+
+See **[COMMERCE.md](./COMMERCE.md)** for architecture details, API documentation, and integration guides.
 
 ## Directus Backend (Optional)
 
@@ -94,8 +106,11 @@ Media is wired so it works **locally without copying**. `SCV2/public/images` and
 | Category card   | `src/components/CategoryCard.tsx` |
 | Products data   | `src/data/products.ts` (TOP_12, TOP_PRODUCTS) |
 | Categories      | `src/data/categories.ts` |
+| Commerce lib    | `src/lib/commerce/` (hooks, types, utils) |
 | Directus client | `src/lib/directus.ts` (CMS API integration) |
+| Cart utilities  | `src/lib/cart.ts` (localStorage cart) |
 | Routes          | `src/lib/constants.ts` (ROUTES) |
 | Tracking doc    | `TRACKING_AND_TAGS.md` |
+| Commerce doc    | `COMMERCE.md` |
 | gtag helpers    | `src/lib/gtag.ts` |
 | Directus backend| `directus/` (headless CMS) |
