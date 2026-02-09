@@ -1,0 +1,1263 @@
+{
+  "version": 1,
+  "directus": "10.10.4",
+  "vendor": "postgres",
+  "collections": [
+    {
+      "collection": "categories",
+      "meta": {
+        "icon": "category",
+        "display_template": "{{name}}",
+        "sort_field": "sort"
+      },
+      "schema": {
+        "name": "categories"
+      }
+    },
+    {
+      "collection": "products",
+      "meta": {
+        "icon": "inventory_2",
+        "display_template": "{{name}} ({{sku}})",
+        "sort_field": "sort"
+      },
+      "schema": {
+        "name": "products"
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "meta": {
+        "icon": "shopping_basket",
+        "display_template": "{{label}} - {{quantity}}x"
+      },
+      "schema": {
+        "name": "bundle_options"
+      }
+    },
+    {
+      "collection": "product_faqs",
+      "meta": {
+        "icon": "help",
+        "display_template": "{{question}}"
+      },
+      "schema": {
+        "name": "product_faqs"
+      }
+    },
+    {
+      "collection": "customers",
+      "meta": {
+        "icon": "person",
+        "display_template": "{{first_name}} {{last_name}} ({{email}})"
+      },
+      "schema": {
+        "name": "customers"
+      }
+    },
+    {
+      "collection": "orders",
+      "meta": {
+        "icon": "receipt",
+        "display_template": "Order #{{order_number}} - {{customer.email}}"
+      },
+      "schema": {
+        "name": "orders"
+      }
+    },
+    {
+      "collection": "order_items",
+      "meta": {
+        "icon": "list",
+        "display_template": "{{product.name}} x{{quantity}}"
+      },
+      "schema": {
+        "name": "order_items"
+      }
+    },
+    {
+      "collection": "reviews",
+      "meta": {
+        "icon": "star",
+        "display_template": "{{rating}}★ - {{customer.email}}"
+      },
+      "schema": {
+        "name": "reviews"
+      }
+    }
+  ],
+  "fields": [
+    {
+      "collection": "categories",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "categories",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "width": "full",
+        "options": {
+          "choices": [
+            { "text": "Published", "value": "published" },
+            { "text": "Draft", "value": "draft" },
+            { "text": "Archived", "value": "archived" }
+          ]
+        },
+        "interface": "select-dropdown",
+        "display": "labels"
+      },
+      "schema": {
+        "default_value": "draft",
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "categories",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "hidden": true
+      },
+      "schema": {}
+    },
+    {
+      "collection": "categories",
+      "field": "category_id",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true,
+        "note": "URL-friendly ID (e.g., 'bestsellers', 'mens', 'womens')"
+      },
+      "schema": {
+        "is_unique": true,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "categories",
+      "field": "name",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "categories",
+      "field": "description",
+      "type": "text",
+      "meta": {
+        "interface": "input-rich-text-html",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "categories",
+      "field": "image",
+      "type": "uuid",
+      "meta": {
+        "interface": "file-image",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "categories",
+      "field": "count",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "note": "Number of products in this category"
+      },
+      "schema": {
+        "default_value": 0
+      }
+    },
+    {
+      "collection": "products",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "products",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "width": "full",
+        "options": {
+          "choices": [
+            { "text": "Published", "value": "published" },
+            { "text": "Draft", "value": "draft" },
+            { "text": "Archived", "value": "archived" }
+          ]
+        },
+        "interface": "select-dropdown",
+        "display": "labels"
+      },
+      "schema": {
+        "default_value": "draft",
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "products",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "hidden": true
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "hidden": true,
+        "special": ["date-created"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "hidden": true,
+        "special": ["date-updated"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "slug",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true,
+        "note": "URL-friendly product slug"
+      },
+      "schema": {
+        "is_unique": true,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "products",
+      "field": "sku",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true,
+        "note": "Product SKU"
+      },
+      "schema": {
+        "is_unique": true,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "products",
+      "field": "name",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "products",
+      "field": "price",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "products",
+      "field": "category",
+      "type": "string",
+      "meta": {
+        "interface": "select-dropdown",
+        "width": "half",
+        "options": {
+          "choices": [
+            { "text": "Best Sellers", "value": "Best Sellers" },
+            { "text": "Men's Health", "value": "Men's Health" },
+            { "text": "Women's Health", "value": "Women's Health" },
+            { "text": "Eye Health", "value": "Eye Health" },
+            { "text": "Weight Loss", "value": "Weight Loss" },
+            { "text": "Bundle Deals", "value": "Bundle Deals" },
+            { "text": "Lung Health", "value": "Lung Health" },
+            { "text": "Legacy", "value": "Legacy" },
+            { "text": "Unisex", "value": "Unisex" }
+          ]
+        }
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "short_description",
+      "type": "text",
+      "meta": {
+        "interface": "input-rich-text-html",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "description",
+      "type": "text",
+      "meta": {
+        "interface": "input-rich-text-html",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "suggested_use",
+      "type": "text",
+      "meta": {
+        "interface": "input-multiline",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "supplement_facts",
+      "type": "text",
+      "meta": {
+        "interface": "input-multiline",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "ingredients",
+      "type": "text",
+      "meta": {
+        "interface": "input-multiline",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "upc",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "gtin",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "weight",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "dimensions",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "key_search_terms",
+      "type": "text",
+      "meta": {
+        "interface": "input-multiline",
+        "width": "full",
+        "note": "SEO keywords"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "image",
+      "type": "uuid",
+      "meta": {
+        "interface": "file-image",
+        "width": "half",
+        "note": "Primary product image"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "images",
+      "type": "json",
+      "meta": {
+        "interface": "list",
+        "width": "full",
+        "note": "Array of image URLs"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "products",
+      "field": "subscribe_save_percent",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "note": "Subscribe & Save discount percentage"
+      },
+      "schema": {
+        "default_value": 15
+      }
+    },
+    {
+      "collection": "products",
+      "field": "bundle_options",
+      "type": "alias",
+      "meta": {
+        "interface": "list-o2m",
+        "width": "full",
+        "special": ["o2m"]
+      }
+    },
+    {
+      "collection": "products",
+      "field": "faqs",
+      "type": "alias",
+      "meta": {
+        "interface": "list-o2m",
+        "width": "full",
+        "special": ["o2m"]
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "field": "product_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "field": "label",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "field": "quantity",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "field": "price",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "bundle_options",
+      "field": "save_percent",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "product_faqs",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "product_faqs",
+      "field": "product_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "product_faqs",
+      "field": "question",
+      "type": "text",
+      "meta": {
+        "interface": "input-multiline",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "product_faqs",
+      "field": "answer",
+      "type": "text",
+      "meta": {
+        "interface": "input-rich-text-html",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "product_faqs",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "hidden": true
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "customers",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "special": ["date-created"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "special": ["date-updated"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "email",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "is_unique": true,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "customers",
+      "field": "first_name",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "last_name",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "phone",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "billing_address",
+      "type": "json",
+      "meta": {
+        "interface": "input-code",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "customers",
+      "field": "shipping_address",
+      "type": "json",
+      "meta": {
+        "interface": "input-code",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "special": ["date-created"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "special": ["date-updated"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "order_number",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "readonly": true
+      },
+      "schema": {
+        "is_unique": true
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "customer_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "interface": "select-dropdown",
+        "width": "half",
+        "options": {
+          "choices": [
+            { "text": "Pending", "value": "pending" },
+            { "text": "Processing", "value": "processing" },
+            { "text": "Shipped", "value": "shipped" },
+            { "text": "Delivered", "value": "delivered" },
+            { "text": "Cancelled", "value": "cancelled" },
+            { "text": "Refunded", "value": "refunded" }
+          ]
+        }
+      },
+      "schema": {
+        "default_value": "pending"
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "payment_status",
+      "type": "string",
+      "meta": {
+        "interface": "select-dropdown",
+        "width": "half",
+        "options": {
+          "choices": [
+            { "text": "Pending", "value": "pending" },
+            { "text": "Paid", "value": "paid" },
+            { "text": "Failed", "value": "failed" },
+            { "text": "Refunded", "value": "refunded" }
+          ]
+        }
+      },
+      "schema": {
+        "default_value": "pending"
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "payment_method",
+      "type": "string",
+      "meta": {
+        "interface": "select-dropdown",
+        "width": "half",
+        "options": {
+          "choices": [
+            { "text": "PayPal", "value": "paypal" },
+            { "text": "Google Pay", "value": "google_pay" },
+            { "text": "Credit Card", "value": "credit_card" }
+          ]
+        }
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "subtotal",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "third"
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "tax",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "third"
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "shipping",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "third"
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "total",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2,
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "customer_email",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "shipping_address",
+      "type": "json",
+      "meta": {
+        "interface": "input-code",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "billing_address",
+      "type": "json",
+      "meta": {
+        "interface": "input-code",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "orders",
+      "field": "items",
+      "type": "alias",
+      "meta": {
+        "interface": "list-o2m",
+        "width": "full",
+        "special": ["o2m"]
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "order_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "product_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "order_items",
+      "field": "product_name",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "order_items",
+      "field": "product_sku",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "order_items",
+      "field": "quantity",
+      "type": "integer",
+      "meta": {
+        "interface": "input",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "unit_price",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "total",
+      "type": "decimal",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {
+        "numeric_precision": 10,
+        "numeric_scale": 2
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "hidden": true,
+        "interface": "input",
+        "readonly": true
+      },
+      "schema": {
+        "is_primary_key": true,
+        "has_auto_increment": true
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "interface": "select-dropdown",
+        "width": "half",
+        "options": {
+          "choices": [
+            { "text": "Published", "value": "published" },
+            { "text": "Pending", "value": "pending" },
+            { "text": "Rejected", "value": "rejected" }
+          ]
+        }
+      },
+      "schema": {
+        "default_value": "pending"
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "interface": "datetime",
+        "readonly": true,
+        "special": ["date-created"]
+      },
+      "schema": {}
+    },
+    {
+      "collection": "reviews",
+      "field": "product_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "half",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "customer_id",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown-m2o",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "reviews",
+      "field": "rating",
+      "type": "integer",
+      "meta": {
+        "interface": "select-dropdown",
+        "width": "half",
+        "required": true,
+        "options": {
+          "choices": [
+            { "text": "1 Star", "value": 1 },
+            { "text": "2 Stars", "value": 2 },
+            { "text": "3 Stars", "value": 3 },
+            { "text": "4 Stars", "value": 4 },
+            { "text": "5 Stars", "value": 5 }
+          ]
+        }
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "title",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "full"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "reviews",
+      "field": "comment",
+      "type": "text",
+      "meta": {
+        "interface": "input-rich-text-html",
+        "width": "full",
+        "required": true
+      },
+      "schema": {
+        "is_nullable": false
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "customer_name",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    },
+    {
+      "collection": "reviews",
+      "field": "customer_email",
+      "type": "string",
+      "meta": {
+        "interface": "input",
+        "width": "half"
+      },
+      "schema": {}
+    }
+  ],
+  "relations": [
+    {
+      "collection": "bundle_options",
+      "field": "product_id",
+      "related_collection": "products",
+      "meta": {
+        "one_field": "bundle_options"
+      },
+      "schema": {
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "product_faqs",
+      "field": "product_id",
+      "related_collection": "products",
+      "meta": {
+        "one_field": "faqs"
+      },
+      "schema": {
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "customer_id",
+      "related_collection": "customers",
+      "meta": {
+        "one_field": null
+      },
+      "schema": {
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "order_id",
+      "related_collection": "orders",
+      "meta": {
+        "one_field": "items"
+      },
+      "schema": {
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "order_items",
+      "field": "product_id",
+      "related_collection": "products",
+      "meta": {
+        "one_field": null
+      },
+      "schema": {
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "product_id",
+      "related_collection": "products",
+      "meta": {
+        "one_field": null
+      },
+      "schema": {
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "reviews",
+      "field": "customer_id",
+      "related_collection": "customers",
+      "meta": {
+        "one_field": null
+      },
+      "schema": {
+        "on_delete": "SET NULL"
+      }
+    }
+  ]
+}

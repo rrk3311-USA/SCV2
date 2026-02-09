@@ -1,0 +1,19 @@
+# Environment variables
+.env
+
+# Data directories
+data/
+uploads/
+extensions/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

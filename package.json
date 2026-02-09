@@ -13,6 +13,7 @@
     "fill-google-pay-form": "node scripts/fill-google-pay-web-form.mjs"
   },
   "dependencies": {
+    "@directus/sdk": "^17.0.1",
     "@medusajs/js-sdk": "^2.8.0",
     "@phosphor-icons/react": "^2.1.6",
     "clsx": "^2.1.0",

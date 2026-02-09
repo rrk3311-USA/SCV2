@@ -36,6 +36,34 @@ npm run dev
 
 Then open **http://localhost:8000**
 
+## Directus Backend (Optional)
+
+SCV2 includes an optional Directus headless CMS backend for managing products, orders, and content via a powerful admin UI and REST/GraphQL APIs.
+
+**Quick start:**
+
+```bash
+cd directus
+make start
+```
+
+Then access the admin panel at **http://localhost:8055** (default login: `admin@example.com` / `admin`)
+
+See **[directus/README.md](./directus/README.md)** for full documentation:
+- Setup guide
+- API documentation
+- Schema management
+- Production deployment
+- Frontend integration
+
+The backend provides:
+- Product catalog management with images, FAQs, bundle options
+- Category management
+- Order tracking and management
+- Customer accounts
+- Product reviews
+- Media library
+
 ## Media (images / video)
 
 Media is wired so it works **locally without copying**. `SCV2/public/images` and `SCV2/public/videos` are symlinks to `deploy-site/public/images` and `deploy-site/public/videos`. Category thumbnails are linked from `deploy-site/images/Catagory Thumbnail Images` into `deploy-site/public/images/` so the store page gets them too.
@@ -66,6 +94,8 @@ Media is wired so it works **locally without copying**. `SCV2/public/images` and
 | Category card   | `src/components/CategoryCard.tsx` |
 | Products data   | `src/data/products.ts` (TOP_12, TOP_PRODUCTS) |
 | Categories      | `src/data/categories.ts` |
+| Directus client | `src/lib/directus.ts` (CMS API integration) |
 | Routes          | `src/lib/constants.ts` (ROUTES) |
 | Tracking doc    | `TRACKING_AND_TAGS.md` |
 | gtag helpers    | `src/lib/gtag.ts` |
+| Directus backend| `directus/` (headless CMS) |

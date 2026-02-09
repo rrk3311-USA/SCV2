@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgis/postgis:13-master
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: directus
+      POSTGRES_PASSWORD: directus
+      POSTGRES_DB: directus
+    networks:
+      - directus
+
+  cache:
+    image: redis:7-alpine
+    networks:
+      - directus
+
+  directus:
+    image: directus/directus:10.10.4
+    ports:
+      - 8055:8055
+    volumes:
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+    depends_on:
+      - database
+      - cache
+    environment:
+      KEY: '255d861b-5ea1-5996-9aa3-922530ec40b1'
+      SECRET: '6116487b-cda1-52c2-b5b5-c8022c45e263'
+
+      DB_CLIENT: 'pg'
+      DB_HOST: 'database'
+      DB_PORT: '5432'
+      DB_DATABASE: 'directus'
+      DB_USER: 'directus'
+      DB_PASSWORD: 'directus'
+
+      CACHE_ENABLED: 'true'
+      CACHE_STORE: 'redis'
+      REDIS: 'redis://cache:6379'
+
+      ADMIN_EMAIL: 'admin@example.com'
+      ADMIN_PASSWORD: 'admin'
+
+      # CORS Configuration for Next.js frontend
+      CORS_ENABLED: 'true'
+      CORS_ORIGIN: 'http://localhost:8000,http://localhost:3000,https://www.successchemistry.com,https://scv2-success-chemistry.vercel.app'
+
+      # Public URL
+      PUBLIC_URL: 'http://localhost:8055'
+
+      # Assets
+      ASSETS_CACHE_TTL: '30m'
+      ASSETS_TRANSFORM_MAX_CONCURRENT: '25'
+
+      # Rate Limiting
+      RATE_LIMITER_ENABLED: 'true'
+      RATE_LIMITER_POINTS: '50'
+      RATE_LIMITER_DURATION: '1'
+
+      # Email (SMTP) - configure for production
+      # EMAIL_FROM: 'noreply@successchemistry.com'
+      # EMAIL_TRANSPORT: 'smtp'
+      # EMAIL_SMTP_HOST: 'smtp.example.com'
+      # EMAIL_SMTP_PORT: '587'
+      # EMAIL_SMTP_USER: 'smtp_user'
+      # EMAIL_SMTP_PASSWORD: 'smtp_password'
+
+    networks:
+      - directus
+
+networks:
+  directus:
+    driver: bridge
+
+volumes:
+  database:
+  uploads:
