@@ -8,7 +8,7 @@ import { CheckoutPayPal } from "@/components/CheckoutPayPal";
 import { ROUTES } from "@/lib/constants";
 
 type Order = {
-  id: number;
+  id: number | string;
   status: string;
   total: number;
   order_items?: { sku: string; name: string; quantity: number; price: number }[];

@@ -5,7 +5,7 @@
  * Current behavior: returns a stub order (orderId, value) so the redirect and tracking work.
  * For production: integrate with your payment processor (Stripe, Braintree, etc.):
  * 1. Use paymentMethodData.tokenizationData.token (and type) to charge via your gateway.
- * 2. Create the order in your backend (PocketBase, Directus, etc.).
+ * 2. Create the order in your PocketBase backend.
  * 3. Return the real orderId and value.
  * See GOOGLE_PAY_SETUP.md and your gateway's Google Pay docs.
  */

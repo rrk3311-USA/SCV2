@@ -127,9 +127,9 @@ export const SKU_TO_CATEGORY: Record<string, string> = {
   "B071JK6HM2": "Best Seller",
 };
 
-const DEFAULT_SUBSCRIBE_SAVE_PERCENT = 15;
+export const DEFAULT_SUBSCRIBE_SAVE_PERCENT = 15;
 
-function defaultBundleOptions(price: number): BundleOption[] {
+export function defaultBundleOptions(price: number): BundleOption[] {
   return [
     { label: "1 bottle", quantity: 1, price },
     { label: "2-Pack", quantity: 2, price: Math.round(price * 2 * 0.9 * 100) / 100, savePercent: 10 },

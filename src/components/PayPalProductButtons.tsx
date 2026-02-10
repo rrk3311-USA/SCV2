@@ -84,7 +84,7 @@ export function PayPalProductButtons({ sku, name, price, quantity = 1 }: PayPalP
             height: 45,
           },
           createOrder: async () => {
-            const res = await fetch(`${API_BASE}/api/paypal/orders`, {
+            const res = await fetch(`${API_BASE}/api/custom/paypal/orders`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -126,7 +126,7 @@ export function PayPalProductButtons({ sku, name, price, quantity = 1 }: PayPalP
             return data.order.id;
           },
           onApprove: async (data: { orderID: string }) => {
-            const res = await fetch(`${API_BASE}/api/paypal/orders/${data.orderID}/pay`, {
+            const res = await fetch(`${API_BASE}/api/custom/paypal/orders/${data.orderID}/pay`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
             });

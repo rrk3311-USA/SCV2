@@ -6,13 +6,13 @@ Use this when **/admin**, **checkout**, or the **Directus URL** don’t work.
 
 ## 1. Fly app is actually running Directus (not Medusa)
 
-The app **success-chemistry-directus** must be **re-deployed with the Directus image**. If you only changed settings and didn’t deploy, it’s still running the old Medusa code.
+The app **medusa-backend-dark-resonance-4960** must be **re-deployed with the Directus image**. If you only changed settings and didn’t deploy, it’s still running the old Medusa code.
 
 **Do this:**
-- From your machine: `cd directus-fly && fly deploy -a success-chemistry-directus`
-- Or: Fly dashboard → **success-chemistry-directus** → make sure **Source** is your repo and **Root Directory** is **directus-fly** → **Deploy** (or push to main so the GitHub Action deploys).
+- From your machine: `cd directus-fly && fly deploy -a medusa-backend-dark-resonance-4960`
+- Or: Fly dashboard → **medusa-backend-dark-resonance-4960** → make sure **Source** is your repo and **Root Directory** is **directus-fly** → **Deploy** (or push to main so the GitHub Action deploys).
 
-**Check:** Open **https://success-chemistry-directus.fly.dev** in a browser.
+**Check:** Open **https://medusa-backend-dark-resonance-4960.fly.dev** in a browser.
 - You should see **Directus login** (email/password).
 - If you see Medusa or something else, the app wasn’t redeployed with Directus.
 
@@ -20,7 +20,7 @@ The app **success-chemistry-directus** must be **re-deployed with the Directus i
 
 ## 2. Directus health
 
-**Check:** Open **https://success-chemistry-directus.fly.dev/server/health**
+**Check:** Open **https://medusa-backend-dark-resonance-4960.fly.dev/server/health**
 
 - Should return JSON (e.g. `{"status":"ok"}` or similar).
 - If 404 or 500, the app isn’t running Directus or it’s crashing (check Fly **Logs**).
@@ -29,13 +29,13 @@ The app **success-chemistry-directus** must be **re-deployed with the Directus i
 
 ## 3. Directus secrets on Fly
 
-Fly app **success-chemistry-directus** → **Secrets**. You must have:
+Fly app **medusa-backend-dark-resonance-4960** → **Secrets**. You must have:
 
 - `DB_CLIENT` = `pg`
 - `DB_CONNECTION_STRING` = your Postgres URL (e.g. `postgresql://...@bold-wind-1462.internal:5432/...`)
 - `KEY`, `SECRET` = random strings
 - `ADMIN_EMAIL`, `ADMIN_PASSWORD` = your Directus login
-- `PUBLIC_URL` = `https://success-chemistry-directus.fly.dev`
+- `PUBLIC_URL` = `https://medusa-backend-dark-resonance-4960.fly.dev`
 
 Wrong or missing `DB_CONNECTION_STRING` → Directus can’t start or will crash. Check **Logs** in Fly.
 
@@ -45,7 +45,7 @@ Wrong or missing `DB_CONNECTION_STRING` → Directus can’t start or will crash
 
 Vercel → your SCV2 project → **Settings** → **Environment Variables**:
 
-- **DIRECTUS_URL** = `https://success-chemistry-directus.fly.dev` (no trailing slash)
+- **DIRECTUS_URL** = `https://medusa-backend-dark-resonance-4960.fly.dev` (no trailing slash)
 - **DIRECTUS_STATIC_TOKEN** = token from Directus (Admin → Settings → Access Tokens)
 
 Redeploy the Vercel project after changing env.
@@ -56,7 +56,7 @@ Redeploy the Vercel project after changing env.
 
 In **SCV2/.env.local**:
 
-- **DIRECTUS_URL** = `https://success-chemistry-directus.fly.dev` (so local SCV2 talks to the same Directus)
+- **DIRECTUS_URL** = `https://medusa-backend-dark-resonance-4960.fly.dev` (so local SCV2 talks to the same Directus)
 - **DIRECTUS_STATIC_TOKEN** = same token as on Vercel
 
 Restart `npm run dev` after changing `.env.local`.
@@ -76,7 +76,7 @@ If collections or token are wrong, checkout will return 502/503 or “Failed to 
 
 ## Quick test order
 
-1. **https://success-chemistry-directus.fly.dev** → Directus login.
+1. **https://medusa-backend-dark-resonance-4960.fly.dev** → Directus login.
 2. **https://YOUR-SCV2-SITE/admin** → should redirect to (1).
 3. On SCV2: add to cart → Checkout with PayPal → should create an order in Directus and send you to `/checkout?order_id=...`.
 

@@ -52,10 +52,10 @@ function StoreProductCard({ product }: { product: Product }) {
   );
 }
 
-/** Store uses local catalog only: all products, top sellers first, 12 per page, transparent hero cards. */
-export function StoreProductsList() {
+/** Store uses server-provided products (from Supabase when configured) or local catalog. */
+export function StoreProductsList({ initialProducts }: { initialProducts?: Product[] }) {
   const searchParams = useSearchParams();
-  const orderedProducts = getStoreProductsSortedByBestSellers();
+  const orderedProducts = initialProducts ?? getStoreProductsSortedByBestSellers();
   const cat = searchParams.get("cat");
   const page = Math.max(1, Math.min(999, parseInt(searchParams.get("page") ?? "1", 10) || 1));
   const allowedCategories = cat ? CATEGORY_ID_TO_PRODUCT_CATEGORIES[cat] : null;

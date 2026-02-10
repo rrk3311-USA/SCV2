@@ -14,7 +14,7 @@ const PAYPAL_CLIENT_ID =
 type OrderItem = { sku: string; name: string; quantity: number; price: number };
 
 type CheckoutPayPalProps = {
-  orderId: number;
+  orderId: number | string;
   total: number;
   items: OrderItem[];
   onCleared?: () => void;
@@ -30,7 +30,7 @@ declare global {
 
 /**
  * PayPal button for cart checkout. Uses PocketBase to create/capture order.
- * On success, marks the Directus order as paid and redirects to order-confirmation.
+ * On success, marks the Supabase order as paid and redirects to order-confirmation.
  */
 export function CheckoutPayPal({ orderId, total, items, onCleared }: CheckoutPayPalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ export function CheckoutPayPal({ orderId, total, items, onCleared }: CheckoutPay
             height: 45,
           },
           createOrder: async () => {
-            const res = await fetch(`${API_BASE}/api/paypal/orders`, {
+            const res = await fetch(`${API_BASE}/api/custom/paypal/orders`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -104,7 +104,7 @@ export function CheckoutPayPal({ orderId, total, items, onCleared }: CheckoutPay
             return data.order.id;
           },
           onApprove: async (data: { orderID: string }) => {
-            const res = await fetch(`${API_BASE}/api/paypal/orders/${data.orderID}/pay`, {
+            const res = await fetch(`${API_BASE}/api/custom/paypal/orders/${data.orderID}/pay`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
             });

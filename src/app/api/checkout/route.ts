@@ -1,9 +1,10 @@
 /**
- * Checkout: create order in Directus, return checkout URL.
- * Cart stays in localStorage; this records the order and sends user to payment.
+ * Checkout: create order in PocketBase (main admin). Copy to Supabase as backup.
+ * PB = main admin; Supabase = backup copy of everything.
  */
 import { NextResponse } from "next/server";
-import { createOrder, isDirectusConfigured } from "@/lib/directus";
+import { createOrder as createOrderSupabase, isSupabaseConfigured } from "@/lib/supabase";
+import { createOrder as createOrderPocketBase, isPocketBaseConfigured } from "@/lib/pocketbase";
 import { getProductBySku } from "@/data/products";
 
 type CartLine = { sku: string; quantity: number; name?: string; price?: string | number };
@@ -33,9 +34,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
     }
 
-    if (!isDirectusConfigured()) {
+    // PB = main admin. Supabase = backup (copy of everything).
+    const usePocketBase = isPocketBaseConfigured();
+    const useSupabase = isSupabaseConfigured();
+    if (!usePocketBase) {
       return NextResponse.json(
-        { error: "Directus not configured (DIRECTUS_URL and DIRECTUS_STATIC_TOKEN)" },
+        { error: "Backend not configured. Set NEXT_PUBLIC_API_BASE (PocketBase = main admin)." },
         { status: 503 }
       );
     }
@@ -51,9 +55,20 @@ export async function POST(request: Request) {
       items.push({ sku: line.sku, name, quantity: line.quantity, price: safePrice });
     }
 
-    const result = await createOrder(total, items);
-    if (!result) {
+    // Create in PocketBase first (main admin)
+    const pbResult = await createOrderPocketBase(total, items);
+    if (!pbResult) {
       return NextResponse.json({ error: "Failed to create order" }, { status: 502 });
+    }
+    const result = { id: pbResult.id };
+
+    // Backup copy to Supabase so it has everything
+    if (useSupabase) {
+      try {
+        await createOrderSupabase(total, items, { pocketbase_order_id: String(pbResult.id) });
+      } catch {
+        // Non-fatal: PB is main; Supabase is backup
+      }
     }
 
     const siteBase =

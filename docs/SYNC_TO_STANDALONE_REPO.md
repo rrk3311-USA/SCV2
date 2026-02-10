@@ -46,4 +46,4 @@ Vercel is connected to the **standalone** repo `github.com/rrk3311-USA/SCV2`. Th
 ## After sync
 
 - Set **DIRECTUS_URL** and **DIRECTUS_STATIC_TOKEN** in the Vercel project (Settings → Environment Variables) if not already set.
-- Deploy Directus on Fly (e.g. `success-chemistry-directus`) and create `orders` / `order_items` + static token; use that token as **DIRECTUS_STATIC_TOKEN** in Vercel.
+- Deploy Directus on Fly (app `medusa-backend-dark-resonance-4960`) and create `orders` / `order_items` + static token; use that token as **DIRECTUS_STATIC_TOKEN** in Vercel.

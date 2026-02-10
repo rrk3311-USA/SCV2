@@ -9,11 +9,13 @@
     "start": "next start -p 8000",
     "lint": "eslint .",
     "generate-product-md": "tsx scripts/generate-product-markdown.ts",
+    "import-products-to-supabase": "tsx scripts/import-products-to-supabase.ts",
     "upload-merchant-feed": "tsx scripts/upload-feed-to-merchant-center.ts",
     "fill-google-pay-form": "node scripts/fill-google-pay-web-form.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.6",
+    "@supabase/supabase-js": "^2.95.3",
     "clsx": "^2.1.0",
     "next": "16.1.6",
     "react": "19.2.4",

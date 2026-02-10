@@ -55,3 +55,22 @@ git remote add scv2-repo https://github.com/rrk3311-USA/SCV2.git
 ```
 
 Then run the `git subtree push` command above.
+
+---
+
+## Production (Vercel) environment variables
+
+Set these in **Vercel** → Project **scv2-success-chemistry** → Settings → Environment Variables so the online version works:
+
+| Variable | Required | Notes |
+|----------|----------|--------|
+| `NEXT_PUBLIC_API_BASE` | Yes (for PocketBase) | PocketBase URL, e.g. `https://success-chemistry-pb.fly.dev`. Enables orders + PayPal + **admin redirect** (/admin → PocketBase Admin login). |
+| `NEXT_PUBLIC_PAYPAL_CLIENT_ID` | Yes (for checkout) | PayPal client ID (sandbox or live). |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Production URL, e.g. `https://www.successchemistry.com` or `https://scv2-success-chemistry.vercel.app`. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | GA4 property for analytics. |
+| `NEXT_PUBLIC_GOOGLE_PAY_ENABLED` | Optional | `true` to show Google Pay. |
+| `NEXT_PUBLIC_YOTPO_APP_KEY` | Optional | For product reviews. |
+
+**Admin login:** With `NEXT_PUBLIC_API_BASE` set, visiting **/admin** on the live site redirects to PocketBase Admin (`{NEXT_PUBLIC_API_BASE}/_/`) where you log in with your PocketBase admin account.
+
+**Fallback backends:** If you don’t use PocketBase for orders, set Supabase or Directus vars instead (see CONNECTED_TO_BACKEND.md). PayPal still needs a server; PocketBase provides it when `NEXT_PUBLIC_API_BASE` points to PocketBase.

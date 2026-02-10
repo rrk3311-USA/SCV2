@@ -23,6 +23,9 @@ google-merchant-sa.json
 # Vercel
 .vercel
 
+# Local sync / temp (do not deploy)
+tmp-scv2-push
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts

@@ -3,7 +3,7 @@
 You already use Fly. Deploy Directus there so the admin is online at a URL like `https://your-directus.fly.dev` — no Directus Cloud cost.
 
 - **Database (required):** Directus needs one of **Postgres** (recommended), MySQL, or SQLite. Use Fly Postgres, Neon, or any hosted Postgres.
-- **Redis (optional):** For cache/sessions; you can add it later.
+- **Redis (recommended):** For cache and **session persistence**. Without it, Fly’s auto-stop/restart wipes in-memory sessions and you’ll have to sign in again constantly. See DIRECTUS_SETUP.md → “Session keeps expiring”.
 - **Tigris (optional):** S3-compatible storage for files; Directus can use it for uploads, but the main requirement is the DB.
 
 ---
@@ -122,7 +122,13 @@ fly secrets set ADMIN_PASSWORD=your-secure-password
 fly secrets set PUBLIC_URL=https://YOUR-DIRECTUS-APP-NAME.fly.dev
 ```
 
-**Optional – Redis** (if you have a Redis on Fly): set `REDIS=redis://default:PASSWORD@your-redis.flycast:6379` and `CACHE_ENABLED=true` / `CACHE_STORE=redis` (check Directus docs for exact env names).
+**Recommended – Redis** (stops “keeps making me sign in again” on Fly): create Redis with `fly redis create`, then set secrets:
+```bash
+fly secrets set CACHE_ENABLED=true -a YOUR-DIRECTUS-APP-NAME
+fly secrets set CACHE_STORE=redis -a YOUR-DIRECTUS-APP-NAME
+fly secrets set REDIS="redis://default:PASSWORD@your-redis-app.flycast:6379" -a YOUR-DIRECTUS-APP-NAME
+```
+URL-encode any special characters in the password. Redeploy after setting secrets. See DIRECTUS_SETUP.md for full steps.
 
 ### 4. Launch and deploy
 

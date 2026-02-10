@@ -10,10 +10,10 @@ Fly doesn’t have a Vercel-style “paste .env” screen. You send config by (1
 
 - **If you haven’t deployed Directus yet:**
   - `cd directus-fly` (from repo root: `success007/directus-fly`)
-  - `fly launch --no-deploy --copy-config` (app name e.g. **success-chemistry-directus**)
-  - Set **secrets** (CLI or Dashboard → Secrets, one by one): `DB_CLIENT`, `DB_CONNECTION_STRING`, `KEY`, `SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `PUBLIC_URL=https://success-chemistry-directus.fly.dev`
+  - `fly launch --no-deploy --copy-config` (app name e.g. **medusa-backend-dark-resonance-4960**)
+  - Set **secrets** (CLI or Dashboard → Secrets, one by one): `DB_CLIENT`, `DB_CONNECTION_STRING`, `KEY`, `SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `PUBLIC_URL=https://medusa-backend-dark-resonance-4960.fly.dev`
   - `fly deploy`
-- **Note your Directus URL**, e.g. `https://success-chemistry-directus.fly.dev`.
+- **Note your Directus URL**, e.g. `https://medusa-backend-dark-resonance-4960.fly.dev`.
 
 ---
 
@@ -24,7 +24,7 @@ Fly doesn’t have a Vercel-style “paste .env” screen. You send config by (1
 
    | Name | Value |
    |------|--------|
-   | **DIRECTUS_URL** | `https://success-chemistry-directus.fly.dev` (your Directus URL, no trailing slash) |
+   | **DIRECTUS_URL** | `https://medusa-backend-dark-resonance-4960.fly.dev` (your Directus URL, no trailing slash) |
    | **DIRECTUS_STATIC_TOKEN** | Token from Directus: Admin → Settings → Access Tokens (create one with access to `orders` + `order_items`) |
 
 3. **Save**. Apply to Production (and Preview if you want).
@@ -43,7 +43,7 @@ From your machine (no need to run `npm run dev`):
 
 ```bash
 cd /Users/r-kammer/Documents/GitHub/success007/SCV2
-DIRECTUS_URL=https://success-chemistry-directus.fly.dev node scripts/verify-admin-urls.mjs --online-only
+DIRECTUS_URL=https://medusa-backend-dark-resonance-4960.fly.dev node scripts/verify-admin-urls.mjs --online-only
 ```
 
 (Replace the URL with your real Directus URL if different.)
@@ -56,7 +56,7 @@ DIRECTUS_URL=https://success-chemistry-directus.fly.dev node scripts/verify-admi
 ## 5. Use it
 
 - **Live admin:** Open **https://YOUR-SCV2-SITE.vercel.app/admin** → you get redirected to Directus. Log in there.
-- **Direct:** Or open your Directus URL (e.g. `https://success-chemistry-directus.fly.dev`) and log in.
+- **Direct:** Or open your Directus URL (e.g. `https://medusa-backend-dark-resonance-4960.fly.dev`) and log in.
 
 ---
 

@@ -2,11 +2,35 @@ import { Suspense } from "react";
 import { Trophy, ListBullets } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/Container";
 import { getVisitorCount } from "@/lib/constants";
-import { TOTAL_PRODUCTS } from "@/data/products";
+import {
+  TOTAL_PRODUCTS,
+  getStoreProductsSortedByBestSellers,
+  resolveProductForDisplay,
+  defaultBundleOptions,
+  DEFAULT_SUBSCRIBE_SAVE_PERCENT,
+} from "@/data/products";
+import { isSupabaseConfigured, getProductsFromSupabase } from "@/lib/supabase";
+import type { Product } from "@/data/products";
 import { CategoryPills } from "./CategoryPills";
 import { StoreProductsList } from "./StoreProductsList";
 
-export default function StorePage() {
+async function getStoreProducts(): Promise<Product[]> {
+  if (!isSupabaseConfigured()) return getStoreProductsSortedByBestSellers();
+  const fromDb = await getProductsFromSupabase();
+  if (!fromDb?.length) return getStoreProductsSortedByBestSellers();
+  return fromDb.map((p) =>
+    resolveProductForDisplay({
+      ...p,
+      bundle_options: defaultBundleOptions(p.price),
+      subscribe_save_percent: DEFAULT_SUBSCRIBE_SAVE_PERCENT,
+    } as Product)
+  );
+}
+
+export default async function StorePage() {
+  const products = await getStoreProducts();
+  const totalProducts = products.length;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <Container className="px-4 py-4 sm:px-6 sm:py-6">
@@ -21,7 +45,7 @@ export default function StorePage() {
         {/* Product grid (not carousel) – top 12 first, bundles last in categories, paginated */}
         <section className="mt-4">
           <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">
-            All Products <span className="font-normal text-slate-500">({TOTAL_PRODUCTS})</span>
+            All Products <span className="font-normal text-slate-500">({totalProducts})</span>
           </h2>
           <p className="mt-0.5 flex flex-wrap items-center gap-2 text-sm text-slate-600 pb-4">
             <span className="inline-flex items-center gap-1.5">
@@ -35,7 +59,7 @@ export default function StorePage() {
             </span>
           </p>
           <Suspense fallback={<div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 max-w-5xl mx-auto"><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /><div className="aspect-square animate-pulse rounded-xl bg-slate-100" /></div>}>
-            <StoreProductsList />
+            <StoreProductsList initialProducts={products} />
           </Suspense>
         </section>
       </Container>
